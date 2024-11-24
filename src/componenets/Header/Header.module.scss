@@ -1,0 +1,39 @@
+.buttonContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.profileContainer {
+  display: flex;
+  justify-content: center; /* Распределение элементов внутри контейнера */
+  align-items: center; /* Вертикальное выравнивание */
+  gap: 5px; /* Расстояние между кнопками */
+}
+
+.iconLogo {
+  fill: var(--text-color);
+  width: 100px;
+  height: 100px;
+}
+
+.logoContainer {
+  display: flex;
+  align-self: flex-start;
+}
+
+.logoName {
+  font-size: 80px;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between; /* Разделяет контейнеры на противоположные стороны */
+  align-items: center; /* Вертикально выравнивает содержимое */
+  padding: 30px 30px; /* Отступы внутри header */
+  border-bottom: 1px solid var(--accent-color);
+}
+
+
+

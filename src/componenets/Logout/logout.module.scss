@@ -1,0 +1,24 @@
+.button:hover .logout{
+  fill: var(--accent-color);
+}
+
+.button:hover .logoutText{
+  color: var(--accent-color);
+}
+
+.logout {
+  fill: var(--text-color);
+  width: 30px;
+  height: 30px;
+}
+
+.button {
+  background-color: transparent;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: center;
+  cursor: pointer;
+
+}

@@ -1,0 +1,27 @@
+.languageSelector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 10px;
+}
+
+.input:checked + .select {
+  font-weight: 700;
+  color: var(--accent-color)}
+
+.select {
+  cursor: pointer;
+}
+
+.hebrew {
+  font-family: 'NotoSansHebrew';
+}
+
+.russian {
+  font-family: 'Jost';
+}
+
+.english {
+  font-family: 'Jost';
+}

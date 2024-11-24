@@ -1,0 +1,14 @@
+.buttonContainer {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+  padding-bottom: 5px;
+}

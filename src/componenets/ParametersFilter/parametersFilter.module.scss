@@ -1,0 +1,42 @@
+.form {
+  display: flex;
+  gap: 30px;
+}
+
+
+.input:checked + label {
+  color: var(--accent-color);
+}
+
+.label {
+  cursor: pointer;
+}
+
+.inputContainer:hover { 
+  color: var(--accent-color);
+}
+
+.form {
+  padding-top: 10px;
+}
+
+.label {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.input:checked + icon {
+  fill: var(--accent-color);
+}
+
+.container {
+  border-bottom: var(--accent-color) 1px solid;
+}

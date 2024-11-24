@@ -1,0 +1,54 @@
+/* fonts.scss */
+
+/* DancingScript */
+@font-face {
+  font-family: 'DancingScript';
+  src: url('./DancingScript-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'DancingScript';
+  src: url('./DancingScript-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'DancingScript';
+  src: url('./DancingScript-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'DancingScript';
+  src: url('./DancingScript-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+
+/* Jost */
+@font-face {
+  font-family: 'Jost';
+  src: url('./Jost-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Montserrat */
+@font-face {
+  font-family: 'Montserrat';
+  src: url('./Montserrat-Thin.ttf') format('truetype');
+  font-weight: 100;
+  font-style: normal;
+}
+
+/* NotoSansHebrew */
+@font-face {
+  font-family: 'NotoSansHebrew';
+  src: url('./NotoSansHebrew-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}

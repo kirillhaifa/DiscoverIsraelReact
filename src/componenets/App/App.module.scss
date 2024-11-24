@@ -1,0 +1,56 @@
+.app {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  transition: opacity 0.5s ease, background-color 0.5s ease;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  
+  button, select {
+    color: var(--text-color);
+    background-color: var(--background-color);
+  }
+
+  input {
+    color: var(--text-color);
+    background-color: var(--background-color);
+    border: var(--accent-color) 1px solid
+  }
+
+  // не работает анимация, временно
+  // &.fadeOut {
+  //   opacity: 0;
+  //   background-color: #fff;
+  //   transition: opacity 0.1s ease-out;
+  // }
+
+  // &.fadeIn {
+  //   opacity: 1;
+  //   transition: opacity 1s ease-in;
+  // }
+
+  &.russian {
+    font-family: 'Jost', sans-serif;
+  }
+
+  &.english {
+    font-family: 'Jost', sans-serif;
+  }
+
+  &.hebrew {
+    font-family: 'NotoSansHebrew', sans-serif;
+  }
+
+  &.rtl {
+    direction: rtl;
+    text-align: right;
+  }
+}
+
+
+
+
+
+

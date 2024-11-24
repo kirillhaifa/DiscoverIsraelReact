@@ -1,0 +1,67 @@
+/*global*/
+:root {
+  width: 100%;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+body {
+  width: 100%;
+  margin: 0;
+}
+
+.main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+li {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select {
+  color: currentColor;
+  font-family: inherit;
+  font-size: inherit;
+  border: none;
+}
+
+ul,
+ol {
+  list-style: none;
+
+}
+
+.hidden {
+  display: none
+}
+
+.button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}

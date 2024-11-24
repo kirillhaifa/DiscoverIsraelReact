@@ -1,0 +1,21 @@
+.profileButtonContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+}
+
+.profileButtonContainer:hover .profileIcon {
+  fill: var(--accent-color)
+}
+
+.profileButtonContainer:hover .profileName {
+  color: var(--accent-color)
+
+}
+
+.profileIcon {
+  width: 30px;
+  height: 30px;
+}
+

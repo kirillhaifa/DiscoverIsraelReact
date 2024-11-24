@@ -1,0 +1,27 @@
+.button {
+  border: none;
+  margin: 2px;
+  cursor: pointer;
+  background-color: transparent;
+  font-size: 15px;
+}
+
+.button-active {
+  color: var(--accent-color);
+  font-weight: 700;
+}
+
+.button-saving {
+  cursor: not-allowed;
+}
+
+.container {
+  align-self: flex-end;
+  justify-self: end;
+  margin-top: auto;
+}
+
+.span-active {
+  color: var(--accent-color);
+  font-weight: 700;
+}
