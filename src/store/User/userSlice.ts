@@ -39,7 +39,14 @@ const initialState: UserSliceState = {
 const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    clearUserData: (state) => {
+      state.userData = null;
+      state.loading = false;
+      state.error = null;
+      console.log('User data cleared from store');
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchUserData.pending, (state) => {
@@ -56,6 +63,8 @@ const userSlice = createSlice({
       .addCase(fetchUserData.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || 'Failed to fetch user data';
+        console.error('fetchUserData rejected:', action.error.message);
+        console.error('Full error:', action);
       });
 
     // Обработка обновления данных пользователя
@@ -78,4 +87,5 @@ const userSlice = createSlice({
   },
 });
 
+export const { clearUserData } = userSlice.actions;
 export default userSlice.reducer;

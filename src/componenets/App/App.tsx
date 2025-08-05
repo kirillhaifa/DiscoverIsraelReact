@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../../firebaseConfig';
 import { fetchUserData } from '../../store/User/fetchUserThunk';
+import { clearUserData } from '../../store/User/userSlice';
 import { setTheme } from '../../store/ColorScheme/themeSlice';
 import { RootState, AppDispatch } from '../../store';
 import PlacesList from '../PlacesList/PlacesList';
@@ -39,6 +40,7 @@ const App = () => {
   const { language } = useSelector((state: RootState) => state.language);
   const userProfileTheme = useSelector(selectUserColorTheme);
   const userPreferredTheme = useSelector((state: RootState) => state.theme.theme);
+  const userLoading = useSelector((state: RootState) => state.user.loading);
   const [resolvedTheme, setResolvedTheme] = useState('light');
 
   useEffect(() => {
@@ -74,20 +76,39 @@ const App = () => {
   useEffect(() => {
     if (user) {
       if (user.uid) {
-        dispatch(fetchUserData(user.uid));
+        console.log('App: User authenticated, fetching user data for:', user.uid);
+        console.log('User email:', user.email);
+        console.log('User emailVerified:', user.emailVerified);
+        
+        // Небольшая задержка для обеспечения очистки старых данных
+        setTimeout(() => {
+          dispatch(fetchUserData(user.uid));
+        }, 100);
       }
+    } else {
+      console.log('App: No user authenticated, clearing user data');
+      // Очищаем данные пользователя при выходе
+      dispatch(clearUserData());
     }
     dispatch(fetchPlacesThunk());
   }, [user, dispatch]);
 
   // Инициализация темы из профиля пользователя
   useEffect(() => {
+    console.log('App theme initialization check:');
+    console.log('userProfileTheme:', userProfileTheme);
+    console.log('userPreferredTheme:', userPreferredTheme);
+    console.log('user:', user?.uid);
+    
     // Если есть тема в профиле пользователя, но нет сохраненной локально, используем тему из профиля
-    if (userProfileTheme && !userPreferredTheme) {
+    if (user && userProfileTheme && !userPreferredTheme) {
       console.log('Initializing theme from user profile:', userProfileTheme);
       dispatch(setTheme(userProfileTheme));
+    } else if (!user && userPreferredTheme) {
+      // Если пользователь вышел, но тема еще сохранена в localStorage, сохраняем ее
+      console.log('User logged out, keeping localStorage theme:', userPreferredTheme);
     }
-  }, [userProfileTheme, userPreferredTheme, dispatch]);
+  }, [user, userProfileTheme, userPreferredTheme, dispatch]);
 
   useLayoutEffect(() => {
     setIsAnimating(true);

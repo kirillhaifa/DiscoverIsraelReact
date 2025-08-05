@@ -19,15 +19,15 @@ export const registerUser = async (email: string, password: string) => {
         userID: user.uid,
         name: null, 
         surname: null,
-        premiumStatus: null,
+        premiumStatus: false,
         email: user.email,
         profilePicture: null, 
         joinDate: new Date(),
-        placesMarks: null,
-        wishlist: null, 
-        role: null,
-        language: null,
-        colorTheme: null,
+        ratings: [],
+        wishlist: [], 
+        role: 'user',
+        language: 'en',
+        colorTheme: 'light',
       });
       console.log(`User registered and data added to Firestore, ${user}`);
     }
@@ -71,13 +71,42 @@ export const handleGoogleSignIn = async () => {
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
 
+    console.log('Google sign-in successful for user:', user.uid);
+
+    // Проверяем, существует ли пользователь в Firestore
+    const userDocRef = doc(db, 'Users', user.uid);
+    const userDoc = await getDoc(userDocRef);
+
+    if (!userDoc.exists()) {
+      // Если пользователь не существует, создаем новую запись
+      console.log('Creating new user in Firestore for:', user.email);
+      await setDoc(userDocRef, {
+        userID: user.uid,
+        name: user.displayName?.split(' ')[0] || null,
+        surname: user.displayName?.split(' ')[1] || null,
+        premiumStatus: false,
+        email: user.email,
+        profilePicture: user.photoURL || null,
+        joinDate: new Date(),
+        ratings: [],
+        wishlist: [],
+        role: 'user',
+        language: 'en',
+        colorTheme: 'light',
+      });
+      console.log('New user created in Firestore');
+    } else {
+      console.log('User already exists in Firestore');
+    }
+
     // Получение данных пользователя из Firestore
     const userData = await getUserData(user.uid);
     console.log('User data after Google sign-in:', userData);
     
     return userData; // Возвращаем полный объект пользователя
   } catch (error) {
-    console.log('Error signing in with Google:', error);
+    console.error('Error signing in with Google:', error);
+    throw error;
   }
 };
 
@@ -96,7 +125,8 @@ export const getUserData = async (userUID: string) => {
         photoURL: auth.currentUser?.photoURL,
       };
     } else {
-      console.log('user not found')
+      console.log('User not found in Firestore for UID:', userUID);
+      return null;
     }
   } catch (error) {
     console.error('Error fetching user data:', error);
