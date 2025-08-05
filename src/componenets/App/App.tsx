@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../../firebaseConfig';
 import { fetchUserData } from '../../store/User/fetchUserThunk';
+import { setTheme } from '../../store/ColorScheme/themeSlice';
 import { RootState, AppDispatch } from '../../store';
 import PlacesList from '../PlacesList/PlacesList';
 import Register from '../Register/register';
@@ -36,7 +37,8 @@ const App = () => {
   const [isAnimating, setIsAnimating] = useState(false);
   const [user, loading, error] = useAuthState(auth);
   const { language } = useSelector((state: RootState) => state.language);
-  const userPreferredTheme = useSelector(selectUserColorTheme);
+  const userProfileTheme = useSelector(selectUserColorTheme);
+  const userPreferredTheme = useSelector((state: RootState) => state.theme.theme);
   const [resolvedTheme, setResolvedTheme] = useState('light');
 
   useEffect(() => {
@@ -44,28 +46,15 @@ const App = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    // if (userPreferredTheme) {
-    setResolvedTheme(userPreferredTheme);
-    // } else {
-    //   const systemPrefersDark = window.matchMedia(
-    //     '(prefers-color-scheme: dark)',
-    //   ).matches;
-    //   setResolvedTheme(systemPrefersDark ? 'dark' : 'light');
-
-    //   const handleSystemThemeChange = (e: MediaQueryListEvent) => {
-    //     if (!userPreferredTheme) {
-    //       setResolvedTheme(e.matches ? 'dark' : 'light');
-    //     }
-    //   };
-
-    //   const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    //   mediaQuery.addEventListener('change', handleSystemThemeChange);
-
-    //   return () => {
-    //     mediaQuery.removeEventListener('change', handleSystemThemeChange);
-    //   };
-    // }
-  }, [userPreferredTheme]);
+    // Приоритет: тема из localStorage (userPreferredTheme) > тема из профиля > светлая тема по умолчанию
+    const themeToUse = userPreferredTheme || userProfileTheme || 'light';
+    console.log('App resolving theme:', {
+      userPreferredTheme,
+      userProfileTheme,
+      themeToUse
+    });
+    setResolvedTheme(themeToUse);
+  }, [userPreferredTheme, userProfileTheme]);
 
   let languageClass = '';
   switch (language) {
@@ -90,6 +79,15 @@ const App = () => {
     }
     dispatch(fetchPlacesThunk());
   }, [user, dispatch]);
+
+  // Инициализация темы из профиля пользователя
+  useEffect(() => {
+    // Если есть тема в профиле пользователя, но нет сохраненной локально, используем тему из профиля
+    if (userProfileTheme && !userPreferredTheme) {
+      console.log('Initializing theme from user profile:', userProfileTheme);
+      dispatch(setTheme(userProfileTheme));
+    }
+  }, [userProfileTheme, userPreferredTheme, dispatch]);
 
   useLayoutEffect(() => {
     setIsAnimating(true);

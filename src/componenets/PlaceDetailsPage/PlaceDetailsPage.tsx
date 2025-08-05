@@ -5,6 +5,7 @@ import { RootState } from '../../store';
 import { Place } from '../../types';
 import PlaceDetails from '../PlaceDetails/PlaceDetails';
 import Navigation from '../Navigation/Navigation';
+let classes = require('./PlaceDetailsPage.module.scss');
 
 const PlaceDetailsPage = () => {
   const { placeName } = useParams<{ placeName: string }>();
@@ -19,20 +20,26 @@ const PlaceDetailsPage = () => {
 
   // Если места еще загружаются, выводим сообщение "Loading..."
   if (loading || !place) {
-    return <p>Loading...</p>;
+    return <div className={classes.loading}>Loading...</div>;
   }
 
   // Если произошла ошибка
   if (error) {
-    return <p>Error: {error}</p>;
+    return <div className={classes.error}>Error: {error}</div>;
   }
 
   // Если все данные готовы, рендерим детали места
   return (
-    <div>
-      <h1>{place?.placeName.en}</h1>
-      <Navigation />
-      <PlaceDetails place={place} />
+    <div className={classes.placeDetailsPage}>
+      <div className={classes.header}>
+        <h1>{place?.placeName.en}</h1>
+      </div>
+      <div className={classes.navigation}>
+        <Navigation />
+      </div>
+      <div className={classes.content}>
+        <PlaceDetails place={place} />
+      </div>
     </div>
   );
 };
