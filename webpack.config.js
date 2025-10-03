@@ -15,7 +15,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.[contenthash].js',
-    publicPath: '/DiscoverIsraelReact/', // <= ВАЖНО для GH Pages
+    publicPath: isGhPages ? `/${REPO}/` : '/', // ВАЖНО
     clean: true,
   },
   resolve: {
