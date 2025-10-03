@@ -56,7 +56,7 @@ module.exports = {
       template: './src/public/index.html',
       filename: '404.html',
     }),
-    new Dotenv(),
+    new Dotenv({ systemvars: true }),
   ],
   devServer: {
     static: './dist',
