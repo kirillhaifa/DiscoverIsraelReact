@@ -1,0 +1,18 @@
+# Node.js
+node_modules/
+
+# Build и сборка
+dist/
+
+# Переменные окружения
+.env
+
+# Логи
+*.log
+
+# IDE и редакторы
+.vscode/
+.idea/
+
+# Кэш и временные файлы
+.cache/
