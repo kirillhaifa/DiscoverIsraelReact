@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useLayoutEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Link, BrowserRouter } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../../firebaseConfig';
 import { fetchUserData } from '../../store/User/fetchUserThunk';
@@ -32,6 +32,8 @@ import { selectUserColorTheme } from '../../store/User/userSelector';
 let classes = require('./App.module.scss');
 let normilizer = require('../../public/Styles/normalizer.module.scss');
 let themes = require('../../public/Styles/themes.module.scss');
+
+const BASENAME = process.env.NODE_ENV === 'production' ? '/DiscoverIsraelReact' : '/';
 
 const App = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -119,7 +121,7 @@ const App = () => {
   }, [language]);
 
   return (
-    <Router>
+    <BrowserRouter basename={BASENAME}>
       <div
         className={`${classes.app} ${normilizer} ${themes[resolvedTheme]} ${classes[languageClass]} ${isAnimating ? classes.fadeOut : classes.fadeIn} ${language === 'he' ? classes.rtl : ''}`}
       >
@@ -153,7 +155,6 @@ const App = () => {
               )
             }
           />
-          {/* Другие маршруты */}
           <Route path="/places/:placeName" element={<PlaceDetailsPage />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/login" element={<GoogleLogin />} />
@@ -164,7 +165,7 @@ const App = () => {
           <Route path="/contacts" element={<Contacts />} />
         </Routes>
       </div>
-    </Router>
+    </BrowserRouter>
   );
 };
 

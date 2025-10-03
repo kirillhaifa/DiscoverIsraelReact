@@ -1,11 +1,15 @@
 {
-  "name": "discoverisraelreact",
+  "name": "DiscoverIsraelReact",
   "version": "1.0.0",
-  "description": "",
+  "description": "Discover Israel — React SPA built with Webpack and TypeScript",
   "main": "index.js",
+  "homepage": "https://kirillhaifa.github.io/DiscoverIsraelReact",
   "scripts": {
     "start": "webpack serve --mode=development",
     "build": "webpack --mode=production",
+    "build:gh": "GH_PAGES=true NODE_ENV=production webpack --mode=production",
+    "predeploy": "npm run build:gh && cp dist/index.html dist/404.html",
+    "deploy": "gh-pages -d dist",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
@@ -46,6 +50,7 @@
     "eslint-plugin-jsx-a11y": "^6.10.0",
     "eslint-plugin-react": "^7.37.1",
     "eslint-plugin-storybook": "^0.11.0",
+    "gh-pages": "^6.3.0",
     "html-webpack-plugin": "^5.6.0",
     "prettier": "^3.3.3",
     "sass": "^1.80.4",
