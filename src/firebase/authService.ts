@@ -117,7 +117,7 @@ export const getUserData = async (userUID: string) => {
 
     if (userDoc.exists()) {
       return {
-        ...userDoc.data(), // Данные из Firestore
+        ...userDoc.data(),
         uid: userUID,
         email: auth.currentUser?.email,
         emailVerified: auth.currentUser?.emailVerified,
