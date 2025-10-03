@@ -9,9 +9,23 @@ permissions:
   pages: write
   id-token: write
 
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      NODE_ENV: production
+      GH_PAGES: "true"  # включает publicPath=/DiscoverIsraelReact/ в webpack
+      REACT_APP_FIREBASE_API_KEY: ${{ secrets.REACT_APP_FIREBASE_API_KEY }}
+      REACT_APP_FIREBASE_AUTH_DOMAIN: ${{ secrets.REACT_APP_FIREBASE_AUTH_DOMAIN }}
+      REACT_APP_FIREBASE_PROJECT_ID: ${{ secrets.REACT_APP_FIREBASE_PROJECT_ID }}
+      REACT_APP_FIREBASE_STORAGE_BUCKET: ${{ secrets.REACT_APP_FIREBASE_STORAGE_BUCKET }}
+      REACT_APP_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.REACT_APP_FIREBASE_MESSAGING_SENDER_ID }}
+      REACT_APP_FIREBASE_APP_ID: ${{ secrets.REACT_APP_FIREBASE_APP_ID }}
+      REACT_APP_FIREBASE_MEASUREMENT_ID: ${{ secrets.REACT_APP_FIREBASE_MEASUREMENT_ID }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -19,13 +33,7 @@ jobs:
           node-version: 20
           cache: 'npm'
       - run: npm ci
-
-      # ВАРИАНТ A: если publicPath вычисляется по GH_PAGES, собираем build:gh
-      # - run: npm run build:gh
-
-      # ВАРИАНТ B: если publicPath захардкожен на /DiscoverIsraelReact/, достаточно обычной сборки:
-      - run: npm run build
-
+      - run: npm run build:gh
       - run: cp dist/index.html dist/404.html  # SPA fallback
       - uses: actions/upload-pages-artifact@v3
         with:
