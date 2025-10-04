@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { setTheme } from '../../store/ColorScheme/themeSlice';
@@ -12,6 +12,8 @@ let classes = require('./themeToggle.module.scss');
 const ThemeSelector: React.FC = () => {
   const dispatch = useDispatch();
   const [user] = useAuthState(auth);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
   // Получаем текущий язык и тему из Redux
   const currentLanguage = useSelector(
@@ -58,28 +60,97 @@ const ThemeSelector: React.FC = () => {
     }
   };
 
+  // Закрытие dropdown при клике вне меню
+  useEffect(() => {
+    if (!dropdownOpen) return;
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [dropdownOpen]);
+
+  // Для мобильных: обработчик выбора темы
+  const handleMobileThemeChange = (selectedTheme: string) => {
+    dispatch(setTheme(selectedTheme));
+    if (user && userData) {
+      try {
+        dispatch(updateUserThunk({
+          userID: userData.userID,
+          colorTheme: selectedTheme
+        }) as any);
+      } catch (error) {
+        console.error('Failed to update theme in database:', error);
+      }
+    }
+    setDropdownOpen(false);
+  };
+
+  // Определяем текущую тему
+  const currentTheme = userPreferredTheme || userProfileTheme || 'light';
+
   return (
-    <div className={classes.themeSelector}>
-      <label htmlFor="theme-select">
+    <div className={classes.themeSelector} ref={dropdownRef}>
+      <label htmlFor="theme-select" className={classes.label}>
         {translations.colorTheme[currentLanguage]}
       </label>
+      {/* Desktop: обычный select */}
       <div className={classes.selectWrapper}>
         <select
           id="theme-select"
-          value={userPreferredTheme || userProfileTheme || 'light'}
+          value={currentTheme}
           onChange={handleThemeChange}
+          className={classes.desktopSelect}
         >
           <option value="light">{translations.light[currentLanguage]}</option>
           <option value="dark">{translations.dark[currentLanguage]}</option>
         </select>
         <div className={classes.iconWrapper}>
-          {(userPreferredTheme || userProfileTheme) === 'light' ? (
+          {currentTheme === 'light' ? (
             <PiSunThin className={classes.icon} />
           ) : (
             <PiMoonStarsThin className={classes.icon} />
           )}
         </div>
-
+      </div>
+      {/* Mobile: dropdown-кнопка */}
+      <div className={classes.mobileDropdownWrapper}>
+        <button
+          className={classes.dropdownButton}
+          onClick={() => setDropdownOpen((open) => !open)}
+          aria-haspopup="listbox"
+          aria-expanded={dropdownOpen}
+        >
+          {currentTheme === 'light' ? (
+            <PiSunThin className={classes.icon} />
+          ) : (
+            <PiMoonStarsThin className={classes.icon} />
+          )}
+          {currentTheme === 'light'
+            ? translations.light[currentLanguage]
+            : translations.dark[currentLanguage]}
+          {/* <span className={classes.arrow}>{dropdownOpen ? '▲' : '▼'}</span> */}
+        </button>
+        {dropdownOpen && (
+          <div className={classes.dropdownMenu} role="listbox">
+            <button
+              className={classes.dropdownItem}
+              onClick={() => handleMobileThemeChange('light')}
+              aria-selected={currentTheme === 'light'}
+            >
+              <PiSunThin className={classes.icon} /> {translations.light[currentLanguage]}
+            </button>
+            <button
+              className={classes.dropdownItem}
+              onClick={() => handleMobileThemeChange('dark')}
+              aria-selected={currentTheme === 'dark'}
+            >
+              <PiMoonStarsThin className={classes.icon} /> {translations.dark[currentLanguage]}
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

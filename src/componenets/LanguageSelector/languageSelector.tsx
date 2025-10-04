@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setLanguage } from '../../store/Language/languageSlice';
 import { RootState } from '../../store';
@@ -9,13 +9,29 @@ let basic = require('../../public/Styles/basic.module.scss')
 const LanguageSelector = () => {
   const dispatch = useDispatch();
   const language = useSelector((state: RootState) => state.language.language);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
   const handleChange = (e) => {
     dispatch(setLanguage(e.target.value));
+    setMenuOpen(false);
   };
 
-  return (
-    <div className={classes.languageSelector}>
+  // Закрытие dropdown при клике вне меню
+  useEffect(() => {
+    if (!menuOpen) return;
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [menuOpen]);
+
+  // Список языков
+  const languageOptions = (
+    <>
       <input
         type="radio"
         id="language-en"
@@ -51,6 +67,35 @@ const LanguageSelector = () => {
       <label htmlFor="language-he" className={`${classes.select} ${classes.hebrew}`}>
         עברית
       </label>
+    </>
+  );
+
+  // Текст на кнопке — текущий язык
+  const getLangLabel = () => {
+    switch (language) {
+      case 'en': return 'English';
+      case 'ru': return 'Русский';
+      case 'he': return 'עברית';
+      default: return '🌐';
+    }
+  };
+
+  return (
+    <div className={classes.languageSelector} ref={dropdownRef}>
+      <button
+        className={classes.dropdownButton}
+        onClick={() => setMenuOpen((open) => !open)}
+        aria-haspopup="listbox"
+        aria-expanded={menuOpen}
+      >
+        {getLangLabel()} 
+        {/* <span className={classes.arrow}>{menuOpen ? '▲' : '▼'}</span> */}
+      </button>
+      {menuOpen && (
+        <div className={classes.dropdownMenu} role="listbox">
+          {languageOptions}
+        </div>
+      )}
     </div>
   );
 };

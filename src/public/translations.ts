@@ -299,4 +299,9 @@ export const translations = {
     en: 'Kids Friendly',
     he: 'ידידותי לילדים',
   },
+  filters: {
+    ru: 'Фильтры',
+    en: 'Filters',
+    he: 'מסננים',
+  }
 };
