@@ -28,10 +28,10 @@ const Header: React.FC = () => {
       <div className={classes.buttonsContainer}>
         <div className={classes.profileContainer}>
           {user ? (
-            <>
+            <div className={classes.welcomeMessage}>
               <ProfileButton />
               <Logout />
-            </>
+            </div>
           ) : null}
         </div>
         <LanguageSelector />
