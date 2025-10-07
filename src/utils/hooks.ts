@@ -1,5 +1,7 @@
+import React from "react";
 import { AppDispatch } from "../store";
 import { setLocation, setLocationError } from "../store/Location/locationSlice";
+import { useRef, useEffect } from "react";
 
 export const fetchUserLocation = () => async (dispatch: AppDispatch) => {
   if (navigator.geolocation) {
@@ -19,3 +21,25 @@ export const fetchUserLocation = () => async (dispatch: AppDispatch) => {
     dispatch(setLocationError("Геолокация не поддерживается вашим браузером."));
   }
 };
+
+/**
+ * useDebounce хук для задержки вызова значения/функции.
+ * @param value - значение, которое нужно дебаунсить
+ * @param delay - задержка в мс
+ * @returns дебаунсенное значение
+ */
+export function useDebounce<T>(value: T, delay: number): T {
+  const [debouncedValue, setDebouncedValue] = React.useState(value);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [value, delay]);
+
+  return debouncedValue;
+}

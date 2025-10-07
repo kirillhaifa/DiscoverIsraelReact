@@ -338,5 +338,10 @@ export const translations = {
     ru: 'Геолокация не поддерживается',
     en: 'Geolocation not supported',
     he: 'מיקום גיאוגרפי לא נתמך',
+  },
+  searchPlaceholder: {
+    ru: 'Поиск по тексту...',
+    en: 'Text search...',
+    he: 'חיפוש טקסט...'
   }
 };

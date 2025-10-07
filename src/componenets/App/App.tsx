@@ -151,8 +151,10 @@ const App = () => {
                   <Navigation />
                   <ParametersFilter />
                   <SearchBar />
-                  <DistanceFilter />
-                  <UnvisitedFilter />
+                  <div className={classes.filtersContainer}>
+                    <DistanceFilter />
+                    <UnvisitedFilter />
+                  </div>
                   <PlacesList />
                 </>
               ) : user ? (
