@@ -2,14 +2,21 @@
   position: absolute;
   top: 110%;
   left: 0;
-  min-width: 220px;
+  min-width: 300px;
   background: var(--background-color);
-  border: 1px solid var(--border-color);
+  outline: 1px solid white;
   border-radius: 8px;
-  box-shadow: var(--dropdown-shadow);
   padding: 16px;
   z-index: 100;
+  pointer-events: auto;
 }
+
+@media (max-width: 768px) {
+  .distanceDropdown {
+    margin-left: -100px;
+  }
+}
+
 .locationInfo {
   margin-bottom: 8px;
   font-size: 0.98em;
@@ -31,4 +38,5 @@
 .dropdownWrapper {
   position: relative;
   display: inline-block;
+  margin-top: 10px;
 }

@@ -5,6 +5,9 @@ import { setDistance } from "../../store/Filters/filtersSlice";
 import { translations } from "../../public/translations";
 import '../../public/Styles/colors.module.scss';
 let classes = require('./distanceFilter.module.scss');
+import IsraelMap from './IsraelMap';
+
+const DEBOUNCE_DELAY = 350;
 
 const DistanceFilter = () => {
   const dispatch = useDispatch();
@@ -13,7 +16,13 @@ const DistanceFilter = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [location, setLocation] = useState<{ lat: number; lng: number } | null>(null);
   const [locationError, setLocationError] = useState<string | null>(null);
+  const [sliderValue, setSliderValue] = useState(maxDistance || 500);
   const dropdownRef = useRef(null);
+  const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    setSliderValue(maxDistance || 500);
+  }, [maxDistance]);
 
   // Закрытие dropdown при клике вне меню
   useEffect(() => {
@@ -47,19 +56,25 @@ const DistanceFilter = () => {
     }
   };
 
+  // Дебаунс для бегунка
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newDistance = Number(event.target.value);
-    dispatch(setDistance(newDistance));
+    const newValue = Number(event.target.value);
+    setSliderValue(newValue);
+    if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
+    debounceTimeout.current = setTimeout(() => {
+      dispatch(setDistance(newValue));
+    }, DEBOUNCE_DELAY);
   };
 
   return (
     <div className={classes.dropdownWrapper} ref={dropdownRef}>
       <button onClick={handleLocationClick}>
         {translations.setLocation?.[language] || 'Указать местоположение'}
-        <span style={{ marginLeft: '0.5em' }}>{dropdownOpen ? '▲' : '▼'}</span>
+        <span className={classes.arrow} style={{ pointerEvents: 'none', marginLeft: '0.5em' }}>{dropdownOpen ? '▲' : '▼'}</span>
       </button>
       {dropdownOpen && (
         <div className={classes.distanceDropdown}>
+          <IsraelMap userLocation={location} radiusKm={sliderValue} svgWidth={300} svgHeight={600} />
           {location && (
             <div className={classes.locationInfo}>
               {translations.yourLocation?.[language] || 'Ваша локация'}: <b>{location.lat.toFixed(4)}, {location.lng.toFixed(4)}</b>
@@ -69,7 +84,7 @@ const DistanceFilter = () => {
             <div className={classes.locationError}>{locationError}</div>
           )}
           <label htmlFor="distance" className={classes.distanceLabel}>
-            {translations.maxDistance[language]}: {maxDistance} {translations.km[language]}
+            {translations.maxDistance[language]}: {sliderValue} {translations.km[language]}
           </label>
           <input
             id="distance"
@@ -77,7 +92,7 @@ const DistanceFilter = () => {
             min="10"
             max="500"
             step="10"
-            value={maxDistance || 500}
+            value={sliderValue}
             onChange={handleChange}
             className={classes.distanceRange}
           />
