@@ -23,6 +23,7 @@ const PlaceCard: React.FC<PlaceCardProps> = ({ place }) => {
   const language = useSelector((state: RootState) => state.language.language);
   const isRtl = language === 'he'; // Определяем направление текста
   const navigate = useNavigate();
+  const searchText = useSelector((state: RootState) => state.filters.searchText);
 
   const handlePlaceClick = () => {
     navigate(`/places/${place.placeName.en.toLowerCase().replace(/\s+/g, '-')}`);
@@ -30,6 +31,15 @@ const PlaceCard: React.FC<PlaceCardProps> = ({ place }) => {
 
   const languageShort = { ru: 'ru', en: 'en', he: 'he' }[language] || 'en';
 
+  const highlightText = (text: string, search: string) => {
+    if (!search) return text;
+    const regex = new RegExp(`(${search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+    return text.split(regex).map((part, i) =>
+      regex.test(part)
+        ? <span key={i} style={{ background: '#ffe066', color: '#222', borderRadius: '3px', padding: '0 2px' }}>{part}</span>
+        : part
+    );
+  };
 
   return (
     <div
@@ -53,8 +63,8 @@ const PlaceCard: React.FC<PlaceCardProps> = ({ place }) => {
       <div className={classes.descriptionContainer}>
         {user && userData?.role === 'admin' && <p>ID: {place.id}</p>}
         <div>
-          <h3>{place.placeName[language]}</h3>
-          <p>{place.shortDescription[language]}</p>
+          <h3>{highlightText(place.placeName[language], searchText)}</h3>
+          <p>{highlightText(place.shortDescription[language], searchText)}</p>
         </div>
         <PlaceRating
           placeId={place.id}

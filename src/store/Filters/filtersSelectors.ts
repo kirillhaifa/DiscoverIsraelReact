@@ -28,6 +28,12 @@ export const selectOpenNow = createSelector(
   (filters) => filters.openNow
 );
 
+// Селектор для получения текста поиска
+export const selectSearchText = createSelector(
+  [selectFiltersSlice],
+  (filters) => filters.searchText
+);
+
 // Селектор для фильтра "непосещенные"
 export const selectUnvisited = createSelector(
   [selectFiltersSlice],
