@@ -12,6 +12,7 @@ interface FiltersState {
   parameters: {
     [key: string]: boolean; // Параметры из объекта `parameters`
   };
+  searchText: string; // Новый фильтр по тексту
 }
 
 const initialState: FiltersState = {
@@ -42,6 +43,7 @@ const initialState: FiltersState = {
     nationalPark: false,
     kidsFriendly: false,
   },
+  searchText: '',
 };
 
 const filtersSlice = createSlice({
@@ -80,6 +82,9 @@ const filtersSlice = createSlice({
         state.parameters[key] = value;
       }
     },
+    setSearchText(state, action: PayloadAction<string>) {
+      state.searchText = action.payload;
+    },
     resetFilters(state) {
       return initialState; // Сбрасывает все фильтры к исходному состоянию
     },
@@ -96,6 +101,7 @@ export const {
   setHasPhotos,
   setRating,
   setParameter,
+  setSearchText,
   resetFilters,
 } = filtersSlice.actions;
 

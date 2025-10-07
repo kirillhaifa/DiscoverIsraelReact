@@ -1,0 +1,41 @@
+.distanceDropdown {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  min-width: 300px;
+  background: var(--background-color);
+  outline: 1px solid white;
+  border-radius: 8px;
+  padding: 16px;
+  z-index: 100;
+  pointer-events: auto;
+}
+
+@media (max-width: 768px) {
+  .distanceDropdown {
+    margin-left: -100px;
+  }
+}
+
+.locationInfo {
+  margin-bottom: 8px;
+  font-size: 0.98em;
+  color: var(--accent-color);
+}
+.locationError {
+  color: red;
+  margin-bottom: 8px;
+  font-size: 0.98em;
+}
+.distanceLabel {
+  display: block;
+  margin-bottom: 8px;
+}
+.distanceRange {
+  width: 100%;
+}
+
+.dropdownWrapper {
+  position: relative;
+  display: inline-block;
+}

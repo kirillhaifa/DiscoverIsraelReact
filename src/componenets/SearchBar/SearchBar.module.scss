@@ -1,0 +1,26 @@
+.textFilterWrapper {
+  width: 40%;
+  min-width: 250px;
+  padding-top: 16px;
+  transition: width 0.3s;
+}
+
+.textFilterWrapper:has(.textInput:focus) {
+  width: 70%;
+}
+
+.textInput {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 1em;
+  border: 1px solid var(--accent-color, #007bff);
+  border-radius: 8px;
+  outline: none;
+  background: var(--background-color, #fff);
+  color: var(--text-color, #222);
+  transition: border-color 0.2s;
+}
+
+.textInput:focus {
+  border-color: var(--accent-color, #007bff);
+}

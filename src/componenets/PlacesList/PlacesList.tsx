@@ -4,7 +4,8 @@ import { selectPlaces } from "../../store/Places/placesSelectors";
 import { 
   selectUnvisited, 
   selectParameters, 
-  selectDistance 
+  selectDistance,
+  selectSearchText 
 } from "../../store/Filters/filtersSelectors";
 import { Place } from "../../types";
 import PlaceCard from "../PlaceCard/PlaceCard";
@@ -19,6 +20,7 @@ const PlacesList = () => {
   const unvisited = useSelector(selectUnvisited); // Фильтр "непосещенные"
   const parameters = useSelector(selectParameters); // Параметры фильтра
   const maxDistance = useSelector(selectDistance); // Максимальное расстояние
+  const searchText = useSelector(selectSearchText); // Текст поиска
   const userRatings = useSelector(selectUserRatings); // Рейтинги пользователя
   const userCoordinates = useSelector((state: RootState) => state.location.coordinates); // Координаты пользователя
 
@@ -52,6 +54,19 @@ const PlacesList = () => {
         place.coordinates[1]
       );
       if (distance > maxDistance) return false;
+    }
+
+    // Фильтрация по тексту поиска
+    if (searchText && searchText.trim()) {
+      const searchLower = searchText.toLowerCase().trim();
+      const nameMatch = Object.values(place.placeName).some(name => name.toLowerCase().includes(searchLower));
+      const shortDescMatch = Object.values(place.shortDescription).some(desc => desc.toLowerCase().includes(searchLower));
+      const extendedDescMatch = Object.values(place.extendedDescription).some(desc => desc.toLowerCase().includes(searchLower));
+      const regionMatch = place.region.toLowerCase().includes(searchLower);
+      
+      if (!nameMatch && !shortDescMatch && !extendedDescMatch && !regionMatch) {
+        return false;
+      }
     }
 
     return true; // Если место прошло все фильтры

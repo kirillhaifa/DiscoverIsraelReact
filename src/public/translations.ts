@@ -303,5 +303,45 @@ export const translations = {
     ru: 'Фильтры',
     en: 'Filters',
     he: 'מסננים',
+  },
+  maxDistance: {
+    ru: 'Максимальное расстояние',
+    en: 'Maximum distance',
+    he: 'מרחק מקסימלי',
+  },
+  km: {
+    ru: 'км',
+    en: 'km',
+    he: 'ק"מ',
+  },
+  unvisitedOnly: {
+    ru: 'Только непосещенные места',
+    en: 'Only unvisited places',
+    he: 'רק מקומות שלא ביקרתי בהם',
+  },
+  setLocation: {
+    ru: 'Указать местоположение',
+    en: 'Set location',
+    he: 'הגדר מיקום',
+  },
+  yourLocation: {
+    ru: 'Ваша локация',
+    en: 'Your location',
+    he: 'המיקום שלך',
+  },
+  locationError: {
+    ru: 'Ошибка определения локации',
+    en: 'Location error',
+    he: 'שגיאת מיקום',
+  },
+  locationNotSupported: {
+    ru: 'Геолокация не поддерживается',
+    en: 'Geolocation not supported',
+    he: 'מיקום גיאוגרפי לא נתמך',
+  },
+  searchPlaceholder: {
+    ru: 'Поиск по тексту...',
+    en: 'Text search...',
+    he: 'חיפוש טקסט...'
   }
 };

@@ -1,6 +1,12 @@
 import React, { useEffect, useState, useLayoutEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { BrowserRouter as Router, Route, Routes, Link, BrowserRouter } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Link,
+  BrowserRouter,
+} from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../../firebaseConfig';
 import { fetchUserData } from '../../store/User/fetchUserThunk';
@@ -28,12 +34,14 @@ import DistanceFilter from '../DistanceFilter/distanceFilter';
 import { fetchUserLocation } from '../../utils/hooks';
 import UnvisitedFilter from '../UnvisitedFliter/UnvisitedFilter';
 import { selectUserColorTheme } from '../../store/User/userSelector';
+import SearchBar from '../SearchBar/SearchBar';
 
 let classes = require('./App.module.scss');
 let normilizer = require('../../public/Styles/normalizer.module.scss');
 let themes = require('../../public/Styles/themes.module.scss');
 
-const BASENAME = process.env.NODE_ENV === 'production' ? '/DiscoverIsraelReact' : '/';
+const BASENAME =
+  process.env.NODE_ENV === 'production' ? '/DiscoverIsraelReact' : '/';
 
 const App = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -41,7 +49,9 @@ const App = () => {
   const [user, loading, error] = useAuthState(auth);
   const { language } = useSelector((state: RootState) => state.language);
   const userProfileTheme = useSelector(selectUserColorTheme);
-  const userPreferredTheme = useSelector((state: RootState) => state.theme.theme);
+  const userPreferredTheme = useSelector(
+    (state: RootState) => state.theme.theme,
+  );
   const userLoading = useSelector((state: RootState) => state.user.loading);
   const [resolvedTheme, setResolvedTheme] = useState('light');
 
@@ -55,7 +65,7 @@ const App = () => {
     console.log('App resolving theme:', {
       userPreferredTheme,
       userProfileTheme,
-      themeToUse
+      themeToUse,
     });
     setResolvedTheme(themeToUse);
   }, [userPreferredTheme, userProfileTheme]);
@@ -78,10 +88,13 @@ const App = () => {
   useEffect(() => {
     if (user) {
       if (user.uid) {
-        console.log('App: User authenticated, fetching user data for:', user.uid);
+        console.log(
+          'App: User authenticated, fetching user data for:',
+          user.uid,
+        );
         console.log('User email:', user.email);
         console.log('User emailVerified:', user.emailVerified);
-        
+
         // Небольшая задержка для обеспечения очистки старых данных
         setTimeout(() => {
           dispatch(fetchUserData(user.uid));
@@ -101,14 +114,17 @@ const App = () => {
     console.log('userProfileTheme:', userProfileTheme);
     console.log('userPreferredTheme:', userPreferredTheme);
     console.log('user:', user?.uid);
-    
+
     // Если есть тема в профиле пользователя, но нет сохраненной локально, используем тему из профиля
     if (user && userProfileTheme && !userPreferredTheme) {
       console.log('Initializing theme from user profile:', userProfileTheme);
       dispatch(setTheme(userProfileTheme));
     } else if (!user && userPreferredTheme) {
       // Если пользователь вышел, но тема еще сохранена в localStorage, сохраняем ее
-      console.log('User logged out, keeping localStorage theme:', userPreferredTheme);
+      console.log(
+        'User logged out, keeping localStorage theme:',
+        userPreferredTheme,
+      );
     }
   }, [user, userProfileTheme, userPreferredTheme, dispatch]);
 
@@ -134,8 +150,11 @@ const App = () => {
                   <Header />
                   <Navigation />
                   <ParametersFilter />
-                  <DistanceFilter/>
-                  <UnvisitedFilter />
+                  <SearchBar />
+                  <div className={classes.filtersContainer}>
+                    <DistanceFilter />
+                    <UnvisitedFilter />
+                  </div>
                   <PlacesList />
                 </>
               ) : user ? (
