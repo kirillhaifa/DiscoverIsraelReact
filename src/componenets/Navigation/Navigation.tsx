@@ -59,7 +59,7 @@ const Navigation = () => {
 
       {/* Mobile burger button */}
       <button className={classes.menuButton} onClick={() => setMenuOpen(true)} aria-label="Открыть меню">
-        <span>☰</span>
+        <span >☰</span>
       </button>
 
       {/* Mobile menu */}

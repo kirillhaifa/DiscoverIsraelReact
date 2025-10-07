@@ -16,7 +16,7 @@
 }
 
 .descriptionContainer {
-  padding: 16px; /* Внутренний отступ */
+  padding: 16px 4px 8px 16px; /* Внутренний отступ */
   grid-row: 2 / 3; /* Описание занимает вторую строку */
   display: flex;
   flex-direction: column;
