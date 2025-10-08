@@ -1,0 +1,25 @@
+.widget {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap; /* allow icons to wrap to next line instead of shrinking */
+}
+
+.iconWrap {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+  flex: 0 0 auto; /* do not shrink, keep fixed size */
+  margin-bottom: 6px; /* space between wrapped rows */
+}
+
+.icon {
+  color: var(--accent-color, #2d7c9a);
+  width: 20px;
+  height: 20px;
+}

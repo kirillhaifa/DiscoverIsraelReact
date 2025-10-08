@@ -5,6 +5,7 @@ import { RootState } from '../../store';
 import Slider from 'react-slick';
 import IconButton from '@mui/material/IconButton';
 import PhotosModal from '../PhotosModal/PhotosModal';
+import ParametersWidget from '../ParametersWidget/ParametersWidget';
 import { MdLocationOn, MdChevronLeft, MdChevronRight, MdClose } from 'react-icons/md';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import "slick-carousel/slick/slick.css";
@@ -154,6 +155,9 @@ const PlaceDetails: React.FC<PlaceDetailsProps> = ({ place }) => {
         >
           <MdLocationOn size={32} />
         </IconButton>
+      </div>
+      <div style={{marginBottom: 12}}>
+        <ParametersWidget place={place} />
       </div>
       <p className={classes.placeDescription}>{place.extendedDescription.en}</p>
       <PhotosModal
