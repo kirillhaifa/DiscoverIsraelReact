@@ -1,0 +1,43 @@
+.sliderContainer {
+  width: 100%;
+  max-height: 35vh;
+  height: 35vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.sliderImage {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 12px;
+  display: block;
+  margin: 0 auto;
+}
+
+.placeDetailsWrapper {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.detailsHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.placeTitle {
+  margin: 0;
+}
+
+.placeDescription {
+  font-size: 1.1em;
+  margin-bottom: 24px;
+}
