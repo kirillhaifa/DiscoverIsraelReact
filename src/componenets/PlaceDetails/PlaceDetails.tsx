@@ -26,7 +26,7 @@ const PlaceDetails: React.FC<PlaceDetailsProps> = ({ place }) => {
   }, [place.photos]);
 
   const sliderSettings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 500,
     slidesToShow: 1,

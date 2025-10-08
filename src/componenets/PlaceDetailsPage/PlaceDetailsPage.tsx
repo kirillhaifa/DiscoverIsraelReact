@@ -5,6 +5,7 @@ import { RootState } from '../../store';
 import { Place } from '../../types';
 import PlaceDetails from '../PlaceDetails/PlaceDetails';
 import Navigation from '../Navigation/Navigation';
+import Header from '../Header/Header';
 let classes = require('./PlaceDetailsPage.module.scss');
 
 const PlaceDetailsPage = () => {
@@ -31,9 +32,7 @@ const PlaceDetailsPage = () => {
   // Если все данные готовы, рендерим детали места
   return (
     <div className={classes.placeDetailsPage}>
-      <div className={classes.header}>
-        <h1>{place?.placeName.en}</h1>
-      </div>
+      <Header />
       <div className={classes.navigation}>
         <Navigation />
       </div>
