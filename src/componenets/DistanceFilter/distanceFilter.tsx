@@ -6,6 +6,7 @@ import { translations } from "../../public/translations";
 import '../../public/Styles/colors.module.scss';
 let classes = require('./distanceFilter.module.scss');
 import IsraelMap from './IsraelMap';
+import { IoChevronDown } from "react-icons/io5";
 
 const DEBOUNCE_DELAY = 350;
 
@@ -68,9 +69,11 @@ const DistanceFilter = () => {
 
   return (
     <div className={classes.dropdownWrapper} ref={dropdownRef}>
-      <button onClick={handleLocationClick}>
+      <button className={classes.arrow} onClick={handleLocationClick}>
         {translations.setLocation?.[language] || 'Указать местоположение'}
-        <span className={classes.arrow} style={{ pointerEvents: 'none', marginLeft: '0.5em' }}>{dropdownOpen ? '▲' : '▼'}</span>
+        <span className={`${classes.chevronIcon} ${dropdownOpen ? classes.rotated : ''}`}>
+          <IoChevronDown />
+        </span>
       </button>
       {dropdownOpen && (
         <div className={classes.distanceDropdown}>

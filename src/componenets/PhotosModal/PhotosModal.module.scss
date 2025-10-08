@@ -1,0 +1,61 @@
+.modalBox {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--background-color);
+  padding: 16px;
+  border-radius: 16px;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  font-family: var(--main-font, 'Inter', Arial, sans-serif) !important;
+}
+
+.modalPhotoRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.modalImageWrap {
+  position: relative;
+  display: inline-block;
+}
+
+.modalImage {
+  max-width: 80vw;
+  max-height: 70vh;
+  object-fit: contain;
+  border-radius: 8px;
+  background: var(--background-color, #000);
+  display: block;
+}
+
+.modalCaption {
+  color: var(--accent-color, #fff);
+  margin-top: 12px;
+  text-align: center;
+  font-size: 1.05em;
+}
+
+.modalNavBtn {
+  color: var(--accent-color, #fff) !important;
+}
+
+.modalCloseWrap {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 30;
+}
+
+.modalCloseBtn {
+  background-color: transparent !important;
+  color: var(--accent-color, #fff) !important;
+}

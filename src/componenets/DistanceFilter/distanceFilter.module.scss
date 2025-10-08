@@ -11,12 +11,6 @@
   pointer-events: auto;
 }
 
-@media (max-width: 768px) {
-  .distanceDropdown {
-    margin-left: -100px;
-  }
-}
-
 .locationInfo {
   margin-bottom: 8px;
   font-size: 0.98em;
@@ -38,4 +32,25 @@
 .dropdownWrapper {
   position: relative;
   display: inline-block;
+  cursor: pointer;
+}
+
+.arrow {
+  display: flex;
+  align-items: center;
+  margin-left: 0.5em;
+    cursor: pointer;
+
+}
+
+.chevronIcon {
+  margin-left: 0.5em;
+  display: flex;
+  align-items: center;
+  transition: transform 0.3s ease;
+  pointer-events: none;
+}
+
+.chevronIcon.rotated {
+  transform: rotate(180deg);
 }
