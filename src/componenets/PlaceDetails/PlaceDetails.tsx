@@ -4,9 +4,9 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import Slider from 'react-slick';
 import IconButton from '@mui/material/IconButton';
-import Modal from '@mui/material/Modal';
-import Box from '@mui/material/Box';
+import PhotosModal from '../PhotosModal/PhotosModal';
 import { MdLocationOn, MdChevronLeft, MdChevronRight, MdClose } from 'react-icons/md';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 let classes = require('./PlaceDetails.module.scss');
@@ -25,6 +25,8 @@ const PlaceDetails: React.FC<PlaceDetailsProps> = ({ place }) => {
     setPhotos(place.photos || []);
   }, [place.photos]);
 
+  const isSmall = useMediaQuery('(max-width:767px)');
+
   const sliderSettings = {
     dots: false,
     infinite: true,
@@ -36,6 +38,7 @@ const PlaceDetails: React.FC<PlaceDetailsProps> = ({ place }) => {
   };
 
   const handlePhotoClick = (idx: number) => {
+    if (isSmall) return;
     setModalIndex(idx);
     setModalOpen(true);
   };
@@ -153,45 +156,13 @@ const PlaceDetails: React.FC<PlaceDetailsProps> = ({ place }) => {
         </IconButton>
       </div>
       <p className={classes.placeDescription}>{place.extendedDescription.en}</p>
-      <Modal open={modalOpen} onClose={handleClose}>
-        <Box className={`${classes.modalBox} ${themes}`}>
-          <div className={classes.modalPhotoRow}>
-            {photos.length > 1 && (
-              <IconButton onClick={handlePrev} size="large" className={classes.modalNavBtn}>
-                <MdChevronLeft size={36} />
-              </IconButton>
-            )}
-
-            <div className={classes.modalImageWrap}>
-              {currentPhoto && (
-                <img
-                  src={currentPhoto.photoWay}
-                  alt={currentPhoto.photoName}
-                  className={classes.modalImage}
-                  onClick={handleNext}
-                />
-              )}
-
-              <div className={classes.modalCloseWrap}>
-                <IconButton onClick={handleClose} size="small" className={classes.modalCloseBtn}>
-                  <MdClose size={20} />
-                </IconButton>
-              </div>
-            </div>
-
-            {photos.length > 1 && (
-              <IconButton onClick={handleNext} size="large" className={classes.modalNavBtn}>
-                <MdChevronRight size={36} />
-              </IconButton>
-            )}
-          </div>
-          {currentPhoto && (
-            <div className={classes.modalCaption}>
-              {currentPhoto.photoName}
-            </div>
-          )}
-        </Box>
-      </Modal>
+      <PhotosModal
+        open={modalOpen}
+        index={modalIndex}
+        photos={photos}
+        onClose={handleClose}
+        onImageError={handleImageError}
+      />
     </div>
   );
 };
