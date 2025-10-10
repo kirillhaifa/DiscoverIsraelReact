@@ -10,7 +10,7 @@ import LanguageSelector from '../LanguageSelector/languageSelector';
 import ThemeSelector from '../ThemeToggle/themeToggle';
 let classes = require('./Header.module.scss');
 import ProfileButton from '../ProfileButton/profileButton';
-import { MdHiking } from 'react-icons/md';
+import { MdHiking, MdLogin } from 'react-icons/md';
 
 const Header: React.FC = () => {
   const [user, loading, error] = useAuthState(auth);
@@ -32,7 +32,12 @@ const Header: React.FC = () => {
               <ProfileButton />
               <Logout />
             </div>
-          ) : null}
+          ) : (
+            <Link to="/login" className={classes.loginButton}>
+              <MdLogin size={20} style={{ marginRight: 6 }} />
+              <span className={classes.loginText}>Login</span>
+            </Link>
+          )}
         </div>
         <LanguageSelector />
         <ThemeSelector />

@@ -343,5 +343,40 @@ export const translations = {
     ru: 'Поиск по тексту...',
     en: 'Text search...',
     he: 'חיפוש טקסט...'
-  }
+  },
+  welcomeTitle: {
+    ru: 'Добро пожаловать на Discover Israel',
+    en: 'Welcome to Discover Israel',
+    he: 'ברוכים הבאים ל-Discover Israel',
+  },
+  welcomeText: {
+    ru: 'Пожалуйста войдите или зарегистрируйтесь, чтобы мы могли персонализировать рекомендации и показывать вам самые подходящие места для отдыха и путешествий.',
+    en: 'Please sign in or register so we can personalize recommendations and show you the best places to visit and relax.',
+    he: 'אנא התחברו או הירשמו כדי שנוכל להתאים המלצות אישיות ולהראות לכם את המקומות המתאימים ביותר לטיול ומנוחה.',
+  },
+  googleLogin: {
+    ru: 'Войти с Google',
+    en: 'Sign in with Google',
+    he: 'התחברות עם Google',
+  },
+  fastestWay: {
+    ru: 'Самый быстрый способ — через ваш аккаунт Google',
+    en: 'The fastest way — with your Google account',
+    he: 'הדרך המהירה ביותר — עם חשבון Google שלכם',
+  },
+  emailPassword: {
+    ru: 'Email / Пароль',
+    en: 'Email / Password',
+    he: 'אימייל / סיסמה',
+  },
+  checkinLoginPassword: {
+    ru: 'Check-in Логин / Пароль',
+    en: 'Check-in Login / Password',
+    he: 'Check-in שם משתמש / סיסמה',
+  },
+  password: {
+    ru: 'Пароль',
+    en: 'Password',
+    he: 'סיסמה',
+  },
 };

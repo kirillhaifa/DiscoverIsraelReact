@@ -16,7 +16,7 @@ import { RootState, AppDispatch } from '../../store';
 import PlacesList from '../PlacesList/PlacesList';
 import Register from '../Register/register';
 import Checkin from '../Checkin/checkin';
-import GoogleLogin from '../GoogleLogin/googleLogin';
+import GoogleLogin from '../Login/Login';
 import Logout from '../Logout/logout';
 import { fetchPlacesThunk } from '../../store/Places/placesThunks';
 import PlaceDetailsPage from '../PlaceDetailsPage/PlaceDetailsPage';
@@ -35,6 +35,7 @@ import { fetchUserLocation } from '../../utils/hooks';
 import UnvisitedFilter from '../UnvisitedFliter/UnvisitedFilter';
 import { selectUserColorTheme } from '../../store/User/userSelector';
 import SearchBar from '../SearchBar/SearchBar';
+import LoginPage from '../LoginPage/LoginPage';
 
 let classes = require('./App.module.scss');
 let normilizer = require('../../public/Styles/normalizer.module.scss');
@@ -136,6 +137,21 @@ const App = () => {
     return () => clearTimeout(timer);
   }, [language]);
 
+  // Shared layout for the main page (public or verified user)
+  const mainPageLayout = (
+    <>
+      <Header />
+      <Navigation />
+      <ParametersFilter />
+      <SearchBar />
+      <div className={classes.filtersContainer}>
+        <DistanceFilter />
+        <UnvisitedFilter />
+      </div>
+      <PlacesList />
+    </>
+  );
+
   return (
     <BrowserRouter basename={BASENAME}>
       <div
@@ -145,38 +161,21 @@ const App = () => {
           <Route
             path="/"
             element={
-              user && user.emailVerified ? (
-                <>
-                  <Header />
-                  <Navigation />
-                  <ParametersFilter />
-                  <SearchBar />
-                  <div className={classes.filtersContainer}>
-                    <DistanceFilter />
-                    <UnvisitedFilter />
-                  </div>
-                  <PlacesList />
-                </>
-              ) : user ? (
-                <>
-                  <h3>Please confirm your email</h3>
-                  <Logout />
-                </>
-              ) : (
-                <>
-                  <Header />
-                  <h2>Welcome</h2>
-                  <Register />
-                  <Checkin />
-                  <GoogleLogin />
-                  <PlacesList />
-                </>
-              )
+              user
+                ? user.emailVerified
+                  ? mainPageLayout
+                  : (
+                      <>
+                        <h3>Please confirm your email</h3>
+                        <Logout />
+                      </>
+                    )
+                : mainPageLayout
             }
           />
           <Route path="/places/:placeName" element={<PlaceDetailsPage />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/login" element={<GoogleLogin />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route path="/map" element={<PlacesMap />} />
           <Route path="/admin" element={<AdminPanel />} />
           <Route path="*" element={<NotFound />} />
