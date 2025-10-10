@@ -4,9 +4,7 @@ import { translations } from '../../public/translations';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { PiUserSquareThin } from "react-icons/pi";
-import { useAuthState } from 'react-firebase-hooks/auth';
 let classes = require('./profileButton.module.scss');
-import { auth } from '../../../firebaseConfig';
 
 
 const ProfileButton = () => {

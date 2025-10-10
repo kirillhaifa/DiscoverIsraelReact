@@ -7,11 +7,7 @@ let classes = require('./LoginPage.module.scss');
 const LoginPage: React.FC = () => {
   return (
     <div className={classes.pageWrapper}>
-      <Header />
-      <Navigation />
-      <div className={classes.mainContent}>
         <Login />
-      </div>
     </div>
   );
 };
