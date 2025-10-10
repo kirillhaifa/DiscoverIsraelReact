@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store';
-import { useNavigate } from 'react-router-dom';
+import { requireAuth } from '../../store/authPrompt/authPromptSlice';
 import { FaStar } from 'react-icons/fa';
 let classes = require('./PlaceRating.module.scss');
 let themes = require('../../public/Styles/themes.module.scss');
@@ -15,7 +15,7 @@ const PlaceRating = ({ placeId, submitRating, deleteRating }) => {
   const [hoverTimer, setHoverTimer] = useState(null);
   const [hideTimer, setHideTimer] = useState(null);
   const { userData } = useSelector((state: RootState) => state.user);
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const barRef = useRef(null);
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const PlaceRating = ({ placeId, submitRating, deleteRating }) => {
   const handleRatingClick = async (rating, event) => {
     event.stopPropagation();
     if (!userData || !userData.userID) {
-      navigate('/login')
+      dispatch(requireAuth({ reason: 'rate' }));
       return;
     }
     setIsSaving(true);

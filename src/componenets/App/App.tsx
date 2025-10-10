@@ -36,6 +36,7 @@ import UnvisitedFilter from '../UnvisitedFliter/UnvisitedFilter';
 import { selectUserColorTheme } from '../../store/User/userSelector';
 import SearchBar from '../SearchBar/SearchBar';
 import LoginPage from '../LoginPage/LoginPage';
+import AuthModal from '../AuthModal/AuthModal';
 
 let classes = require('./App.module.scss');
 let normilizer = require('../../public/Styles/normalizer.module.scss');
@@ -182,6 +183,8 @@ const App = () => {
           <Route path="/about" element={<AboutProject />} />
           <Route path="/contacts" element={<Contacts />} />
         </Routes>
+        <div id="modal-root" />
+        <AuthModal />
       </div>
     </BrowserRouter>
   );

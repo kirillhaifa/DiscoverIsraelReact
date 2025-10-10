@@ -5,6 +5,7 @@ import languageReducer from '../store/Language/languageSlice';
 import themeReducer from '../store/ColorScheme/themeSlice';
 import filtersReducer from './Filters/filtersSlice';
 import locationReducer from '../store/Location/locationSlice'
+import authPromptReducer from '../store/authPrompt/authPromptSlice'
 
 const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
     theme: themeReducer,
     filters: filtersReducer,
     location: locationReducer,
+    authPrompt: authPromptReducer,
   },
 });
 

@@ -11,14 +11,14 @@ import { auth } from '../../../firebaseConfig';
 import { Navigate } from 'react-router-dom';
 let classes = require('./Login.module.scss');
 
-const Login: React.FC = () => {
+const Login: React.FC<{ variant?: 'page' | 'modal' }> = ({ variant = 'page' }) => {
   const language = useSelector((state: RootState) => state.language.language);
   const [user, loading] = useAuthState(auth);
   if (loading) return <div className={classes.loading}>{translations.loading[language]}</div>;
   if (user) return <Navigate to="/" replace />;
   const t = (key: keyof typeof translations) => translations[key][language] || translations[key].en;
   return (
-    <div className={classes.mainContent}>
+    <div className={`${classes.mainContent} ${variant === 'modal' ? classes.modal : ''}`}> {/* welcomeBlock now visible on mobile due to CSS override */}
       <section className={classes.welcomeBlock}>
         <h1 className={classes.welcomeTitle}>{t('welcomeTitle')}</h1>
         <p className={classes.welcomeText}>{t('welcomeText')}</p>

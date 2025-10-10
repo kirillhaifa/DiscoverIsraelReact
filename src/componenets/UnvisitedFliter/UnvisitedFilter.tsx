@@ -5,7 +5,7 @@ import { setUnvisited } from "../../store/Filters/filtersSlice";
 import { translations } from "../../public/translations";
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../../firebaseConfig';
-import { useNavigate } from 'react-router-dom';
+import { requireAuth } from '../../store/authPrompt/authPromptSlice';
 let styles = require('./UnvisitedFilter.module.scss');
 
 const UnvisitedFilter = () => {
@@ -13,11 +13,10 @@ const UnvisitedFilter = () => {
   const unvisited = useSelector((state: RootState) => state.filters.unvisited);
   const language = useSelector((state: RootState) => state.language.language);
   const [user] = useAuthState(auth);
-  const navigate = useNavigate();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!user) {
-      navigate('/login');
+      dispatch(requireAuth({ reason: 'unvisitedFilter' }));
       return;
     }
     dispatch(setUnvisited(event.target.checked));

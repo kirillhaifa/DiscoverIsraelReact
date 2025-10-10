@@ -134,3 +134,21 @@
   .welcomeBlock { max-width: 100%; }
   .loginWrapper { max-width: 100%; }
 }
+
+@media (max-width: 768px) {
+  .modal {
+    padding: 0; /* full screen */
+    width: 100%;
+    .welcomeBlock { display:flex; padding:20px 20px 0; }
+    .welcomeTitle { font-size:28px; }
+    .welcomeText { font-size:15px; }
+    .loginWrapper { padding: 20px; gap:24px; }
+  }
+}
+
+.modal {
+  padding: 24px 0 8px;
+  .welcomeBlock { display:none; }
+  .loginWrapper { max-width:100%; }
+  .optionsGrid { grid-template-columns:1fr; }
+}

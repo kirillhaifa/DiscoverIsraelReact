@@ -1,0 +1,14 @@
+.backdrop { position:fixed; inset:0; background:rgba(0,0,0,.48); display:flex; align-items:flex-start; justify-content:center; padding:8vh 16px 40px; z-index:1000; }
+.dialog { background:var(--background-color,#fff); color:inherit; width:100%; max-width:620px; border-radius:18px; box-shadow:0 10px 30px -5px rgba(0,0,0,.35); position:relative; display:flex; flex-direction:column; overflow:hidden; animation:fadeIn .25s ease; }
+.header { padding:18px 24px 10px; font-size:20px; font-weight:600; display:flex; align-items:center; justify-content:space-between; }
+.closeBtn { background:none; border:none; cursor:pointer; font-size:22px; line-height:1; padding:4px; }
+.content { padding:0 24px 28px; }
+.reasonNote { font-size:12px; opacity:.65; margin:-6px 0 14px; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(12px);} to { opacity:1; transform:translateY(0);} }
+@media (max-width:640px){ .dialog { border-radius:14px; } .header { padding:14px 18px 6px; } .content { padding:0 18px 22px; } }
+@media (max-width: 768px) {
+  .backdrop { padding:0; }
+  .dialog { border-radius:0; min-height:100vh; max-width:100%; }
+  .header { padding:16px 18px 4px; }
+  .content { padding:0 0 32px; }
+}
