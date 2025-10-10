@@ -46,6 +46,11 @@ const Navigation = () => {
           </Link>
         </li>
       )}
+      {user && (
+        <li className={classes.link}>
+          <Link to="/profile" onClick={() => setMenuOpen(false)}>{translations.profile[languageShort]}</Link>
+        </li>
+      )}
     </>
   );
 
