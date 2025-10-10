@@ -6,6 +6,7 @@ import { translations } from '../../public/translations';
 import LanguageSelector from '../../componenets/LanguageSelector/languageSelector';
 import Navigation from '../../componenets/Navigation/Navigation';
 import Header from '../../componenets/Header/Header';
+import { Navigate } from 'react-router-dom';
 
 let classes = require('./profile.module.scss');
 let themes = require('../../public/Styles/themes.module.scss');
@@ -34,12 +35,10 @@ const Profile = () => {
   // Отображение состояния загрузки, ошибки или отсутствия данных
   if (loading) return <p>{translations.loading[language]}</p>;
   if (error) return <p>{translations.error[language]}: {error}</p>;
-  if (!userData) return <p>{translations.loading[language]}</p>; // Если `userData` отсутствует
+  if (!userData) return <Navigate to="/login" replace />;
 
   return (
     <>
-      <Header />
-      <Navigation />
       <img
         className={classes.profileImage}
         src={

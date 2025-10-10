@@ -17,7 +17,7 @@ import Profile from '../../pages/Profile/profile';
 import AboutProject from '../../pages/AboutProject/aboutProject';
 import { fetchUserLocation } from '../../utils/hooks';
 import { selectUserColorTheme } from '../../store/User/userSelector';
-import LoginPage from '../LoginPage/LoginPage';
+import LoginPage from '../../pages/LoginPage/LoginPage';
 import AuthModal from '../AuthModal/AuthModal';
 import MainPageLayout from '../../pages/MainPage/MainPage';
 import AdminPanel from '../../pages/AdminPanel/AdminPanel';
