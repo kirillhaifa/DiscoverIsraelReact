@@ -3,6 +3,7 @@
   gap: 30px;
   flex-wrap: wrap;
   justify-content: center;
+  margin: auto;
 }
 
 .input:checked + label {
@@ -94,6 +95,12 @@
 }
 
 @media (max-width: 768px) {
+  .container {
+    border-bottom: none;
+    padding-top: 15px;
+    padding-bottom: 0;
+  }
+
   .desktopFilters {
     display: none;
   }
@@ -104,6 +111,7 @@
     position: relative;
     margin-top: 16px;
     margin-bottom: 8px;
+    margin: auto;
   }
   .dropdownButton {
     width: 150px;
@@ -118,6 +126,7 @@
     cursor: pointer;
     justify-content: center;
     transition: border 0.2s;
+    margin: auto;
   }
   .dropdownButton:focus {
     outline: none;

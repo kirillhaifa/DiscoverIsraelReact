@@ -26,7 +26,7 @@ export const translations = {
   },
   aboutProject: {
     ru: 'О проекте',
-    en: 'About Project',
+    en: 'About us',
     he: 'על הפרויקט',
   },
   logout: {

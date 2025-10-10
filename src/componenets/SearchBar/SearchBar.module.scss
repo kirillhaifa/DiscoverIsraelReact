@@ -3,6 +3,7 @@
   min-width: 250px;
   padding-top: 16px;
   transition: width 0.3s;
+  margin: auto;
 }
 
 .textFilterWrapper:has(.textInput:focus) {

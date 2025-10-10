@@ -61,7 +61,6 @@ const PlaceCard: React.FC<PlaceCardProps> = ({ place }) => {
         </div>
       )}
       <div className={classes.descriptionContainer}>
-        {user && userData?.role === 'admin' && <p>ID: {place.id}</p>}
         <div>
           <h3>{highlightText(place.placeName[language], searchText)}</h3>
           <p>{highlightText(place.shortDescription[language], searchText)}</p>

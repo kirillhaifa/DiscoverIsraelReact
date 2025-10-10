@@ -26,6 +26,10 @@ const Header: React.FC = () => {
         <h1 className={classes.logoName}>Discover Israel</h1>
       </div>
       <div className={classes.buttonsContainer}>
+        <div className={classes.selectorsContainer}>
+          <LanguageSelector />
+          <ThemeSelector />
+        </div>
         <div className={classes.profileContainer}>
           {user ? (
             <div className={classes.welcomeMessage}>
@@ -39,8 +43,6 @@ const Header: React.FC = () => {
             </Link>
           )}
         </div>
-        <LanguageSelector />
-        <ThemeSelector />
       </div>
     </header>
   );

@@ -1,0 +1,14 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh; /* already present */
+}
+.main {
+  flex-grow: 1; /* ensure it expands to push footer down */
+  width: 100%;
+  max-width: 1400px;
+  padding: 0 24px;
+  box-sizing: border-box;
+}

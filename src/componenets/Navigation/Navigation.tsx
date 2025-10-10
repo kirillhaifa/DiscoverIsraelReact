@@ -37,9 +37,6 @@ const Navigation = () => {
         <Link to="/map" onClick={() => setMenuOpen(false)}>{translations.map[languageShort]}</Link>
       </li>
       <li className={classes.link}>
-        <Link to="/contacts" onClick={() => setMenuOpen(false)}>{translations.contacts[languageShort]}</Link>
-      </li>
-      <li className={classes.link}>
         <Link to="/about" onClick={() => setMenuOpen(false)}>{translations.aboutProject[languageShort]}</Link>
       </li>
       {user && userData?.role === 'admin' && (

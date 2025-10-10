@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store';
-import Header from '../Header/Header';
-import Navigation from '../Navigation/Navigation';
+let classes = require('./Map.module.scss');
+
 
 const PlacesMap = () => {
   const [isMapLoaded, setIsMapLoaded] = useState(false);
@@ -28,9 +26,7 @@ const PlacesMap = () => {
   };
 
   return (
-    <>
-      <Header />
-      <Navigation />
+    <div className={classes.mapWrapper}>
       {!isMapLoaded && !mapError && <p>Loading map...</p>}
       {mapError && (
         <p style={{ color: 'red' }}>Failed to load the map. Please try again later.</p>
@@ -39,11 +35,11 @@ const PlacesMap = () => {
         className="map"
         src="https://www.google.com/maps/d/u/0/embed?mid=1upKmWv0I1zL3VW_2gLoDDANfYLZqhRY&ehbc=2E312F"
         width="100%"
-        height="650vh"
+        height='500px'
         onLoad={handleMapLoad}
         onError={handleMapError}
       ></iframe>
-    </>
+    </div>
   );
 };
 
