@@ -5,6 +5,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store';
 import { clearUserData } from '../../store/User/userSlice';
 import { clearTheme } from '../../store/ColorScheme/themeSlice';
+import { resetFilters } from '../../store/Filters/filtersSlice';
+import { resetPlaces } from '../../store/Places/placesSlice';
 import { translations } from '../../public/translations';
 import { CiLogout } from "react-icons/ci";
 let classes = require('./logout.module.scss');
@@ -21,6 +23,8 @@ const Logout = () => {
       // Сначала очищаем Redux store
       dispatch(clearUserData());
       dispatch(clearTheme());
+      dispatch(resetFilters());
+      dispatch(resetPlaces());
       
       // Затем выходим из Firebase Auth
       await signOut(auth);

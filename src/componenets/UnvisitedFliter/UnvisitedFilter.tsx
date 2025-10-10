@@ -1,18 +1,35 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { setUnvisited } from "../../store/Filters/filtersSlice";
 import { translations } from "../../public/translations";
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../../../firebaseConfig';
+import { requireAuth } from '../../store/authPrompt/authPromptSlice';
 let styles = require('./UnvisitedFilter.module.scss');
 
 const UnvisitedFilter = () => {
   const dispatch = useDispatch();
   const unvisited = useSelector((state: RootState) => state.filters.unvisited);
   const language = useSelector((state: RootState) => state.language.language);
+  const [user] = useAuthState(auth);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (!user) {
+      dispatch(requireAuth({ reason: 'unvisitedFilter' }));
+      return;
+    }
     dispatch(setUnvisited(event.target.checked));
   };
+
+  // Force default unchecked once on mount if it's currently true
+  useEffect(() => {
+    if (unvisited) {
+      dispatch(setUnvisited(false));
+    }
+    // only run once on mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className={styles.wrapper}>

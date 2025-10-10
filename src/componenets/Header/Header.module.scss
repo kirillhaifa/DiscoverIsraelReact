@@ -9,6 +9,10 @@
   justify-content: center; /* Распределение элементов внутри контейнера */
   align-items: center; /* Вертикальное выравнивание */
   gap: 5px; /* Расстояние между кнопками */
+
+  @media screen and (max-width: 768px) {
+    margin: 20px 7px 0 0;
+  }
 }
 
 .iconLogo {
@@ -40,4 +44,13 @@
 }
 
 
+.loginButton {
+  display: flex;
+  cursor: pointer;
+}
+
+.buttonsContainer {
+  display: flex;
+  gap: 30px;
+}
 

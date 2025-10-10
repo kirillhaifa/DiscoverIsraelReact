@@ -17,7 +17,9 @@ const initialState: PlacesState = {
 const placesSlice = createSlice({
   name: 'places',
   initialState,
-  reducers: {},
+  reducers: {
+    resetPlaces: () => initialState,
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchPlacesThunk.pending, (state) => {
@@ -38,4 +40,5 @@ const placesSlice = createSlice({
   },
 });
 
+export const { resetPlaces } = placesSlice.actions;
 export default placesSlice.reducer;

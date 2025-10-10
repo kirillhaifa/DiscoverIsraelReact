@@ -11,16 +11,13 @@ import { auth } from '../../../firebaseConfig';
 
 const ProfileButton = () => {
   const { language } = useSelector((state: RootState) => state.language);
-  const languageShort = { ru: 'ru', en: 'en', he: 'he' }[language] || 'en';
-  const [user, loading, error] = useAuthState(auth);
-
   const { userData } = useSelector((state: RootState) => state.user);
 
   return (
     <Link to="/profile" className={classes.profileButtonContainer}>
       <PiUserSquareThin className={classes.profileIcon} />
       <span className={classes.profileName}>
-        {userData?.name ? userData.name : user?.email || 'Guest'}
+        {userData?.name ? userData.name : translations.profile[language]}
       </span>
     </Link>
   );

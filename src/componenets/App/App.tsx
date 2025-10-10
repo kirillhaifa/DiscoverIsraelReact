@@ -1,40 +1,27 @@
 import React, { useEffect, useState, useLayoutEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Link,
-  BrowserRouter,
-} from 'react-router-dom';
+import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../../firebaseConfig';
 import { fetchUserData } from '../../store/User/fetchUserThunk';
 import { clearUserData } from '../../store/User/userSlice';
 import { setTheme } from '../../store/ColorScheme/themeSlice';
 import { RootState, AppDispatch } from '../../store';
-import PlacesList from '../PlacesList/PlacesList';
-import Register from '../Register/register';
-import Checkin from '../Checkin/checkin';
-import GoogleLogin from '../GoogleLogin/googleLogin';
 import Logout from '../Logout/logout';
 import { fetchPlacesThunk } from '../../store/Places/placesThunks';
-import PlaceDetailsPage from '../PlaceDetailsPage/PlaceDetailsPage';
-import Navigation from '../Navigation/Navigation';
-import PlacesMap from '../Map/Map';
-import AdminPanel from '../AdminPanel/AdminPanel';
+import PlaceDetailsPage from '../../pages/PlaceDetailsPage/PlaceDetailsPage';
+import PlacesMap from '../../pages/Map/Map';
 import NotFound from '../NotFound/NotFound';
 import '../../public/Fonts/fonts.scss';
-import Profile from '../Profile/profile';
-import Header from '../Header/Header';
-import AboutProject from '../AboutProject/aboutProject';
-import Contacts from '../Contacts/contacts';
-import ParametersFilter from '../ParametersFilter/ParametersFilter';
-import DistanceFilter from '../DistanceFilter/distanceFilter';
+import Profile from '../../pages/Profile/profile';
+import AboutProject from '../../pages/AboutProject/aboutProject';
 import { fetchUserLocation } from '../../utils/hooks';
-import UnvisitedFilter from '../UnvisitedFliter/UnvisitedFilter';
 import { selectUserColorTheme } from '../../store/User/userSelector';
-import SearchBar from '../SearchBar/SearchBar';
+import LoginPage from '../LoginPage/LoginPage';
+import AuthModal from '../AuthModal/AuthModal';
+import MainPageLayout from '../../pages/MainPage/MainPage';
+import AdminPanel from '../../pages/AdminPanel/AdminPanel';
+import MainLayout from '../Layout/MainLayout';
 
 let classes = require('./App.module.scss');
 let normilizer = require('../../public/Styles/normalizer.module.scss');
@@ -110,21 +97,9 @@ const App = () => {
 
   // Инициализация темы из профиля пользователя
   useEffect(() => {
-    console.log('App theme initialization check:');
-    console.log('userProfileTheme:', userProfileTheme);
-    console.log('userPreferredTheme:', userPreferredTheme);
-    console.log('user:', user?.uid);
-
     // Если есть тема в профиле пользователя, но нет сохраненной локально, используем тему из профиля
     if (user && userProfileTheme && !userPreferredTheme) {
-      console.log('Initializing theme from user profile:', userProfileTheme);
       dispatch(setTheme(userProfileTheme));
-    } else if (!user && userPreferredTheme) {
-      // Если пользователь вышел, но тема еще сохранена в localStorage, сохраняем ее
-      console.log(
-        'User logged out, keeping localStorage theme:',
-        userPreferredTheme,
-      );
     }
   }, [user, userProfileTheme, userPreferredTheme, dispatch]);
 
@@ -141,48 +116,36 @@ const App = () => {
       <div
         className={`${classes.app} ${normilizer} ${themes[resolvedTheme]} ${classes[languageClass]} ${isAnimating ? classes.fadeOut : classes.fadeIn} ${language === 'he' ? classes.rtl : ''}`}
       >
-        <Routes>
-          <Route
-            path="/"
-            element={
-              user && user.emailVerified ? (
-                <>
-                  <Header />
-                  <Navigation />
-                  <ParametersFilter />
-                  <SearchBar />
-                  <div className={classes.filtersContainer}>
-                    <DistanceFilter />
-                    <UnvisitedFilter />
-                  </div>
-                  <PlacesList />
-                </>
-              ) : user ? (
-                <>
-                  <h3>Please confirm your email</h3>
-                  <Logout />
-                </>
-              ) : (
-                <>
-                  <Header />
-                  <h2>Welcome</h2>
-                  <Register />
-                  <Checkin />
-                  <GoogleLogin />
-                  <PlacesList />
-                </>
-              )
-            }
-          />
-          <Route path="/places/:placeName" element={<PlaceDetailsPage />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/login" element={<GoogleLogin />} />
-          <Route path="/map" element={<PlacesMap />} />
-          <Route path="/admin" element={<AdminPanel />} />
-          <Route path="*" element={<NotFound />} />
-          <Route path="/about" element={<AboutProject />} />
-          <Route path="/contacts" element={<Contacts />} />
-        </Routes>
+        <MainLayout>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                user ? (
+                  user.emailVerified ? (
+                    <MainPageLayout />
+                  ) : (
+                    <>
+                      <h3>Please confirm your email</h3>
+                      <Logout />
+                    </>
+                  )
+                ) : (
+                  <MainPageLayout />
+                )
+              }
+            />
+            <Route path="/places/:placeName" element={<PlaceDetailsPage />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/map" element={<PlacesMap />} />
+            <Route path="/admin" element={<AdminPanel />} />
+            <Route path="/about" element={<AboutProject />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+          <div id="modal-root" />
+          <AuthModal />
+        </MainLayout>
       </div>
     </BrowserRouter>
   );

@@ -32,10 +32,6 @@ const PlaceDetailsPage = () => {
   // Если все данные готовы, рендерим детали места
   return (
     <div className={classes.placeDetailsPage}>
-      <Header />
-      <div className={classes.navigation}>
-        <Navigation />
-      </div>
       <div className={classes.content}>
         <PlaceDetails place={place} />
       </div>

@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store';
 import { uploadPlaceToFirestore } from '../../firebase/firebaseService';
-import Navigation from '../Navigation/Navigation';
-import AdminPlaceEditor from '../AdminPlaceEditor/AdminPlaceEditor';
 import { translations } from '../../public/translations';
-import Header from '../Header/Header';
+import MainLayout from '../../componenets/Layout/MainLayout';
+import AdminPlaceEditor from '../../componenets/AdminPlaceEditor/AdminPlaceEditor';
 
 const AdminPanel = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -48,9 +47,7 @@ const AdminPanel = () => {
   };
 
   return (
-    <div>
-      <Header />
-      <Navigation />
+    <>
       <h1>{translations.adminPanel[languageShort]}</h1>
       <h2>{translations.addPlace[languageShort]}</h2>
       <textarea
@@ -63,7 +60,7 @@ const AdminPanel = () => {
       <br />
       <button onClick={handleAddPlace}>{translations.addPlaceButton[languageShort]}</button>
       <AdminPlaceEditor />
-    </div>
+    </>
   );
 };
 

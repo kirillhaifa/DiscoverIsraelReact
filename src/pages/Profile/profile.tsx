@@ -1,11 +1,11 @@
 import React from 'react';
-import ProfileEditForm from '../ProfileEditForm/ProfileEditForm';
+import ProfileEditForm from '../../componenets/ProfileEditForm/ProfileEditForm';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { translations } from '../../public/translations';
-import LanguageSelector from '../LanguageSelector/languageSelector';
-import Navigation from '../Navigation/Navigation';
-import Header from '../Header/Header';
+import LanguageSelector from '../../componenets/LanguageSelector/languageSelector';
+import Navigation from '../../componenets/Navigation/Navigation';
+import Header from '../../componenets/Header/Header';
 
 let classes = require('./profile.module.scss');
 let themes = require('../../public/Styles/themes.module.scss');
@@ -39,7 +39,6 @@ const Profile = () => {
   return (
     <>
       <Header />
-      <h1>{translations.profile[language]}</h1>
       <Navigation />
       <img
         className={classes.profileImage}
