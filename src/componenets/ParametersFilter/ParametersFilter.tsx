@@ -13,13 +13,13 @@ import { TbFreeRights } from 'react-icons/tb';
 import { LiaDogSolid } from 'react-icons/lia';
 import { LuParkingSquare } from 'react-icons/lu';
 import { MdOutlineWc } from 'react-icons/md';
-import { FaWifi } from 'react-icons/fa';
+import { FaCheck, FaWifi } from 'react-icons/fa';
 import { MdAccessible } from 'react-icons/md';
 import { MdOutlineForest } from 'react-icons/md';
 import ReactComponent from '../../public/img/unesco.svg'
 import { MdChildFriendly } from "react-icons/md";
 import { LuMountainSnow } from "react-icons/lu";
-import { FaCheck } from 'react-icons/fa';
+import { FaCheckCircle } from 'react-icons/fa';
 import { FaChevronDown } from 'react-icons/fa';
 
 let classes = require('./parametersFilter.module.scss');
@@ -113,7 +113,7 @@ const ParametersFilter = () => {
               <span className={classes.customCheckbox}></span>
               {(translations as any)[f.key][language]}
             </label>
-            <span className={classes.checkboxBadge}><FaCheck size={10} /></span>
+            <div className={classes.checkboxBadge}><FaCheck size={10} /></div>
           </div>
         );
       })}
