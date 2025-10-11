@@ -2,10 +2,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 5px;
-  padding: 10px;
+  gap: 4px;
+  padding: 0;
   position: relative;
   border: none;
+  text-align: center;
 
   @media screen and (max-width: 768px) {
     padding: 0;
@@ -72,16 +73,18 @@
 
 .dropdownButton {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 0.5em;
-  background: var(--accent-color);
+  gap: 4px;
+  background: none;
   border: none;
   border-radius: 6px;
-  padding: 6px 16px;
+  padding: 4px 6px;
   font-size: 1rem;
   cursor: pointer;
-  min-width: 110px;
+  min-width: auto;
   transition: border 0.2s;
+  justify-content: center;
 }
 .dropdownButton:focus {
   outline: none;
@@ -104,6 +107,8 @@
   align-items: stretch;
   padding: 10px 0;
   animation: fadeIn 0.18s;
+  margin-top: 4px;
+  min-width: 100px;
 }
 .dropdownMenu label {
   padding: 8px 18px;
@@ -113,6 +118,16 @@
 }
 .dropdownMenu label:hover {
   background: #f2f2f2;
+}
+
+.globeIcon {
+  width: 32px;
+  height: 32px;
+}
+
+.currentLabel {
+  font-size: 0.8rem;
+  font-weight: 600;
 }
 
 @media (max-width: 768px) {

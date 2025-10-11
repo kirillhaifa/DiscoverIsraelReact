@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setLanguage } from '../../store/Language/languageSlice';
 import { RootState } from '../../store';
 import classNames from 'classnames';
+import { PiGlobeHemisphereEastLight } from 'react-icons/pi';
 let classes = require('./languageSelector.module.scss');
 let basic = require('../../public/Styles/basic.module.scss')
 
@@ -87,9 +88,11 @@ const LanguageSelector = () => {
         onClick={() => setMenuOpen((open) => !open)}
         aria-haspopup="listbox"
         aria-expanded={menuOpen}
+        aria-label="Language selector"
+        type="button"
       >
-        {getLangLabel()} 
-        {/* <span className={classes.arrow}>{menuOpen ? '▲' : '▼'}</span> */}
+        <PiGlobeHemisphereEastLight className={classes.globeIcon} />
+        <span className={classes.currentLabel}>{getLangLabel()}</span>
       </button>
       {menuOpen && (
         <div className={classes.dropdownMenu} role="listbox">

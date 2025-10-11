@@ -30,7 +30,7 @@
   font-size: 80px;
 
   @media screen and (max-width: 768px) {
-    display: none
+    display: none;
   }
 }
 
@@ -43,14 +43,51 @@
   border-bottom: 1px solid var(--accent-color);
 }
 
-
 .loginButton {
   display: flex;
   cursor: pointer;
 }
 
 .buttonsContainer {
-  display: flex;
-  gap: 30px;
+  display: grid;
+  grid-template-columns: repeat(2, 90px);
+  grid-template-rows: repeat(2, 80px);
+  grid-template-areas:
+    'lang profile'
+    'theme logout';
+  align-items: center;
+  justify-items: center;
+}
+.gridLang {
+  grid-area: lang;
+}
+.gridLang svg {
+  transform: scale(0.9);
 }
 
+.gridProfile {
+  grid-area: profile;
+  justify-self: center;
+}
+.gridTheme {
+  grid-area: theme;
+  justify-self: start;
+}
+.gridLogout {
+  grid-area: logout;
+}
+
+.selectorItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-decoration: none;
+  color: var(--text-color);
+  font-size: 0.8rem;
+}
+
+.selectorIcon {
+  width: 32px;
+  height: 32px;
+}

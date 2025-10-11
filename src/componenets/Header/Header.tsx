@@ -26,22 +26,22 @@ const Header: React.FC = () => {
         <h1 className={classes.logoName}>Discover Israel</h1>
       </div>
       <div className={classes.buttonsContainer}>
-        <div className={classes.selectorsContainer}>
+        <div className={`${classes.selectorItem} ${classes.gridLang}`}>
           <LanguageSelector />
+        </div>
+        <div className={`${classes.selectorItem} ${classes.gridTheme}`}>
           <ThemeSelector />
         </div>
-        <div className={classes.profileContainer}>
-          {user ? (
-            <div className={classes.welcomeMessage}>
-              <ProfileButton />
-              <Logout />
-            </div>
-          ) : (
+        <div className={`${classes.selectorItem} ${classes.gridProfile}`}>
+          {user ? <ProfileButton /> : (
             <Link to="/login" className={classes.loginButton}>
               <MdLogin size={20} style={{ marginRight: 6 }} />
               <span className={classes.loginText}>Login</span>
             </Link>
           )}
+        </div>
+        <div className={`${classes.selectorItem} ${classes.gridLogout}`}>
+            {user && <Logout />}
         </div>
       </div>
     </header>
