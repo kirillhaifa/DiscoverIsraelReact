@@ -20,10 +20,6 @@
   align-items: center;
   align-self: center;
   cursor: pointer;
-
-  @media (max-width: 768px) {
-    display: none;
-  }
 }
 
 .logoutText {

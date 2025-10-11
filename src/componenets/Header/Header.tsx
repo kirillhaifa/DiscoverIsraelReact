@@ -23,7 +23,10 @@ const Header: React.FC = () => {
     <header className={classes.header}>
       <div className={classes.logoContainer}>
         <MdHiking className={classes.iconLogo} />
-        <h1 className={classes.logoName}>Discover Israel</h1>
+        <h1 className={classes.logoName}>
+          <span className={classes.logoWord}>Discover</span>
+          <span className={classes.logoWord}>Israel</span>
+        </h1>
       </div>
       <div className={classes.buttonsContainer}>
         <div className={`${classes.selectorItem} ${classes.gridLang}`}>

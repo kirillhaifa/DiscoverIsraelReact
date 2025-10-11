@@ -379,4 +379,159 @@ export const translations = {
     en: 'Password',
     he: 'סיסמה',
   },
+  personalRecommendationsTitle: {
+    ru: 'Персональные рекомендации',
+    en: 'Personal Recommendations',
+    he: 'המלצות אישיות',
+  },
+  personalRecommendationsDesc: {
+    ru: 'Здесь будут отображаться места, подобранные специально для вас на основе ваших предпочтений и истории посещений.',
+    en: 'Here you will soon see places selected just for you based on your preferences and visit history.',
+    he: 'כאן יופיעו בקרוב מקומות שנבחרו עבורך לפי ההעדפות וההיסטוריה שלך.',
+  },
+  inProgress: {
+    ru: 'Раздел в разработке',
+    en: 'Section in progress',
+    he: 'המדור בפיתוח',
+  },
+  thematicCollectionsTitle: {
+    ru: 'Тематические подборки',
+    en: 'Thematic Collections',
+    he: 'אוספים נושאיים',
+  },
+  thematicCollectionsDesc: {
+    ru: 'Здесь будут собраны места по темам и интересам, чтобы упростить вам поиск идеального места для посещения.',
+    en: 'Here you will find places grouped by themes and interests, making it easier for you to find the perfect spot to visit.',
+    he: 'כאן תמצאו מקומות מקבוצים לפי נושאים ותחומי עניין, מה שיקל עליכם למצוא את המקום המושלם לביקור.',
+  },
+  popularPlacesTitle: {
+    ru: 'Популярные места',
+    en: 'Popular Places',
+    he: 'מקומות פופולריים',
+  },
+  popularPlacesDesc: {
+    ru: 'Самые посещаемые места нашими пользователями. Возможно, вы найдете здесь вдохновение для своего следующего путешествия.',
+    en: 'The most visited places by our users. You might find inspiration for your next trip here.',
+    he: 'המקומות הכי מבוקשים על ידי המשתמשים שלנו. ייתכן שתמצאו כאן השראה לטיול הבא שלכם.',
+  },
+  newPlacesTitle: {
+    ru: 'Новые места',
+    en: 'New Places',
+    he: 'מקומות חדשים',
+  },
+  newPlacesDesc: {
+    ru: 'Недавно добавленные места в нашем каталоге. Будьте в курсе самых свежих предложений!',
+    en: 'Recently added places to our directory. Stay updated with the freshest offerings!',
+    he: 'מקומות שנוספו לאחרונה למדריך שלנו. הישארו מעודכנים עם ההצעות החדשות ביותר!',
+  },
+  verifiedPlacesTitle: {
+    ru: 'Проверенные места',
+    en: 'Verified Places',
+    he: 'מקומות מאומתים',
+  },
+  verifiedPlacesDesc: {
+    ru: 'Места, которые были проверены и одобрены нашей командой. Ваше безопасное и качественное времяпрепровождение — наш приоритет.',
+    en: 'Places that have been verified and approved by our team. Your safe and quality experience is our priority.',
+    he: 'מקומות שנבדקו ואושרו על ידי הצוות שלנו. הבטיחות והאיכות שלכם הם בעדיפות עליונה.',
+  },
+  favoritesTitle: {
+    ru: 'Избранное',
+    en: 'Favorites',
+    he: 'מועדפים',
+  },
+  favoritesDesc: {
+    ru: 'Ваши любимые места, собранные в одном месте. Легкий доступ к вашим предпочтениям.',
+    en: 'Your favorite places collected in one place. Easy access to your preferences.',
+    he: 'המקומות האהובים עליכם שנאספו במקום אחד. גישה קלה להעדפות שלכם.',
+  },
+  settingsTitle: {
+    ru: 'Настройки',
+    en: 'Settings',
+    he: 'הגדרות',
+  },
+  settingsDesc: {
+    ru: 'Настройте приложение под свои нужды. Выберите предпочитаемый язык, тему оформления и другие параметры.',
+    en: 'Customize the app to your needs. Choose your preferred language, color theme, and other settings.',
+    he: 'התאימו את האפליקציה לצרכים שלכם. בחרו את השפה המועדפת עליכם, ערכת הצבעים ועוד הגדרות.',
+  },
+  supportTitle: {
+    ru: 'Поддержка',
+    en: 'Support',
+    he: 'תמיכה',
+  },
+  supportDesc: {
+    ru: 'У вас есть вопросы или предложения? Свяжитесь с нашей службой поддержки.',
+    en: 'Do you have questions or suggestions? Contact our support team.',
+    he: 'יש לכם שאלות או הצעות? צרו קשר עם צוות התמיכה שלנו.',
+  },
+  aboutTitle: {
+    ru: 'О приложении',
+    en: 'About the App',
+    he: 'על האפליקציה',
+  },
+  aboutDesc: {
+    ru: 'Узнайте больше об этом приложении и его возможностях.',
+    en: 'Learn more about this app and its features.',
+    he: 'למדו עוד על האפליקציה הזו ועל הפיצ׳רים שלה.',
+  },
+  recommendations: {
+    ru: 'Рекомендации',
+    en: 'Recommendations',
+    he: 'המלצות',
+  },
+  jesusPathTitle: {
+    ru: 'Путь Иисуса',
+    en: 'Path of Jesus',
+    he: 'דרך ישוע',
+  },
+  jesusPathIntro: {
+    ru: 'Этот маршрут соединяет ключевые места земной жизни Иисуса: от Гефсимании и Тайной Вечери в Иерусалиме до Галилеи, где он проповедовал и исцелял. Эти точки помогают восстановить хронологию его последнего пути и служения.',
+    en: 'This route links key sites from the earthly life of Jesus: from Gethsemane and the Last Supper in Jerusalem to the Galilee where he taught and healed. These locations help reconstruct the chronology of his final path and public ministry.',
+    he: 'המסלול הזה מקשר בין אתרים מרכזיים מחייו של ישוע: מגתשמני וחדר הסעודה האחרונה בירושלים ועד לגליל שבו לימד וריפא. המקומות הללו מסייעים לשחזר את הכרונולוגיה של דרכו ושירותו.',
+  },
+  jesusPathPlacesHeading: {
+    ru: 'Места маршрута',
+    en: 'Route Locations',
+    he: 'אתרי המסלול',
+  },
+  jesusPathRoomOfSupper: {
+    ru: 'Горница Тайной Вечери — традиционное место воспоминания о последней трапезе.',
+    en: 'Room of the Last Supper – traditional site commemorating the final meal.',
+    he: 'חדר הסעודה האחרונה – האתר המסורתי לזכר הארוחה האחרונה.',
+  },
+  jesusPathGethsemane: {
+    ru: 'Гефсимания — сад молитвы и внутренней борьбы перед арестом.',
+    en: 'Gethsemane – garden of prayer and inner struggle before the arrest.',
+    he: 'גתשמני – גן התפילה והמאבק הפנימי לפני המעצר.',
+  },
+  jesusPathSepulchre: {
+    ru: 'Храм Гроба Господня — распятие, погребение и воскресение по христианской традиции.',
+    en: 'Church of the Holy Sepulchre – crucifixion, burial and resurrection per Christian tradition.',
+    he: 'כנסיית הקבר – מקום הצליבה, הקבורה והתחייה על פי המסורת הנוצרית.',
+  },
+  jesusPathTabor: {
+    ru: 'Гора Фавор — место Преображения, явление славы.',
+    en: 'Mount Tabor – site of the Transfiguration, revelation of glory.',
+    he: 'הר תבור – אתר ההשתנות, התגלות התהילה.',
+  },
+  jesusPathCapernaum: {
+    ru: 'Кфар Наум (Капернаум) — «город Иисуса», центр его служения в Галилее.',
+    en: 'Kfar Nahum (Capernaum) – “the town of Jesus”, center of his Galilean ministry.',
+    he: 'כפר נחום – "עירו של ישוע", מרכז שירותו בגליל.',
+  },
+  jesusPathYardenit: {
+    ru: 'Ярденит — место символического напоминания о крещении в Иордане.',
+    en: 'Yardenit – symbolic site recalling the baptism in the Jordan.',
+    he: 'ירדנית – אתר סמלי המזכיר את הטבילה בירדן.',
+  },
+  jesusPathNarrative: {
+    ru: 'Путь Иисуса в Святой Земле соединяет Горницу Тайной Вечери, Гефсиманию и Храм Гроба Господня в Иерусалиме с Галилеей — горой Фавор (Преображение), Капернаумом — «городом Иисуса», Базиликой Благовещения и историческим центром Назарета, а также крещальной памятью у Ярденита. Посетив эти места, вы прослеживаете ключевые вехи служения, страстей и надежды воскресения.',
+    en: 'The Path of Jesus in the Holy Land links the Room of the Last Supper, Gethsemane, and the Church of the Holy Sepulchre in Jerusalem with the Galilee — Mount Tabor (Transfiguration), Capernaum the “town of Jesus,” the Basilica of the Annunciation and Historic Center of Nazareth, and the baptismal reminder at Yardenit. Visiting them traces the milestones of ministry, passion, and the hope of resurrection.',
+    he: 'דרך ישוע בארץ הקודש מחברת את חדר הסעודה האחרונה, גתשמני וכנסיית הקבר בירושלים עם הגליל – הר תבור (ההשתנות), כפר נחום "עירו של ישוע", בזיליקת הבשורה והמרכז ההיסטורי של נצרת, ותזכורת הטבילה בירדנית. הביקור בהם משחזר את אבני הדרך של השירות, הסבל ותקוות התחייה.',
+  },
+  jesusPathNazareth: {
+    ru: 'Базилика Благовещения и исторический центр Назарета — воплощение начала евангельской истории и повседневного контекста ранних лет.',
+    en: 'Basilica of the Annunciation and Historic Center of Nazareth – embody the beginning of the Gospel narrative and daily context of early years.',
+    he: 'בזיליקת הבשורה והמרכז ההיסטורי של נצרת – מייצגות את ראשית סיפור הבשורה וההקשר היומיומי של השנים הראשונות.',
+  },
 };
