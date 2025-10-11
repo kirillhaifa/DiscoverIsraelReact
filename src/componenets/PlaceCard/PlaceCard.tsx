@@ -62,6 +62,7 @@ const PlaceCard: React.FC<PlaceCardProps> = ({ place }) => {
       )}
       <div className={classes.descriptionContainer}>
         <div>
+          <p>{place.id}</p>
           <h3>{highlightText(place.placeName[language], searchText)}</h3>
           <p>{highlightText(place.shortDescription[language], searchText)}</p>
         </div>

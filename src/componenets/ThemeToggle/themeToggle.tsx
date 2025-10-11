@@ -27,21 +27,9 @@ const ThemeSelector: React.FC = () => {
   );
   const userData = useSelector((state: RootState) => state.user.userData);
 
-  // Логируем текущие значения для отладки
-  useEffect(() => {
-    console.log('ThemeToggle render:');
-    console.log('userProfileTheme:', userProfileTheme);
-    console.log('userPreferredTheme:', userPreferredTheme);
-    console.log('userData:', userData);
-  }, [userProfileTheme, userPreferredTheme, userData]);
-
   // Обработчик изменения темы
   const handleThemeChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedTheme = event.target.value;
-    
-    console.log('Theme changing to:', selectedTheme);
-    console.log('Current user:', user);
-    console.log('Current userData:', userData);
     
     // Обновляем тему в Redux store
     dispatch(setTheme(selectedTheme));
@@ -53,7 +41,6 @@ const ThemeSelector: React.FC = () => {
           userID: userData.userID,
           colorTheme: selectedTheme
         }) as any);
-        console.log('Theme update dispatched:', result);
       } catch (error) {
         console.error('Failed to update theme in database:', error);
       }
@@ -93,64 +80,21 @@ const ThemeSelector: React.FC = () => {
 
   return (
     <div className={classes.themeSelector} ref={dropdownRef}>
-      <label htmlFor="theme-select" className={classes.label}>
-        {translations.colorTheme[currentLanguage]}
-      </label>
-      {/* Desktop: обычный select */}
-      <div className={classes.selectWrapper}>
+      <div className={classes.compact}>
+        {currentTheme === 'light' ? (
+          <PiSunThin className={classes.gridIcon} />
+        ) : (
+          <PiMoonStarsThin className={classes.gridIcon} />
+        )}
         <select
           id="theme-select"
           value={currentTheme}
           onChange={handleThemeChange}
-          className={classes.desktopSelect}
+          className={classes.gridSelect}
         >
           <option value="light">{translations.light[currentLanguage]}</option>
           <option value="dark">{translations.dark[currentLanguage]}</option>
         </select>
-        <div className={classes.iconWrapper}>
-          {currentTheme === 'light' ? (
-            <PiSunThin className={classes.icon} />
-          ) : (
-            <PiMoonStarsThin className={classes.icon} />
-          )}
-        </div>
-      </div>
-      {/* Mobile: dropdown-кнопка */}
-      <div className={classes.mobileDropdownWrapper}>
-        <button
-          className={classes.dropdownButton}
-          onClick={() => setDropdownOpen((open) => !open)}
-          aria-haspopup="listbox"
-          aria-expanded={dropdownOpen}
-        >
-          {currentTheme === 'light' ? (
-            <PiSunThin className={classes.icon} />
-          ) : (
-            <PiMoonStarsThin className={classes.icon} />
-          )}
-          {currentTheme === 'light'
-            ? translations.light[currentLanguage]
-            : translations.dark[currentLanguage]}
-          {/* <span className={classes.arrow}>{dropdownOpen ? '▲' : '▼'}</span> */}
-        </button>
-        {dropdownOpen && (
-          <div className={classes.dropdownMenu} role="listbox">
-            <button
-              className={classes.dropdownItem}
-              onClick={() => handleMobileThemeChange('light')}
-              aria-selected={currentTheme === 'light'}
-            >
-              <PiSunThin className={classes.icon} /> {translations.light[currentLanguage]}
-            </button>
-            <button
-              className={classes.dropdownItem}
-              onClick={() => handleMobileThemeChange('dark')}
-              aria-selected={currentTheme === 'dark'}
-            >
-              <PiMoonStarsThin className={classes.icon} /> {translations.dark[currentLanguage]}
-            </button>
-          </div>
-        )}
       </div>
     </div>
   );

@@ -2,7 +2,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  justify-content: center;
 }
 
 .profileButtonContainer:hover .profileIcon {
@@ -17,5 +20,11 @@
 .profileIcon {
   width: 30px;
   height: 30px;
+}
+
+.profileName { 
+  font-size: 0.8rem; 
+  font-weight: 600; 
+  margin-top: 4px; 
 }
 

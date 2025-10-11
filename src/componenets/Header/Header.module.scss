@@ -19,19 +19,40 @@
   fill: var(--text-color);
   width: 100px;
   height: 100px;
+
+  @media screen and (max-width: 768px) {
+    width: 75px;
+    height: 75px;
+  }
 }
 
 .logoContainer {
   display: flex;
   align-self: flex-start;
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+    padding: 15px 0 0 15px;
+  }
 }
 
 .logoName {
   font-size: 80px;
+  display: flex;
+  gap: 12px;
 
   @media screen and (max-width: 768px) {
-    display: none
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    font-size: 20px;
+    text-align: center;
   }
+}
+
+.logoWord {
+  white-space: nowrap;
 }
 
 .header {
@@ -43,14 +64,51 @@
   border-bottom: 1px solid var(--accent-color);
 }
 
-
 .loginButton {
   display: flex;
   cursor: pointer;
 }
 
 .buttonsContainer {
-  display: flex;
-  gap: 30px;
+  display: grid;
+  grid-template-columns: repeat(2, 90px);
+  grid-template-rows: repeat(2, 80px);
+  grid-template-areas:
+    'lang profile'
+    'theme logout';
+  align-items: center;
+  justify-items: center;
+}
+.gridLang {
+  grid-area: lang;
+}
+.gridLang svg {
+  transform: scale(0.9);
 }
 
+.gridProfile {
+  grid-area: profile;
+  justify-self: center;
+}
+.gridTheme {
+  grid-area: theme;
+  justify-self: start;
+}
+.gridLogout {
+  grid-area: logout;
+}
+
+.selectorItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-decoration: none;
+  color: var(--text-color);
+  font-size: 0.8rem;
+}
+
+.selectorIcon {
+  width: 32px;
+  height: 32px;
+}

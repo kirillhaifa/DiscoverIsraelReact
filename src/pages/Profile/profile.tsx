@@ -7,6 +7,8 @@ import LanguageSelector from '../../componenets/LanguageSelector/languageSelecto
 import Navigation from '../../componenets/Navigation/Navigation';
 import Header from '../../componenets/Header/Header';
 import { Navigate } from 'react-router-dom';
+import { FaUserCircle } from 'react-icons/fa';
+import ProfileAchievements from '../../componenets/ProfileAchievements/ProfileAchievements';
 
 let classes = require('./profile.module.scss');
 let themes = require('../../public/Styles/themes.module.scss');
@@ -38,38 +40,36 @@ const Profile = () => {
   if (!userData) return <Navigate to="/login" replace />;
 
   return (
-    <>
-      <img
-        className={classes.profileImage}
-        src={
-          userData.profilePicture
-            ? userData.profilePicture
-            : 'https://i.pinimg.com/736x/30/30/e3/3030e3fa40eb4fd810320bbff7f0a1c4.jpg'
-        }
-        alt={translations.profile[language]}
-      />
-      <div className={classes.userInfo}>
-        <p>{translations.firstName[language]}: {userData.name || 'N/A'}</p>
-        <p>{translations.lastName[language]}: {userData.surname || 'N/A'}</p>
-        <p>{translations.email[language]}: {userData?.email || 'N/A'}</p>
-        <p>{translations.premiumStatus[language]}: {userData?.premiumStatus ? 'Yes' : 'No'}</p>
-        <p>{translations.placesVisited[language]}: {ratingCount}</p>
+    <div className={classes.profilePage}>
+      <div className={classes.headerRow}>
+        {userData.profilePicture ? (
+          <img
+            className={classes.avatar}
+            src={userData.profilePicture}
+            alt={translations.profile[language]}
+          />
+        ) : (
+          <div className={classes.avatarFallback} aria-label={translations.profile[language]}>
+            <FaUserCircle />
+          </div>
+        )}
+        <div className={classes.info}>
+          <h2 className={classes.sectionTitle}>{translations.profile[language]}</h2>
+          <div>{translations.firstName[language]}: {userData.name || 'N/A'}</div>
+            <div>{translations.lastName[language]}: {userData.surname || 'N/A'}</div>
+            <div>{translations.email[language]}: {userData?.email || 'N/A'}</div>
+            <div>{translations.premiumStatus[language]}: {userData?.premiumStatus ? 'Yes' : 'No'}</div>
+            <div>{translations.placesVisited[language]}: {ratingCount}</div>
+        </div>
       </div>
-      <div className={classes.achievements}>
-        <h2>{translations.achievements[language]}</h2>
-        <ul>
-          {achievementLevels.map((level) => (
-            <li
-              key={level.key}
-              className={`${classes.achievement} ${ratingCount >= level.threshold ? classes.completed : ''}`}
-            >
-              {translations[level.key][language]}
-            </li>
-          ))}
-        </ul>
+      <div>
+        <h3 className={classes.sectionTitle}>{translations.achievements[language]}</h3>
+        <ProfileAchievements ratingCount={ratingCount} levels={achievementLevels as any} />
       </div>
-      <ProfileEditForm />
-    </>
+      <div className={classes.editBlock}>
+        <ProfileEditForm />
+      </div>
+    </div>
   );
 };
 

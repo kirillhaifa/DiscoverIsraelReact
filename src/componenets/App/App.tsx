@@ -22,6 +22,7 @@ import AuthModal from '../AuthModal/AuthModal';
 import MainPageLayout from '../../pages/MainPage/MainPage';
 import AdminPanel from '../../pages/AdminPanel/AdminPanel';
 import MainLayout from '../Layout/MainLayout';
+import Recomendations from '../../pages/Recomendations/Recomendations';
 
 let classes = require('./App.module.scss');
 let normilizer = require('../../public/Styles/normalizer.module.scss');
@@ -141,6 +142,7 @@ const App = () => {
             <Route path="/map" element={<PlacesMap />} />
             <Route path="/admin" element={<AdminPanel />} />
             <Route path="/about" element={<AboutProject />} />
+            <Route path="/recomendations" element={<Recomendations />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           <div id="modal-root" />

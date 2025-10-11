@@ -1,3 +1,58 @@
+.profilePage {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 32px 24px 80px;
+}
+
+.headerRow {
+  display: flex;
+  gap: 28px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: rgba(0, 0, 0, 0.08);
+  display: block;
+}
+
+.avatarFallback {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 52px;
+  color: var(--accent-color, #2d7c9a);
+}
+
+.info {
+  flex: 1;
+  min-width: 260px;
+  display: grid;
+  gap: 6px;
+  font-size: 15px;
+}
+
+.sectionTitle {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 4px;
+}
+
+.editBlock {
+  margin-top: 12px;
+}
+
 .profileImage {
   width: 100px;
   height: 100px;
