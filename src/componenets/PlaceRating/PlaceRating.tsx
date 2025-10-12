@@ -4,8 +4,8 @@ import { RootState } from '../../store';
 import { requireAuth } from '../../store/authPrompt/authPromptSlice';
 import { FaStar } from 'react-icons/fa';
 let classes = require('./PlaceRating.module.scss');
-let themes = require('../../public/Styles/themes.module.scss');
-let basic = require('../../public/Styles/basic.module.scss');
+let themes = require('../../../public/Styles/themes.module.scss');
+let basic = require('../../../public/Styles/basic.module.scss');
 
 const PlaceRating = ({ placeId, submitRating, deleteRating }) => {
   const [selectedRating, setSelectedRating] = useState(null);

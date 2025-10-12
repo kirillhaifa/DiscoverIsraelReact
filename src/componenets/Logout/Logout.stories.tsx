@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import Logout from './logout';
 import languageReducer from '../../store/Language/languageSlice';
-import '../../public/Fonts/fonts.scss'; // Подключаем шрифты
+import '../../../public/Fonts/fonts.scss'; // Подключаем шрифты
 
 
 // Создаем моковый store с правильной структурой состояния

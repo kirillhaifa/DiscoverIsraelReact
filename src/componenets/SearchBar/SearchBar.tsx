@@ -4,7 +4,7 @@ import { RootState } from '../../store';
 import { setSearchText } from '../../store/Filters/filtersSlice';
 let styles = require('./SearchBar.module.scss');
 import { useDebounce } from '../../utils/hooks';
-import { translations } from '../../public/translations';
+import { translations } from '../../../public/translations';
 
 const SearchBar: React.FC = () => {
   const dispatch = useDispatch();

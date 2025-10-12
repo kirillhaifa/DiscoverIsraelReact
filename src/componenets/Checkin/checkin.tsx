@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { loginUser } from '../../firebase/authService';
 import { useSelector } from 'react-redux';
-import { translations } from '../../public/translations';
+import { translations } from '../../../public/translations';
 import { RootState } from '../../store';
 
 interface LoginProps {

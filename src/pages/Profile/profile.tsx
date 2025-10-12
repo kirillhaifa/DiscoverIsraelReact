@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ProfileEditForm from '../../componenets/ProfileEditForm/ProfileEditForm';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
-import { translations } from '../../public/translations';
+import { translations } from '../../../public/translations';
 import LanguageSelector from '../../componenets/LanguageSelector/languageSelector';
 import Navigation from '../../componenets/Navigation/Navigation';
 import Header from '../../componenets/Header/Header';
@@ -11,7 +11,7 @@ import { FaUserCircle } from 'react-icons/fa';
 import ProfileAchievements from '../../componenets/ProfileAchievements/ProfileAchievements';
 
 let classes = require('./profile.module.scss');
-let themes = require('../../public/Styles/themes.module.scss');
+let themes = require('../../../public/Styles/themes.module.scss');
 
 const Profile = () => {
   const { userData, loading, error } = useSelector(
@@ -19,6 +19,7 @@ const Profile = () => {
   );
   const language = useSelector((state: RootState) => state.language.language);
   const ratingCount = userData?.ratings ? userData.ratings.length : 0;
+  const [avatarError, setAvatarError] = useState(false);
 
   // Уровни достижений
   const achievementLevels = [
@@ -42,11 +43,12 @@ const Profile = () => {
   return (
     <div className={classes.profilePage}>
       <div className={classes.headerRow}>
-        {userData.profilePicture ? (
+        {userData.profilePicture && !avatarError ? (
           <img
             className={classes.avatar}
             src={userData.profilePicture}
             alt={translations.profile[language]}
+            onError={() => setAvatarError(true)}
           />
         ) : (
           <div className={classes.avatarFallback} aria-label={translations.profile[language]}>

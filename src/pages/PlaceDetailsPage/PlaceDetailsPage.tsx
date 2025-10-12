@@ -6,6 +6,7 @@ import { Place } from '../../types';
 import PlaceDetails from '../../componenets/PlaceDetails/PlaceDetails';
 import Navigation from '../../componenets/Navigation/Navigation';
 import Header from '../../componenets/Header/Header';
+import { translations } from '../../../public/translations';
 let classes = require('./PlaceDetailsPage.module.scss');
 
 const PlaceDetailsPage = () => {

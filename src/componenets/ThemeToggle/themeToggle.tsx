@@ -4,7 +4,7 @@ import { RootState } from '../../store';
 import { setTheme } from '../../store/ColorScheme/themeSlice';
 import { updateUserThunk } from '../../store/User/updateUserThunk';
 import { PiSunThin, PiMoonStarsThin } from 'react-icons/pi';
-import { translations } from '../../public/translations';
+import { translations } from '../../../public/translations';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../../firebaseConfig';
 let classes = require('./themeToggle.module.scss');

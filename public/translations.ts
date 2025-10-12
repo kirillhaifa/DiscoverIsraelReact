@@ -534,4 +534,91 @@ export const translations = {
     en: 'Basilica of the Annunciation and Historic Center of Nazareth – embody the beginning of the Gospel narrative and daily context of early years.',
     he: 'בזיליקת הבשורה והמרכז ההיסטורי של נצרת – מייצגות את ראשית סיפור הבשורה וההקשר היומיומי של השנים הראשונות.',
   },
+
+  // Переводы для CollectionCreator
+  createCollection: {
+    ru: 'Создать коллекцию',
+    en: 'Create Collection',
+    he: 'צור אוסף',
+  },
+  collectionTitle: {
+    ru: 'Название коллекции',
+    en: 'Collection Title',
+    he: 'כותרת האוסף',
+  },
+  collectionShortDescription: {
+    ru: 'Краткое описание',
+    en: 'Short Description',
+    he: 'תיאור קצר',
+  },
+  collectionLongDescription: {
+    ru: 'Подробное описание',
+    en: 'Long Description',
+    he: 'תיאור מפורט',
+  },
+  coverPhoto: {
+    ru: 'Фото обложки',
+    en: 'Cover Photo',
+    he: 'תמונת כריכה',
+  },
+  collectionPhotos: {
+    ru: 'Дополнительные фото (опционально)',
+    en: 'Additional Photos (optional)',
+    he: 'תמונות נוספות (אופציונלי)',
+  },
+  selectPlaces: {
+    ru: 'Выбрать места для коллекции',
+    en: 'Select Places for Collection',
+    he: 'בחר מקומות לאוסף',
+  },
+  makeCollectionPublic: {
+    ru: 'Сделать коллекцию публичной',
+    en: 'Make Collection Public',
+    he: 'הפוך את האוסף לציבורי',
+  },
+  saveCollection: {
+    ru: 'Сохранить коллекцию',
+    en: 'Save Collection',
+    he: 'שמור אוסף',
+  },
+  collectionCreatedSuccess: {
+    ru: 'Коллекция успешно создана!',
+    en: 'Collection created successfully!',
+    he: 'האוסף נוצר בהצלחה!',
+  },
+  collectionCreationFailed: {
+    ru: 'Не удалось создать коллекцию',
+    en: 'Failed to create collection',
+    he: 'יצירת האוסף נכשלה',
+  },
+  enterPhotoUrl: {
+    ru: 'Введите URL фотографии',
+    en: 'Enter photo URL',
+    he: 'הזן URL של התמונה',
+  },
+  addPhoto: {
+    ru: 'Добавить фото',
+    en: 'Add Photo',
+    he: 'הוסף תמונה',
+  },
+  removePhoto: {
+    ru: 'Удалить фото',
+    en: 'Remove Photo',
+    he: 'הסר תמונה',
+  },
+  placesInCollection: {
+    ru: 'Места в коллекции',
+    en: 'Places in collection',
+    he: 'מקומות באוסף',
+  },
+  backToRecommendations: {
+    ru: 'Назад к рекомендациям',
+    en: 'Back to Recommendations',
+    he: 'חזרה להמלצות',
+  },
+  placesNotFound: {
+    ru: 'Места не найдены',
+    en: 'No places found',
+    he: 'לא נמצאו מקומות',
+  },
 };

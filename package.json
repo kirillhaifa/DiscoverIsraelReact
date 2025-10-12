@@ -49,6 +49,7 @@
     "@svgr/webpack": "^8.1.0",
     "@types/react-slick": "^0.23.13",
     "@types/storybook__react": "^5.2.1",
+    "copy-webpack-plugin": "^13.0.1",
     "css-loader": "^7.1.2",
     "dotenv-webpack": "^8.1.0",
     "eslint": "^9.12.0",

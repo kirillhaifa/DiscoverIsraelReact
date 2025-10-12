@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useLayoutEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store';
 import { setParameter } from '../../store/Filters/filtersSlice';
-import { translations } from '../../public/translations'; // Импорт переводов
+import { translations } from '../../../public/translations'; // Импорт переводов
 import { MdOutlineOutdoorGrill } from 'react-icons/md';
 import { LiaHikingSolid } from 'react-icons/lia';
 import { PiBinocularsLight } from 'react-icons/pi';
@@ -23,7 +23,7 @@ import { FaCheckCircle } from 'react-icons/fa';
 import { FaChevronDown } from 'react-icons/fa';
 
 let classes = require('./parametersFilter.module.scss');
-let basic = require('../../public/Styles/basic.module.scss');
+let basic = require('../../../public/Styles/basic.module.scss');
 
 const ParametersFilter = () => {
   const dispatch = useDispatch();

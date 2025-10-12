@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { closeAuthPrompt } from '../../store/authPrompt/authPromptSlice';
 import { selectAuthPromptOpen, selectAuthPromptReason } from '../../store/authPrompt/authPromptSelectors';
 import Login from '../Login/Login';
-import { translations } from '../../public/translations';
+import { translations } from '../../../public/translations';
 import { RootState } from '../../store';
 let classes = require('./AuthModal.module.scss');
 

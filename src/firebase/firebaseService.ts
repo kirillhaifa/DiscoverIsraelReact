@@ -11,7 +11,7 @@ import {
   arrayUnion,
   arrayRemove,
 } from 'firebase/firestore';
-import { Place, uploadPlace } from '../types';
+import { Place, uploadPlace, Collection, CreateCollectionData } from '../types';
 
 // Функция для получения объектов с добавлением их идентификаторов
 export const fetchPlaces = async (): Promise<Place[]> => {
@@ -173,6 +173,77 @@ export const deleteRating = async (userId, placeId) => {
   } catch (error) {
     console.error('Error deleting rating:', error);
     throw error;
+  }
+};
+
+// Функции для работы с коллекциями
+export const createCollection = async (collectionData: CreateCollectionData, userId: string): Promise<string> => {
+  try {
+    const now = new Date().toISOString();
+    
+    const collectionWithMeta: Omit<Collection, 'id'> = {
+      ...collectionData,
+      createdAt: now,
+      updatedAt: now,
+      createdBy: userId,
+    };
+
+    const docRef = await addDoc(collection(db, 'collections'), collectionWithMeta);
+    console.log('Collection created with ID: ', docRef.id);
+    return docRef.id;
+  } catch (error) {
+    console.error('Error creating collection: ', error);
+    throw error;
+  }
+};
+
+export const fetchCollections = async (): Promise<Collection[]> => {
+  try {
+    const collectionsCol = collection(db, 'collections');
+    const collectionSnapshot = await getDocs(collectionsCol);
+
+    const collectionList = collectionSnapshot.docs.map((doc) => {
+      const data = doc.data() as Omit<Collection, 'id'>;
+      return { ...data, id: doc.id };
+    });
+    return collectionList;
+  } catch (error) {
+    console.error('Error fetching collections: ', error);
+    return [];
+  }
+};
+
+export const fetchPublicCollections = async (): Promise<Collection[]> => {
+  try {
+    const collectionsCol = collection(db, 'collections');
+    const q = query(collectionsCol, where('isPublic', '==', true));
+    const collectionSnapshot = await getDocs(q);
+
+    const collectionList = collectionSnapshot.docs.map((doc) => {
+      const data = doc.data() as Omit<Collection, 'id'>;
+      return { ...data, id: doc.id };
+    });
+    return collectionList;
+  } catch (error) {
+    console.error('Error fetching public collections: ', error);
+    return [];
+  }
+};
+
+export const fetchUserCollections = async (userId: string): Promise<Collection[]> => {
+  try {
+    const collectionsCol = collection(db, 'collections');
+    const q = query(collectionsCol, where('createdBy', '==', userId));
+    const collectionSnapshot = await getDocs(q);
+
+    const collectionList = collectionSnapshot.docs.map((doc) => {
+      const data = doc.data() as Omit<Collection, 'id'>;
+      return { ...data, id: doc.id };
+    });
+    return collectionList;
+  } catch (error) {
+    console.error('Error fetching user collections: ', error);
+    return [];
   }
 };
 

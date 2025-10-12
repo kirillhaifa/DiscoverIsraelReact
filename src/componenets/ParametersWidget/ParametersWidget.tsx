@@ -3,7 +3,7 @@ import Tooltip from '@mui/material/Tooltip';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { Place } from '../../types';
-import { translations } from '../../public/translations';
+import { translations } from '../../../public/translations';
 import { MdOutlineOutdoorGrill } from 'react-icons/md';
 import { LiaHikingSolid } from 'react-icons/lia';
 import { PiBinocularsLight } from 'react-icons/pi';

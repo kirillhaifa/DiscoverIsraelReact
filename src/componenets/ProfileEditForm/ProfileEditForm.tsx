@@ -12,7 +12,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
-import { translations } from '../../public/translations';
+import { translations } from '../../../public/translations';
 import { useTheme } from '@mui/material/styles';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
@@ -69,23 +69,23 @@ const ProfileEditForm = () => {
   if (!userData) return null;
 
   return (
-    <Paper elevation={3} sx={{ p: 3, mt: 2 }}>
-      <Typography variant="h6" sx={{ mb: 2 }}>{t('profile')}</Typography>
+    <Paper elevation={3} sx={{ p: 3, mt: 2, backgroundColor: 'var(--background-color)' }}>
+      <Typography variant="h6" sx={{ mb: 2, color: 'var(--text-color)' }}>{t('profile')}</Typography>
       <Box component="form" onSubmit={handleSubmit} sx={{ display: 'grid', gap: 2 }}>
         <Box>
-          <Typography variant="caption" sx={{ fontWeight: 600, mb: .5 }}>{t('firstName')}</Typography>
+          <Typography variant="caption" sx={{ fontWeight: 600, mb: .5, color: 'var(--text-color)' }}>{t('firstName')}</Typography>
           <TextField variant="outlined" fullWidth margin="dense" name="name" placeholder={t('firstName')} value={formData.name} onChange={handleChange} size="small" />
         </Box>
         <Box>
-          <Typography variant="caption" sx={{ fontWeight: 600, mb: .5 }}>{t('lastName')}</Typography>
+          <Typography variant="caption" sx={{ fontWeight: 600, mb: .5, color: 'var(--text-color)' }}>{t('lastName')}</Typography>
           <TextField variant="outlined" fullWidth margin="dense" name="surname" placeholder={t('lastName')} value={formData.surname} onChange={handleChange} size="small" />
         </Box>
         <Box>
-          <Typography variant="caption" sx={{ fontWeight: 600, mb: .5 }}>{t('email')}</Typography>
+          <Typography variant="caption" sx={{ fontWeight: 600, mb: .5, color: 'var(--text-color)' }}>{t('email')}</Typography>
           <TextField variant="outlined" fullWidth margin="dense" name="email" placeholder={t('email')} value={formData.email} onChange={handleChange} size="small" />
         </Box>
         <Box>
-          <Typography variant="caption" sx={{ fontWeight: 600, mb: .5 }}>Avatar URL</Typography>
+          <Typography variant="caption" sx={{ fontWeight: 600, mb: .5, color: 'var(--text-color)' }}>Avatar URL</Typography>
           <TextField variant="outlined" fullWidth margin="dense" name="profilePicture" placeholder="https://" value={formData.profilePicture} onChange={handleChange} size="small" />
         </Box>
         {/* <Divider sx={{ my: 1 }} />
@@ -119,7 +119,13 @@ const ProfileEditForm = () => {
           </Select>
         </FormControl> */}
         <Box sx={{ display:'flex', gap:2, mt:1 }}>
-          <Button variant="contained" type="submit">{t('saveChanges')}</Button>
+          <Button 
+            variant="contained" 
+            type="submit"
+            sx={{ backgroundColor: 'var(--accent-color)', '&:hover': { backgroundColor: 'var(--accent-color)', opacity: 0.8 } }}
+          >
+            {t('saveChanges')}
+          </Button>
         </Box>
       </Box>
     </Paper>

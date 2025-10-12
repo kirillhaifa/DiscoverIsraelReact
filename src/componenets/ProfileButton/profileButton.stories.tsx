@@ -4,7 +4,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { MemoryRouter } from 'react-router-dom';
 import ProfileButton from './profileButton';
 import languageReducer from '../../store/Language/languageSlice';
-import '../../public/Styles/normalizer.module.scss';
+import '../../../public/Styles/normalizer.module.scss';
 
 // Создаем моковый store с правильной структурой состояния
 const createMockStore = (language: string) =>

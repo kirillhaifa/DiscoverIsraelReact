@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 let classes = require('./Navigation.module.scss');
-import { translations } from '../../public/translations';
+import { translations } from '../../../public/translations';
 import { RootState } from '../../store';
 import { useSelector } from 'react-redux';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -40,7 +40,7 @@ const Navigation = () => {
         <Link to="/about" onClick={() => setMenuOpen(false)}>{translations.aboutProject[languageShort]}</Link>
       </li>
       <li className={classes.link}>
-        <Link to="/recomendations" onClick={() => setMenuOpen(false)}>{translations.recommendations[languageShort]}</Link>
+        <Link to="/recommendations" onClick={() => setMenuOpen(false)}>{translations.recommendations[languageShort]}</Link>
       </li>
       {user && userData?.role === 'admin' && (
         <li className={classes.link}>

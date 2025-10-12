@@ -5,7 +5,7 @@ import { RootState } from '../../store';
 import classNames from 'classnames';
 import { PiGlobeHemisphereEastLight } from 'react-icons/pi';
 let classes = require('./languageSelector.module.scss');
-let basic = require('../../public/Styles/basic.module.scss')
+let basic = require('../../../public/Styles/basic.module.scss')
 
 const LanguageSelector = () => {
   const dispatch = useDispatch();

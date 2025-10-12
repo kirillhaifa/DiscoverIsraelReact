@@ -4,7 +4,7 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import { MdChevronLeft, MdChevronRight, MdClose } from 'react-icons/md';
 let classes = require('./PhotosModal.module.scss');
-let themes = require('../../public/Styles/themes.module.scss');
+let themes = require('../../../public/Styles/themes.module.scss');
 
 interface Photo {
   photoWay?: string;
