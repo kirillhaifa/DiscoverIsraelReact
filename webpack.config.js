@@ -59,13 +59,11 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './public/index.html',
       filename: 'index.html',
-      favicon: './public/favicon.ico',
     }),
     // Генерим 404.html из того же шаблона — это даёт fallback для SPA на GH Pages
     new HtmlWebpackPlugin({
       template: './public/index.html',
       filename: '404.html',
-      favicon: './public/favicon.ico',
     }),
     new CopyWebpackPlugin({
       patterns: [
