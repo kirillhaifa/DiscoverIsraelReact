@@ -1,7 +1,6 @@
-import React from "react";
 import { AppDispatch } from "../store";
 import { setLocation, setLocationError } from "../store/Location/locationSlice";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 
 export const fetchUserLocation = () => async (dispatch: AppDispatch) => {
   if (navigator.geolocation) {
@@ -29,7 +28,7 @@ export const fetchUserLocation = () => async (dispatch: AppDispatch) => {
  * @returns дебаунсенное значение
  */
 export function useDebounce<T>(value: T, delay: number): T {
-  const [debouncedValue, setDebouncedValue] = React.useState(value);
+  const [debouncedValue, setDebouncedValue] = useState(value);
 
   useEffect(() => {
     const handler = setTimeout(() => {

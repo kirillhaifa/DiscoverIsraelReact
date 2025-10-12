@@ -137,3 +137,52 @@ export interface FavoriteMonths {
   November: boolean;
   December: boolean;
 }
+
+// Типы для коллекций
+export interface Collection {
+  id: string;
+  title: {
+    ru: string;
+    en: string;
+    he: string;
+  };
+  shortDescription: {
+    ru: string;
+    en: string;
+    he: string;
+  };
+  longDescription: {
+    ru: string;
+    en: string;
+    he: string;
+  };
+  coverPhoto: string;
+  collectionPhotos?: string[]; // Опциональные фото коллекции
+  placeIds: string[]; // Массив ID мест
+  createdAt: string;
+  updatedAt: string;
+  createdBy: string; // ID пользователя-создателя
+  isPublic: boolean;
+}
+
+export interface CreateCollectionData {
+  title: {
+    ru: string;
+    en: string;
+    he: string;
+  };
+  shortDescription: {
+    ru: string;
+    en: string;
+    he: string;
+  };
+  longDescription: {
+    ru: string;
+    en: string;
+    he: string;
+  };
+  coverPhoto: string;
+  collectionPhotos?: string[];
+  placeIds: string[];
+  isPublic: boolean;
+}

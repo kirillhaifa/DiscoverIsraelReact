@@ -8,9 +8,9 @@ import PlaceRating from '../PlaceRating/PlaceRating';
 import { deleteRating, submitRating } from '../../firebase/firebaseService';
 import { useNavigate } from 'react-router-dom';
 import { TbJewishStar } from 'react-icons/tb';
-import { translations } from '../../public/translations';
+import { translations } from '../../../public/translations';
 let classes = require('./PlaceCard.module.scss');
-let themes = require('../../public/Styles/themes.module.scss');
+let themes = require('../../../public/Styles/themes.module.scss');
 
 interface PlaceCardProps {
   place: Place;
@@ -62,7 +62,7 @@ const PlaceCard: React.FC<PlaceCardProps> = ({ place }) => {
       )}
       <div className={classes.descriptionContainer}>
         <div>
-          <p>{place.id}</p>
+          {userData?.role === 'admin' && <p>{place.id}</p>}
           <h3>{highlightText(place.placeName[language], searchText)}</h3>
           <p>{highlightText(place.shortDescription[language], searchText)}</p>
         </div>

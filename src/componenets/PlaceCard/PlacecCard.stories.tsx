@@ -4,8 +4,8 @@ import { configureStore } from '@reduxjs/toolkit';
 import PlaceCard from './PlaceCard';
 import languageReducer from '../../store/Language/languageSlice';
 import userReducer from '../../store/User/userSlice';
-import '../../public/Styles/themes.module.scss';
-import '../../public/Styles/normalizer.module.scss';
+import '../../../public/Styles/themes.module.scss';
+import '../../../public/Styles/normalizer.module.scss';
 
 // Моковые данные для компонента
 const mockPlace = {

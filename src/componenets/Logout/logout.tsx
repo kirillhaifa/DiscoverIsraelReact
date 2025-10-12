@@ -7,7 +7,7 @@ import { clearUserData } from '../../store/User/userSlice';
 import { clearTheme } from '../../store/ColorScheme/themeSlice';
 import { resetFilters } from '../../store/Filters/filtersSlice';
 import { resetPlaces } from '../../store/Places/placesSlice';
-import { translations } from '../../public/translations';
+import { translations } from '../../../public/translations';
 import { CiLogout } from "react-icons/ci";
 let classes = require('./logout.module.scss');
 

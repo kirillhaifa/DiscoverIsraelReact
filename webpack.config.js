@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 
 const REPO = 'DiscoverIsraelReact'; // <— ИМЯ РЕПОЗИТОРИЯ
@@ -48,25 +49,66 @@ module.exports = {
         test: /\.css$/i,
         use: ['style-loader', 'css-loader'],
       },
+      {
+        test: /\.(png|jpe?g|gif|ico|svg)$/i,
+        type: 'asset/resource',
+      },
     ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/public/index.html',
+      template: './public/index.html',
       filename: 'index.html',
+      favicon: './public/favicon.ico',
     }),
     // Генерим 404.html из того же шаблона — это даёт fallback для SPA на GH Pages
     new HtmlWebpackPlugin({
-      template: './src/public/index.html',
+      template: './public/index.html',
       filename: '404.html',
+      favicon: './public/favicon.ico',
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: 'public/img',
+          to: 'img',
+        },
+        {
+          from: 'public/favicon.ico',
+          to: 'favicon.ico',
+        },
+        {
+          from: 'public/favicon.png',
+          to: 'favicon.png',
+        },
+        {
+          from: 'public/Styles',
+          to: 'Styles',
+        },
+        {
+          from: 'public/Fonts',
+          to: 'Fonts',
+        },
+      ],
     }),
     new Dotenv({ systemvars: true }),
   ],
   devServer: {
-    static: './dist',
+    static: [
+      {
+        directory: path.join(__dirname, 'public'),
+        publicPath: '/',
+        serveIndex: false,
+      },
+      {
+        directory: path.join(__dirname, 'dist'),
+      },
+    ],
     hot: true,
     watchFiles: ['src/**/*.scss', 'src/**/*.css'],
     port: 3000,
-    historyApiFallback: true, // SPA fallback в dev
+    historyApiFallback: {
+      index: '/index.html'
+    },
   },
 };

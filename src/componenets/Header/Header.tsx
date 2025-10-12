@@ -1,5 +1,5 @@
 import React from 'react';
-import { translations } from '../../public/translations';
+import { translations } from '../../../public/translations';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { useAuthState } from 'react-firebase-hooks/auth';

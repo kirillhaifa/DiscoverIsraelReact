@@ -12,7 +12,7 @@ import { fetchPlacesThunk } from '../../store/Places/placesThunks';
 import PlaceDetailsPage from '../../pages/PlaceDetailsPage/PlaceDetailsPage';
 import PlacesMap from '../../pages/Map/Map';
 import NotFound from '../NotFound/NotFound';
-import '../../public/Fonts/fonts.scss';
+import '../../../public/Fonts/fonts.scss';
 import Profile from '../../pages/Profile/profile';
 import AboutProject from '../../pages/AboutProject/aboutProject';
 import { fetchUserLocation } from '../../utils/hooks';
@@ -22,11 +22,12 @@ import AuthModal from '../AuthModal/AuthModal';
 import MainPageLayout from '../../pages/MainPage/MainPage';
 import AdminPanel from '../../pages/AdminPanel/AdminPanel';
 import MainLayout from '../Layout/MainLayout';
-import Recomendations from '../../pages/Recomendations/Recomendations';
+import Recommendations from '../../pages/Recomendations/Recomendations';
+import CollectionPage from '../../pages/CollectionPage/CollectionPage';
 
 let classes = require('./App.module.scss');
-let normilizer = require('../../public/Styles/normalizer.module.scss');
-let themes = require('../../public/Styles/themes.module.scss');
+let normilizer = require('../../../public/Styles/normalizer.module.scss');
+let themes = require('../../../public/Styles/themes.module.scss');
 
 const BASENAME =
   process.env.NODE_ENV === 'production' ? '/DiscoverIsraelReact' : '/';
@@ -142,7 +143,8 @@ const App = () => {
             <Route path="/map" element={<PlacesMap />} />
             <Route path="/admin" element={<AdminPanel />} />
             <Route path="/about" element={<AboutProject />} />
-            <Route path="/recomendations" element={<Recomendations />} />
+            <Route path="/recommendations" element={<Recommendations />} />
+            <Route path="/collections/:id" element={<CollectionPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           <div id="modal-root" />

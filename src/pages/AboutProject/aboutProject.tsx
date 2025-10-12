@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
-import { translations } from '../../public/translations';
+import { translations } from '../../../public/translations';
 let classes = require('./aboutProject.module.scss');
 
 const AboutProject = () => {

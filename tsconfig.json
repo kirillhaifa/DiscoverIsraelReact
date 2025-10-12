@@ -10,5 +10,5 @@
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true
   },
-  "include": ["src", "firebaseConfig.js", "src/global.d.ts", "src/**/*.scss"]
+  "include": ["src", "firebaseConfig.js", "src/global.d.ts", "src/**/*.scss", "public"]
 }

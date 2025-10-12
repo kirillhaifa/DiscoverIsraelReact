@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { translations } from '../../public/translations';
+import { translations } from '../../../public/translations';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { PiUserSquareThin } from "react-icons/pi";

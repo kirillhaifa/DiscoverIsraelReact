@@ -4,12 +4,13 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { useNavigate } from 'react-router-dom';
 import { TbJewishStar } from 'react-icons/tb';
-import { translations } from '../../public/translations';
-let styles = require('./RecommendationCard.module.scss');
+import { translations } from '../../../public/translations';
+let styles = require('./PlaceInCollectionCard.module.scss');
 
-interface RecommendationCardProps { place: Place; }
 
-const RecommendationCard: React.FC<RecommendationCardProps> = ({ place }) => {
+interface PlaceInCollectionCardProps { place: Place; }
+
+const PlaceInCollectionCard: React.FC<PlaceInCollectionCardProps> = ({ place }) => {
   const language = useSelector((s: RootState) => s.language.language);
   const languageShort = { ru: 'ru', en: 'en', he: 'he' }[language] || 'en';
   const navigate = useNavigate();
@@ -42,4 +43,4 @@ const RecommendationCard: React.FC<RecommendationCardProps> = ({ place }) => {
   );
 };
 
-export default RecommendationCard;
+export default PlaceInCollectionCard;

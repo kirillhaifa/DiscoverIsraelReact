@@ -11,7 +11,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 let classes = require('./PlaceDetails.module.scss');
-let themes = require('../../public/Styles/themes.module.scss');
+let themes = require('../../../public/Styles/themes.module.scss');
 
 interface PlaceDetailsProps {
   place: Place;
@@ -21,6 +21,7 @@ const PlaceDetails: React.FC<PlaceDetailsProps> = ({ place }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalIndex, setModalIndex] = useState<number | null>(null);
   const [photos, setPhotos] = useState(place.photos || []);
+  const currentLanguage = useSelector((state: RootState) => state.language.language);
 
   useEffect(() => {
     setPhotos(place.photos || []);
@@ -144,7 +145,7 @@ const PlaceDetails: React.FC<PlaceDetailsProps> = ({ place }) => {
         ))}
       </Slider>
       <div className={classes.detailsHeader}>
-        <h2 className={classes.placeTitle}>{place.placeName.en}</h2>
+        <h2 className={classes.placeTitle}>{place.placeName[currentLanguage as keyof typeof place.placeName] || place.placeName.en}</h2>
         <IconButton
           href={place.googleMapsLink}
           target="_blank"
@@ -159,7 +160,7 @@ const PlaceDetails: React.FC<PlaceDetailsProps> = ({ place }) => {
       <div style={{marginBottom: 12}}>
         <ParametersWidget place={place} />
       </div>
-      <p className={classes.placeDescription}>{place.extendedDescription.en}</p>
+      <p className={classes.placeDescription}>{place.extendedDescription[currentLanguage as keyof typeof place.extendedDescription] || place.extendedDescription.en}</p>
       <PhotosModal
         open={modalOpen}
         index={modalIndex}

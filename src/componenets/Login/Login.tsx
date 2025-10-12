@@ -4,7 +4,7 @@ import { handleGoogleSignIn } from '../../firebase/authService';
 import { FcGoogle } from 'react-icons/fc';
 import CheckinLogin from '../Checkin/checkin';
 import { useSelector } from 'react-redux';
-import { translations } from '../../public/translations';
+import { translations } from '../../../public/translations';
 import { RootState } from '../../store';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../../firebaseConfig';

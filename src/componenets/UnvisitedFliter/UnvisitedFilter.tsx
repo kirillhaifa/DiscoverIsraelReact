@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { setUnvisited } from "../../store/Filters/filtersSlice";
-import { translations } from "../../public/translations";
+import { translations } from "../../../public/translations";
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../../firebaseConfig';
 import { requireAuth } from '../../store/authPrompt/authPromptSlice';
