@@ -10,9 +10,11 @@ import {
 } from "../../store/Filters/filtersSelectors";
 import { Place } from "../../types";
 import PlaceCard from "../PlaceCard/PlaceCard";
+import Loader from "../Loader/Loader";
 import { getDistanceFromLatLonInKm } from "../../utils/functions";
 import { selectUserRatings } from "../../store/User/userSelector";
 import { RootState } from "../../store";
+import { translations } from "../../../public/translations";
 let classes = require('./PlacesList.module.scss')
 
 const PlacesList = () => {
@@ -24,9 +26,11 @@ const PlacesList = () => {
   const searchText = useSelector(selectSearchText); // Текст поиска
   const userRatings = useSelector(selectUserRatings); // Рейтинги пользователя
   const userCoordinates = useSelector((state: RootState) => state.location.coordinates); // Координаты пользователя
+  const language = useSelector((state: RootState) => state.language.language); // Текущий язык
 
-  // Состояние для анимаций
+  // Состояние для анимаций и загрузки
   const [previousPlaces, setPreviousPlaces] = useState<Place[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Мемоизированная фильтрация мест
   const filteredPlaces = useMemo(() => {
@@ -82,6 +86,28 @@ const PlacesList = () => {
   useEffect(() => {
     setPreviousPlaces(filteredPlaces);
   }, [filteredPlaces]);
+
+  // Отслеживаем состояние загрузки
+  useEffect(() => {
+    if (places.length > 0) {
+      // Добавляем небольшую задержку для плавного перехода
+      const timer = setTimeout(() => {
+        setIsLoading(false);
+      }, 300);
+      return () => clearTimeout(timer);
+    } else {
+      setIsLoading(true);
+    }
+  }, [places]);
+
+  // Показываем лоадер во время загрузки
+  if (isLoading) {
+    return (
+      <div className={classes.list}>
+        <Loader message={`${translations.loading[language] || translations.loading.en}...`} />
+      </div>
+    );
+  }
 
   return (
     <div className={classes.list}>
