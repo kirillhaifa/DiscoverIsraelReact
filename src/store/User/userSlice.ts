@@ -44,7 +44,6 @@ const userSlice = createSlice({
       state.userData = null;
       state.loading = false;
       state.error = null;
-      console.log('User data cleared from store');
     }
   },
   extraReducers: (builder) => {

@@ -54,7 +54,6 @@ const filtersSlice = createSlice({
       state.region = action.payload;
     },
     setDistance(state, action: PayloadAction<number>) {
-      console.log("Новое значение distance:", action.payload);
       state.distance = action.payload;
     },
        

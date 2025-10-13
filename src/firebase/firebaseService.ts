@@ -30,7 +30,6 @@ export async function addPlaceToCollection(place: Place) {
   const placesCollection = collection(db, 'places');
   try {
     const docRef = await addDoc(placesCollection, place);
-    console.log('Place added with ID: ', docRef.id);
   } catch (e) {
     console.error('Error adding place: ', e);
   }
@@ -71,7 +70,6 @@ export const editPlaceField = async (
     // Обновляем только переданные поля
     await updateDoc(placeRef, updatedFields);
 
-    console.log('Place successfully updated with fields: ', updatedFields);
   } catch (e) {
     console.error('Error updating place: ', e);
   }
@@ -80,7 +78,6 @@ export const editPlaceField = async (
 export const uploadPlaceToFirestore = async (placeData: uploadPlace) => {
   try {
     const docRef = await addDoc(collection(db, 'places'), placeData);
-    console.log('Document written with ID: ', docRef.id);
 
     // Теперь вы можете обновить объект, добавив сгенерированный id:
     placeData.id = docRef.id;
@@ -105,7 +102,6 @@ export const fetchPlaceById = async (id: string): Promise<Place | null> => {
       const data = placeSnapshot.data() as Omit<Place, 'id'>;
       return { ...data, id: placeSnapshot.id }; // Добавляем Id документа
     } else {
-      console.log('No such document!');
       return null;
     }
   } catch (e) {
@@ -143,7 +139,6 @@ export const submitRating = async (userId, placeId, rating) => {
       ratings: userData.ratings,
     });
 
-    console.log('Rating successfully submitted or updated');
   } catch (error) {
     console.error('Error submitting rating:', error);
     throw error;
@@ -169,7 +164,6 @@ export const deleteRating = async (userId, placeId) => {
       ratings: updatedRatings,
     });
 
-    console.log('Rating successfully deleted');
   } catch (error) {
     console.error('Error deleting rating:', error);
     throw error;
@@ -189,7 +183,6 @@ export const createCollection = async (collectionData: CreateCollectionData, use
     };
 
     const docRef = await addDoc(collection(db, 'collections'), collectionWithMeta);
-    console.log('Collection created with ID: ', docRef.id);
     return docRef.id;
   } catch (error) {
     console.error('Error creating collection: ', error);

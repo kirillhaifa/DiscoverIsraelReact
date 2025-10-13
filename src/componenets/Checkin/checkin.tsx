@@ -18,10 +18,7 @@ const Login: React.FC<LoginProps> = ({ title = 'Login', className }) => {
 
   const handleLogin = async () => {
     try {
-      await loginUser(email, password).then((res) => {
-        console.log(res);
-      });
-      console.log('Вход выполнен успешно!');
+      await loginUser(email, password);
     } catch (error) {
       console.error('Ошибка входа:', error);
     }

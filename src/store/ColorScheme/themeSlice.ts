@@ -36,7 +36,6 @@ const themeSlice = createSlice({
     setTheme: (state, action) => {
       state.theme = action.payload; // 'light' или 'dark'
       saveThemeToStorage(action.payload); // Сохраняем в localStorage
-      console.log('Theme set to:', action.payload);
     },
     clearTheme: (state) => {
       state.theme = null;

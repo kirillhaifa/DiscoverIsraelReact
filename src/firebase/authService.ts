@@ -12,7 +12,6 @@ export const registerUser = async (email: string, password: string) => {
     if (user) {
       // Отправляем письмо с подтверждением email
       await sendEmailVerification(user);
-      console.log('Verification email sent to:', user.email);
 
       // Добавляем пользователя в Firestore в коллекцию 'Users'
       await setDoc(doc(db, 'Users', user.uid), {
@@ -29,7 +28,6 @@ export const registerUser = async (email: string, password: string) => {
         language: 'en',
         colorTheme: 'light',
       });
-      console.log(`User registered and data added to Firestore, ${user}`);
     }
   } catch (error) {
     console.error('Error during user registration:', error);
@@ -44,7 +42,6 @@ export const loginUser = async (email: string, password: string) => {
 
     // Получение данных пользователя из Firestore
     const userData = await getUserData(user.uid);
-    console.log('User data after email sign-in:', userData);
     
     return userData; // Возвращаем полный объект пользователя
   } catch (error) {
@@ -57,7 +54,6 @@ export const loginUser = async (email: string, password: string) => {
 export const logout = async () => {
   try {
     await signOut(auth);
-    console.log("Signout succsesful");
   } catch (error) {
     console.error("singout error:", error);
   }
@@ -71,7 +67,6 @@ export const handleGoogleSignIn = async () => {
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
 
-    console.log('Google sign-in successful for user:', user.uid);
 
     // Проверяем, существует ли пользователь в Firestore
     const userDocRef = doc(db, 'Users', user.uid);
@@ -79,7 +74,6 @@ export const handleGoogleSignIn = async () => {
 
     if (!userDoc.exists()) {
       // Если пользователь не существует, создаем новую запись
-      console.log('Creating new user in Firestore for:', user.email);
       await setDoc(userDocRef, {
         userID: user.uid,
         name: user.displayName?.split(' ')[0] || null,
@@ -94,14 +88,10 @@ export const handleGoogleSignIn = async () => {
         language: 'en',
         colorTheme: 'light',
       });
-      console.log('New user created in Firestore');
-    } else {
-      console.log('User already exists in Firestore');
-    }
+    } 
 
     // Получение данных пользователя из Firestore
     const userData = await getUserData(user.uid);
-    console.log('User data after Google sign-in:', userData);
     
     return userData; // Возвращаем полный объект пользователя
   } catch (error) {
@@ -125,7 +115,6 @@ export const getUserData = async (userUID: string) => {
         photoURL: auth.currentUser?.photoURL,
       };
     } else {
-      console.log('User not found in Firestore for UID:', userUID);
       return null;
     }
   } catch (error) {
