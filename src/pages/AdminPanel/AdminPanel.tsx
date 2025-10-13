@@ -95,7 +95,6 @@ const AdminPanel = () => {
           <CollectionCreator 
             onSuccess={(collectionId) => {
               setShowCollectionCreator(false);
-              console.log('Collection created with ID:', collectionId);
               // Здесь можно добавить дополнительные действия после создания коллекции
             }}
           />

@@ -7,15 +7,12 @@ import { UserState } from './userSlice';
 export const fetchUserData = createAsyncThunk<UserState, string>(
   'user/fetchUserData',
   async (userID, { rejectWithValue }) => {
-    try {
-      console.log('fetchUserData called for userID:', userID);
-      
+    try {      
       const userDocRef = doc(db, 'Users', userID);
       const userSnapshot = await getDoc(userDocRef);
 
       if (userSnapshot.exists()) {
         const userData = userSnapshot.data();
-        console.log('User data found in Firestore:', userData);
         
         // Преобразуем joinDate в строку для сериализации
         const result = {
@@ -33,10 +30,8 @@ export const fetchUserData = createAsyncThunk<UserState, string>(
           colorTheme: userData.colorTheme || null,
         };
         
-        console.log('Processed user data:', result);
         return result;
       } else {
-        console.log('User not found in Firestore for userID:', userID);
         return rejectWithValue('User not found');
       }
     } catch (error) {

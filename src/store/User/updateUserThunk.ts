@@ -7,14 +7,11 @@ import { UserState } from './userSlice';
 export const updateUserThunk = createAsyncThunk(
   'user/updateUserData',
   async (updatedData: Partial<UserState>, { rejectWithValue }) => {
-    console.log('update start')
-    console.log(updatedData.userID)
     try {
       const userDocRef = doc(db, 'Users', updatedData.userID as string);
       
       // Обновление данных в Firestore
       await updateDoc(userDocRef, updatedData);
-      console.log('userInfo updated')
       return updatedData; // Возвращаем обновленные данные
 
     } catch (error) {

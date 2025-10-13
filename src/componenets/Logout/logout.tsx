@@ -18,7 +18,6 @@ const Logout = () => {
 
   const handleLogout = async () => {
     try {
-      console.log('Starting logout process...');
       
       // Сначала очищаем Redux store
       dispatch(clearUserData());
@@ -28,7 +27,6 @@ const Logout = () => {
       
       // Затем выходим из Firebase Auth
       await signOut(auth);
-      console.log('User signed out successfully');
     } catch (error) {
       console.error('Error signing out:', error);
     }

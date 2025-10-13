@@ -1,8 +1,71 @@
 .list {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 10px;
+  padding: 20px 10px;
   width: 100%;
-  padding: 40px 0;
+}
+
+.transitionGroup {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 10px;
+  justify-content: center;
+  align-content: start;
+  
+  /* Каждый ряд будет иметь высоту самого высокого элемента в этом ряду */
+  grid-auto-rows: max-content;
+}
+
+/* Убираем фиксированные размеры, позволяем grid управлять */
+.transitionGroup > :global(*) {
+  width: 100%;
+  min-height: 100%;
+}
+
+/* Анимация появления карточек */
+.placeEnter {
+  opacity: 0;
+  transform: scale(0.9) translateY(-10px);
+}
+
+.placeEnterActive {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  transition: opacity 300ms ease-out, transform 300ms ease-out;
+}
+
+/* Анимация исчезновения карточек */
+.placeExit {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+.placeExitActive {
+  opacity: 0;
+  transform: scale(0.9) translateY(-10px);
+  transition: opacity 200ms ease-in, transform 200ms ease-in;
+}
+
+/* Глобальные стили для анимируемых карточек */
+:global(.card) {
+  transition: box-shadow 0.3s ease;
+}
+
+:global(.card:hover) {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Стили для сообщения "не найдено" */
+.noResults {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-secondary, #666);
+  
+  h2 {
+    margin-bottom: 16px;
+    color: var(--text-primary, #333);
+  }
+  
+  p {
+    font-size: 16px;
+    line-height: 1.5;
+  }
 }

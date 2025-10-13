@@ -51,11 +51,6 @@ const App = () => {
   useEffect(() => {
     // Приоритет: тема из localStorage (userPreferredTheme) > тема из профиля > светлая тема по умолчанию
     const themeToUse = userPreferredTheme || userProfileTheme || 'light';
-    console.log('App resolving theme:', {
-      userPreferredTheme,
-      userProfileTheme,
-      themeToUse,
-    });
     setResolvedTheme(themeToUse);
   }, [userPreferredTheme, userProfileTheme]);
 
@@ -77,12 +72,6 @@ const App = () => {
   useEffect(() => {
     if (user) {
       if (user.uid) {
-        console.log(
-          'App: User authenticated, fetching user data for:',
-          user.uid,
-        );
-        console.log('User email:', user.email);
-        console.log('User emailVerified:', user.emailVerified);
 
         // Небольшая задержка для обеспечения очистки старых данных
         setTimeout(() => {
@@ -90,7 +79,6 @@ const App = () => {
         }, 100);
       }
     } else {
-      console.log('App: No user authenticated, clearing user data');
       // Очищаем данные пользователя при выходе
       dispatch(clearUserData());
     }

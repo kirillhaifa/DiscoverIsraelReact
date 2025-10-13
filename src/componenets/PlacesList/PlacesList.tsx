@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useSelector } from "react-redux";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { selectPlaces } from "../../store/Places/placesSelectors";
 import { 
   selectUnvisited, 
@@ -9,9 +10,11 @@ import {
 } from "../../store/Filters/filtersSelectors";
 import { Place } from "../../types";
 import PlaceCard from "../PlaceCard/PlaceCard";
+import Loader from "../Loader/Loader";
 import { getDistanceFromLatLonInKm } from "../../utils/functions";
 import { selectUserRatings } from "../../store/User/userSelector";
 import { RootState } from "../../store";
+import { translations } from "../../../public/translations";
 let classes = require('./PlacesList.module.scss')
 
 const PlacesList = () => {
@@ -23,9 +26,15 @@ const PlacesList = () => {
   const searchText = useSelector(selectSearchText); // Текст поиска
   const userRatings = useSelector(selectUserRatings); // Рейтинги пользователя
   const userCoordinates = useSelector((state: RootState) => state.location.coordinates); // Координаты пользователя
+  const language = useSelector((state: RootState) => state.language.language); // Текущий язык
 
-  // Фильтрация мест
-  const filteredPlaces = places.filter((place: Place) => {
+  // Состояние для анимаций и загрузки
+  const [previousPlaces, setPreviousPlaces] = useState<Place[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Мемоизированная фильтрация мест
+  const filteredPlaces = useMemo(() => {
+    return places.filter((place: Place) => {
     // Фильтрация по "непосещенные"
     if (
       unvisited &&
@@ -70,16 +79,57 @@ const PlacesList = () => {
     }
 
     return true; // Если место прошло все фильтры
-  });
+    });
+  }, [places, unvisited, userRatings, parameters, userCoordinates, maxDistance, searchText]);
+
+  // Отслеживаем изменения для анимаций
+  useEffect(() => {
+    setPreviousPlaces(filteredPlaces);
+  }, [filteredPlaces]);
+
+  // Отслеживаем состояние загрузки
+  useEffect(() => {
+    if (places.length > 0) {
+      // Добавляем небольшую задержку для плавного перехода
+      const timer = setTimeout(() => {
+        setIsLoading(false);
+      }, 300);
+      return () => clearTimeout(timer);
+    } else {
+      setIsLoading(true);
+    }
+  }, [places]);
+
+  // Показываем лоадер во время загрузки
+  if (isLoading) {
+    return (
+      <div className={classes.list}>
+        <Loader message={`${translations.loading[language] || translations.loading.en}...`} />
+      </div>
+    );
+  }
 
   return (
     <div className={classes.list}>
       {filteredPlaces.length > 0 ? (
-        filteredPlaces.map((place: Place) => (
-          <PlaceCard key={place.id} place={place} />
-        ))
+        <TransitionGroup component="div" className={classes.transitionGroup}>
+          {filteredPlaces.map((place: Place) => (
+            <CSSTransition
+              key={place.id}
+              timeout={300}
+              classNames={{
+                enter: classes.placeEnter,
+                enterActive: classes.placeEnterActive,
+                exit: classes.placeExit,
+                exitActive: classes.placeExitActive,
+              }}
+            >
+              <PlaceCard place={place} />
+            </CSSTransition>
+          ))}
+        </TransitionGroup>
       ) : (
-        <div>
+        <div className={classes.noResults}>
           <h2>No places found</h2>
           <p>
             Try adjusting your filters to see more places.

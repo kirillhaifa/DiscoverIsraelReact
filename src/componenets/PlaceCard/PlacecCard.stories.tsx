@@ -145,7 +145,6 @@ const Template = (args) => <PlaceCard {...args} />;
 export const Default = Template.bind({});
 Default.args = {
   place: mockPlace,
-  onClick: () => console.log('PlaceCard clicked'),
 };
 
 export const AdminView = Template.bind({});
