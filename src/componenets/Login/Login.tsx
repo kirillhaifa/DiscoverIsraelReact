@@ -1,5 +1,5 @@
 // src/components/Login/Login.tsx
-import React from 'react';
+import React, { useEffect } from 'react';
 import { handleGoogleSignIn } from '../../firebase/authService';
 import { FcGoogle } from 'react-icons/fc';
 import CheckinLogin from '../Checkin/checkin';
@@ -11,11 +11,19 @@ import { auth } from '../../../firebaseConfig';
 import { Navigate } from 'react-router-dom';
 let classes = require('./Login.module.scss');
 
-const Login: React.FC<{ variant?: 'page' | 'modal' }> = ({ variant = 'page' }) => {
+const Login: React.FC<{ variant?: 'page' | 'modal'; onClose?: () => void }> = ({ variant = 'page', onClose }) => {
   const language = useSelector((state: RootState) => state.language.language);
   const [user, loading] = useAuthState(auth);
+  
+  useEffect(() => {
+    if (user && variant === 'modal' && onClose) {
+      onClose();
+    }
+  }, [user, variant, onClose]);
+  
   if (loading) return <div className={classes.loading}>{translations.loading[language]}</div>;
-  if (user) return <Navigate to="/" replace />;
+  if (user && variant === 'page') return <Navigate to="/" replace />;
+  if (user && variant === 'modal') return null;
   const t = (key: keyof typeof translations) => translations[key][language] || translations[key].en;
   return (
     <div className={`${classes.mainContent} ${variant === 'modal' ? classes.modal : ''}`}> {/* welcomeBlock now visible on mobile due to CSS override */}

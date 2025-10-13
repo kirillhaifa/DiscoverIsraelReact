@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useSelector } from "react-redux";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { selectPlaces } from "../../store/Places/placesSelectors";
 import { 
   selectUnvisited, 
@@ -24,8 +25,12 @@ const PlacesList = () => {
   const userRatings = useSelector(selectUserRatings); // Рейтинги пользователя
   const userCoordinates = useSelector((state: RootState) => state.location.coordinates); // Координаты пользователя
 
-  // Фильтрация мест
-  const filteredPlaces = places.filter((place: Place) => {
+  // Состояние для анимаций
+  const [previousPlaces, setPreviousPlaces] = useState<Place[]>([]);
+
+  // Мемоизированная фильтрация мест
+  const filteredPlaces = useMemo(() => {
+    return places.filter((place: Place) => {
     // Фильтрация по "непосещенные"
     if (
       unvisited &&
@@ -70,16 +75,35 @@ const PlacesList = () => {
     }
 
     return true; // Если место прошло все фильтры
-  });
+    });
+  }, [places, unvisited, userRatings, parameters, userCoordinates, maxDistance, searchText]);
+
+  // Отслеживаем изменения для анимаций
+  useEffect(() => {
+    setPreviousPlaces(filteredPlaces);
+  }, [filteredPlaces]);
 
   return (
     <div className={classes.list}>
       {filteredPlaces.length > 0 ? (
-        filteredPlaces.map((place: Place) => (
-          <PlaceCard key={place.id} place={place} />
-        ))
+        <TransitionGroup component="div" className={classes.transitionGroup}>
+          {filteredPlaces.map((place: Place) => (
+            <CSSTransition
+              key={place.id}
+              timeout={300}
+              classNames={{
+                enter: classes.placeEnter,
+                enterActive: classes.placeEnterActive,
+                exit: classes.placeExit,
+                exitActive: classes.placeExitActive,
+              }}
+            >
+              <PlaceCard place={place} />
+            </CSSTransition>
+          ))}
+        </TransitionGroup>
       ) : (
-        <div>
+        <div className={classes.noResults}>
           <h2>No places found</h2>
           <p>
             Try adjusting your filters to see more places.

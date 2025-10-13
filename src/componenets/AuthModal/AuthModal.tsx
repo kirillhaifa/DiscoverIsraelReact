@@ -50,7 +50,7 @@ const AuthModal: React.FC = () => {
         </div>
         <div className={classes.content}>
           {reason && <div className={classes.reasonNote}>{reasonMap[reason] || ''}</div>}
-          <Login variant="modal" />
+          <Login variant="modal" onClose={() => dispatch(closeAuthPrompt())} />
         </div>
       </div>
     </div>,
