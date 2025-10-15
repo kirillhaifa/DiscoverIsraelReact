@@ -179,6 +179,11 @@ export const translations = {
     en: 'Achievements',
     he: 'הישגים',
   },
+  noRatings: {
+    ru: 'Нет оценок',
+    en: 'No ratings',
+    he: 'אין דירוגים',
+  },
   loading: {
     ru: 'Загрузка',
     en: 'Loading',
