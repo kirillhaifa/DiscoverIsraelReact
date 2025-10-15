@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useLayoutEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '../../../firebaseConfig';
+import { useFirebaseAuth } from '../../hooks/useFirebaseAuth';
 import { fetchUserData } from '../../store/User/fetchUserThunk';
 import { clearUserData } from '../../store/User/userSlice';
 import { setTheme } from '../../store/ColorScheme/themeSlice';
@@ -24,6 +23,7 @@ import AdminPanel from '../../pages/AdminPanel/AdminPanel';
 import MainLayout from '../Layout/MainLayout';
 import Recommendations from '../../pages/Recomendations/Recomendations';
 import CollectionPage from '../../pages/CollectionPage/CollectionPage';
+import EmailVerification from '../EmailVerification/EmailVerification';
 
 let classes = require('./App.module.scss');
 let normilizer = require('../../../public/Styles/normalizer.module.scss');
@@ -35,7 +35,7 @@ const BASENAME =
 const App = () => {
   const dispatch: AppDispatch = useDispatch();
   const [isAnimating, setIsAnimating] = useState(false);
-  const [user, loading, error] = useAuthState(auth);
+  const { user, loading } = useFirebaseAuth();
   const { language } = useSelector((state: RootState) => state.language);
   const userProfileTheme = useSelector(selectUserColorTheme);
   const userPreferredTheme = useSelector(
@@ -115,10 +115,7 @@ const App = () => {
                   user.emailVerified ? (
                     <MainPageLayout />
                   ) : (
-                    <>
-                      <h3>Please confirm your email</h3>
-                      <Logout />
-                    </>
+                    <EmailVerification />
                   )
                 ) : (
                   <MainPageLayout />

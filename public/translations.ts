@@ -39,6 +39,11 @@ export const translations = {
     en: 'Log In',
     he: 'התחברות',
   },
+  register: {
+    ru: 'Регистрация',
+    en: 'Register',
+    he: 'הרשמה',
+  },
   welcomeBack: {
     ru: 'С возвращением',
     en: 'Welcome Back',
@@ -143,6 +148,26 @@ export const translations = {
     ru: 'Электронная почта',
     en: 'Email',
     he: 'דוא"ל',
+  },
+  emailVerificationTitle: {
+    ru: 'Подтвердите свой email',
+    en: 'Please confirm your email',
+    he: 'אנא אמת את האימייל שלך',
+  },
+  emailVerificationMessage: {
+    ru: 'Мы отправили письмо с подтверждением на ваш адрес электронной почты. Пожалуйста, проверьте свою почту и нажмите на ссылку для подтверждения.',
+    en: 'We sent a verification email to your address. Please check your inbox and click the verification link.',
+    he: 'שלחנו אימייל אימות לכתובת שלך. אנא בדוק את תיבת הדואר הנכנס שלך ולחץ על קישור האימות.',
+  },
+  checkingEmailStatus: {
+    ru: 'Проверяем статус подтверждения...',
+    en: 'Checking verification status...',
+    he: 'בודק סטטוס אימות...',
+  },
+  resendVerificationEmail: {
+    ru: 'Отправить письмо повторно',
+    en: 'Resend verification email',
+    he: 'שלח אימייל אימות שוב',
   },
   placesVisited: {
     ru: 'Посещенные места',

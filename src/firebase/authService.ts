@@ -122,3 +122,34 @@ export const getUserData = async (userUID: string) => {
     throw error;
   }
 };
+
+// Функция для проверки и обновления статуса подтверждения email
+export const checkEmailVerificationStatus = async () => {
+  try {
+    const user = auth.currentUser;
+    if (user) {
+      // Обновляем данные пользователя из Firebase
+      await user.reload();
+      return user.emailVerified;
+    }
+    return false;
+  } catch (error) {
+    console.error('Error checking email verification status:', error);
+    return false;
+  }
+};
+
+// Функция для повторной отправки письма подтверждения
+export const resendEmailVerification = async () => {
+  try {
+    const user = auth.currentUser;
+    if (user && !user.emailVerified) {
+      await sendEmailVerification(user);
+      return true;
+    }
+    return false;
+  } catch (error) {
+    console.error('Error resending email verification:', error);
+    throw error;
+  }
+};
