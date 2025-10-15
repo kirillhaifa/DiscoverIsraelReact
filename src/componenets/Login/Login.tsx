@@ -47,8 +47,8 @@ const Login: React.FC<{ variant?: 'page' | 'modal'; onClose?: () => void }> = ({
             </div>
             <div className={classes.inlineNote}>{t('fastestWay')}</div>
           </div>
-          <CheckinLogin title={t('emailPassword')} className={classes.formBlock} />
-          <CheckinLogin title={t('checkinLoginPassword')} className={classes.formBlock} />
+          <CheckinLogin title={t('login')} type="login" className={classes.formBlock} />
+          <CheckinLogin title={t('register')} type="register" className={classes.formBlock} />
         </div>
       </section>
     </div>

@@ -1,6 +1,6 @@
 // src/components/Login.tsx
 import React, { useState } from 'react';
-import { loginUser } from '../../firebase/authService';
+import { loginUser, registerUser } from '../../firebase/authService';
 import { useSelector } from 'react-redux';
 import { translations } from '../../../public/translations';
 import { RootState } from '../../store';
@@ -8,25 +8,32 @@ import { RootState } from '../../store';
 interface LoginProps {
   title?: string;
   className?: string;
+  type?: 'login' | 'register';
 }
 
-const Login: React.FC<LoginProps> = ({ title = 'Login', className }) => {
+const CheckinLogin: React.FC<LoginProps> = ({ title, className, type = 'login' }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const language = useSelector((state: RootState) => state.language.language);
   const t = (key: keyof typeof translations) => translations[key][language] || translations[key].en;
 
-  const handleLogin = async () => {
+  const defaultTitle = type === 'register' ? t('register') : t('login');
+
+  const handleSubmit = async () => {
     try {
-      await loginUser(email, password);
+      if (type === 'register') {
+        await registerUser(email, password);
+      } else {
+        await loginUser(email, password);
+      }
     } catch (error) {
-      console.error('Ошибка входа:', error);
+      console.error(type === 'register' ? 'Ошибка регистрации:' : 'Ошибка входа:', error);
     }
   };
 
   return (
     <div className={className}>
-      <h3>{title}</h3>
+      <h3>{title || defaultTitle}</h3>
       <label style={{ display: 'block' }}>
         <span style={{ display: 'block', fontSize: 12 }}>{t('email')}</span>
         <input
@@ -45,9 +52,9 @@ const Login: React.FC<LoginProps> = ({ title = 'Login', className }) => {
           onChange={(e) => setPassword(e.target.value)}
         />
       </label>
-      <button style={{ marginTop: 12 }} onClick={handleLogin}>{t('login')}</button>
+      <button style={{ marginTop: 12 }} onClick={handleSubmit}>{type === 'register' ? t('register') : t('login')}</button>
     </div>
   );
 };
 
-export default Login;
+export default CheckinLogin;

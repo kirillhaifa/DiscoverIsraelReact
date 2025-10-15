@@ -63,9 +63,11 @@ const Navigation = () => {
       <ul className={classes.linkList}>{navLinks}</ul>
 
       {/* Mobile burger button */}
-      <button className={classes.menuButton} onClick={() => setMenuOpen(true)} aria-label="Открыть меню">
-        <span >☰</span>
-      </button>
+      {!menuOpen && (
+        <button className={classes.menuButton} onClick={() => setMenuOpen(true)} aria-label="Открыть меню">
+          <span >☰</span>
+        </button>
+      )}
 
       {/* Mobile menu */}
       {menuOpen && (

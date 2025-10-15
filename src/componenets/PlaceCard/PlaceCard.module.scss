@@ -41,3 +41,11 @@
   color: var(--text-color); // Цвет иконки
 }
 
+.ratingsContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: auto;
+  gap: 8px;
+}
+

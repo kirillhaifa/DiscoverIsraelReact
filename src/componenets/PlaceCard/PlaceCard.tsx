@@ -5,6 +5,7 @@ import { RootState } from '../../store';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../../firebaseConfig';
 import PlaceRating from '../PlaceRating/PlaceRating';
+import PlaceOverallRating from '../PlaceOverallRating/PlaceOverallRating';
 import { deleteRating, submitRating } from '../../firebase/firebaseService';
 import { useNavigate } from 'react-router-dom';
 import { TbJewishStar } from 'react-icons/tb';
@@ -66,11 +67,14 @@ const PlaceCard: React.FC<PlaceCardProps> = ({ place }) => {
           <h3>{highlightText(place.placeName[language], searchText)}</h3>
           <p>{highlightText(place.shortDescription[language], searchText)}</p>
         </div>
-        <PlaceRating
-          placeId={place.id}
-          submitRating={submitRating}
-          deleteRating={deleteRating}
-        />
+        <div className={classes.ratingsContainer}>
+          <PlaceOverallRating placeId={place.id} />
+          <PlaceRating
+            placeId={place.id}
+            submitRating={submitRating}
+            deleteRating={deleteRating}
+          />
+        </div>
       </div>
     </div>
   );
