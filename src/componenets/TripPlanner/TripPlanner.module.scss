@@ -1,0 +1,498 @@
+.container {
+  padding: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+  background-color: var(--background-color);
+  border-radius: 12px;
+  border: 1px solid rgba(var(--text-color-rgb), 0.1);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid rgba(var(--text-color-rgb), 0.1);
+}
+
+.header h1 {
+  margin: 0;
+  color: var(--text-color);
+  font-size: 1.8rem;
+}
+
+.closeButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: none;
+  border: 2px solid var(--text-color);
+  color: var(--text-color);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: rgba(var(--text-color-rgb), 0.1);
+  }
+}
+
+.dateTimeSection {
+  margin-bottom: 30px;
+  border: 1px solid var(--text-color);
+  border-radius: 5px;
+  padding: 16px;
+}
+
+.dateTimeSection h3 {
+  margin: 0 0 15px 0;
+  color: var(--text-color);
+  font-size: 1.2rem;
+}
+
+.dateTimePickers {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.inputGroup label {
+  color: var(--text-color);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.dateInput,
+.timeInput {
+  padding: 12px;
+  border: 2px solid rgba(var(--text-color-rgb), 0.2);
+  border-radius: 6px;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-size: 14px;
+  min-width: 160px;
+
+  &:focus {
+    outline: none;
+    border-color: var(--text-color);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background-color: rgba(var(--text-color-rgb), 0.05);
+  }
+}
+
+.placesSection {
+  margin-bottom: 30px;
+  border: 1px solid var(--text-color);
+  border-radius: 5px;
+  padding: 16px;
+}
+
+.placesSection h3 {
+  margin: 0 0 20px 0;
+  color: var(--text-color);
+  font-size: 1.2rem;
+}
+
+.searchContainer {
+  margin-bottom: 20px;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid rgba(var(--text-color-rgb), 0.2);
+  border-radius: 8px;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-size: 14px;
+  transition: border-color 0.2s ease;
+
+  &:focus {
+    outline: none;
+    border-color: var(--text-color);
+  }
+
+  &::placeholder {
+    color: rgba(var(--text-color-rgb), 0.5);
+  }
+}
+.selectedPlaces {
+  border-radius: 5px;
+  border: 1px solid var(--text-color);
+  padding: 12px;
+}
+
+.availablePlaces,
+.selectedPlaces {
+  margin-bottom: 25px;
+}
+
+.availablePlaces h4,
+.selectedPlaces h4 {
+  margin: 0 0 15px 0;
+  color: var(--text-color);
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
+.placesListContainer {
+  max-height: 400px;
+  overflow-y: auto;
+  border: 1px solid rgba(var(--text-color-rgb), 0.1);
+  border-radius: 8px;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(var(--text-color-rgb), 0.1);
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(var(--text-color-rgb), 0.3);
+    border-radius: 4px;
+
+    &:hover {
+      background: rgba(var(--text-color-rgb), 0.5);
+    }
+  }
+}
+
+.placesList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.placeItem,
+.selectedPlaceItem {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 12px;
+  border: 1px solid rgba(var(--text-color-rgb), 0.2);
+  border-radius: 8px;
+  background-color: rgba(var(--text-color-rgb), 0.02);
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: rgba(var(--text-color-rgb), 0.3);
+    background-color: rgba(var(--text-color-rgb), 0.05);
+  }
+}
+
+.selectedPlaceItem {
+  border-color: rgba(var(--text-color-rgb), 0.3);
+  background-color: rgba(var(--text-color-rgb), 0.08);
+}
+
+.placeImage {
+  flex-shrink: 0;
+  width: 60px;
+  height: 50px;
+  border-radius: 6px;
+  overflow: hidden;
+  background-color: rgba(var(--text-color-rgb), 0.1);
+}
+
+.placeThumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.placeInfo {
+  flex: 1;
+}
+
+.placeInfo h5 {
+  margin: 0 0 5px 0;
+  color: var(--text-color);
+  font-size: 16px;
+}
+
+.placeInfo p {
+  margin: 0;
+  color: var(--text-color);
+  opacity: 0.7;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.routeNumber {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background-color: var(--text-color);
+  color: var(--background-color);
+  border-radius: 50%;
+  font-size: 14px;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.addButton,
+.removeButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.addButton {
+  background-color: rgba(34, 197, 94, 0.1);
+  color: #22c55e;
+
+  &:hover {
+    background-color: rgba(34, 197, 94, 0.2);
+    transform: scale(1.05);
+  }
+}
+
+.removeButton {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  font-size: 18px;
+
+  &:hover {
+    background-color: rgba(239, 68, 68, 0.2);
+    transform: scale(1.05);
+  }
+}
+
+.noPlaces {
+  padding: 40px 20px;
+  text-align: center;
+  border: 2px dashed rgba(var(--text-color-rgb), 0.2);
+  border-radius: 8px;
+  background-color: rgba(var(--text-color-rgb), 0.02);
+}
+
+.noPlaces p {
+  margin: 0;
+  color: var(--text-color);
+  opacity: 0.6;
+  font-style: italic;
+}
+
+.mapSection {
+  margin-bottom: 30px;
+  border: 1px solid var(--text-color);
+  padding: 8px;
+  border-radius: 5px;
+}
+
+.mapSection h3 {
+  margin: 0 0 15px 0;
+  color: var(--text-color);
+  font-size: 1.2rem;
+}
+
+.mapPlaceholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed rgba(var(--text-color-rgb), 0.2);
+  border-radius: 8px;
+  background-color: rgba(var(--text-color-rgb), 0.02);
+}
+
+.mapPlaceholder p {
+  margin: 5px 0;
+  color: var(--text-color);
+  opacity: 0.6;
+}
+
+.routeInfo {
+  font-weight: 500;
+  opacity: 0.8 !important;
+}
+
+.shareSection {
+  text-align: center;
+  padding-top: 20px;
+  border-top: 2px solid rgba(var(--text-color-rgb), 0.1);
+}
+
+.shareSection h3 {
+  margin: 0 0 20px 0;
+  color: var(--text-color);
+  font-size: 1.2rem;
+}
+
+.socialBar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.socialButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 24px;
+  transition: all 0.3s ease;
+  color: white;
+
+  &:hover {
+    transform: translateY(-3px) scale(1.1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  &:active {
+    transform: translateY(-1px) scale(1.05);
+  }
+}
+
+.authRequired {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.authRequired h2 {
+  margin-bottom: 15px;
+  color: var(--text-color);
+}
+
+.authRequired p {
+  margin: 0;
+  color: var(--text-color);
+  opacity: 0.7;
+  font-size: 1.1rem;
+}
+
+// Адаптивные стили
+@media (max-width: 768px) {
+  .container {
+    padding: 15px;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .header h1 {
+    font-size: 1.5rem;
+  }
+
+  .dateTimePickers {
+    flex-direction: column;
+  }
+
+  .inputGroup {
+    width: 100%;
+  }
+
+  .dateInput,
+  .timeInput {
+    width: 100%;
+    min-width: auto;
+  }
+
+  .placesListContainer {
+    max-height: 300px;
+  }
+
+  .placeItem,
+  .selectedPlaceItem {
+    padding: 10px;
+    gap: 12px;
+  }
+
+  .placeImage {
+    width: 50px;
+    height: 40px;
+  }
+
+  .placeInfo h5 {
+    font-size: 14px;
+  }
+
+  .placeInfo p {
+    font-size: 12px;
+  }
+
+  .addButton,
+  .removeButton {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+  }
+
+  .routeNumber {
+    width: 25px;
+    height: 25px;
+    font-size: 12px;
+  }
+
+  .mapPlaceholder {
+    height: 200px;
+  }
+
+  .socialBar {
+    gap: 10px;
+  }
+
+  .socialButton {
+    width: 45px;
+    height: 45px;
+    font-size: 20px;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .container {
+    animation: fadeIn 0.3s ease-out;
+  }
+}
+
+.mapContainer {
+  height: 550px;
+}

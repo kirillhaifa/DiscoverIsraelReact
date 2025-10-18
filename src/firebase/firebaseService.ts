@@ -240,3 +240,79 @@ export const fetchUserCollections = async (userId: string): Promise<Collection[]
   }
 };
 
+// Функция для добавления места в планы пользователя
+export const addPlaceToPlans = async (userId: string, placeId: string) => {
+  try {
+    const userRef = doc(db, 'Users', userId);
+    await updateDoc(userRef, {
+      plans: arrayUnion(placeId),
+    });
+  } catch (error) {
+    console.error('Error adding place to plans:', error);
+    throw error;
+  }
+};
+
+// Функция для удаления места из планов пользователя
+export const removePlaceFromPlans = async (userId: string, placeId: string) => {
+  try {
+    const userRef = doc(db, 'Users', userId);
+    await updateDoc(userRef, {
+      plans: arrayRemove(placeId),
+    });
+  } catch (error) {
+    console.error('Error removing place from plans:', error);
+    throw error;
+  }
+};
+
+// Функция для проверки, находится ли место в планах пользователя
+export const checkPlaceInPlans = async (userId: string, placeId: string): Promise<boolean> => {
+  try {
+    const userRef = doc(db, 'Users', userId);
+    const userDoc = await getDoc(userRef);
+
+    if (!userDoc.exists()) {
+      return false;
+    }
+
+    const userData = userDoc.data();
+    const plans = userData.plans || [];
+    return plans.includes(placeId);
+  } catch (error) {
+    console.error('Error checking place in plans:', error);
+    return false;
+  }
+};
+
+// Функция для получения мест из планов пользователя
+export const fetchPlannedPlaces = async (userId: string): Promise<Place[]> => {
+  try {
+    // Получаем планы пользователя
+    const userRef = doc(db, 'Users', userId);
+    const userDoc = await getDoc(userRef);
+    
+    if (!userDoc.exists()) {
+      return [];
+    }
+
+    const userData = userDoc.data();
+    const userPlans = userData.plans || [];
+
+    if (userPlans.length === 0) {
+      return [];
+    }
+
+    // Получаем все места
+    const allPlaces = await fetchPlaces();
+    
+    // Фильтруем места, которые есть в планах пользователя
+    const filteredPlaces = allPlaces.filter(place => userPlans.includes(place.id));
+    
+    return filteredPlaces;
+  } catch (error) {
+    console.error('Error fetching planned places:', error);
+    return [];
+  }
+};
+

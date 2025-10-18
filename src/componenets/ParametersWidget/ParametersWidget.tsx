@@ -39,6 +39,7 @@ type ParamKey =
 
 interface ParametersWidgetProps {
   place: Place;
+  inCard?: boolean;
 }
 
 const paramMap: Record<ParamKey, { Icon: React.ComponentType<any>; labelKey: string }> = {
@@ -58,7 +59,7 @@ const paramMap: Record<ParamKey, { Icon: React.ComponentType<any>; labelKey: str
   kidsFriendly: { Icon: MdChildFriendly, labelKey: 'kidsFriendly' },
 };
 
-const ParametersWidget: React.FC<ParametersWidgetProps> = ({ place }) => {
+const ParametersWidget: React.FC<ParametersWidgetProps> = ({ place, inCard = false }) => {
   // place stores parameters under place.parameters (object of booleans)
   const params = (place as any).parameters || (place as any);
   const activeKeys = Object.keys(paramMap).filter((k) => params && params[k]);
@@ -67,14 +68,14 @@ const ParametersWidget: React.FC<ParametersWidgetProps> = ({ place }) => {
   if (activeKeys.length === 0) return null;
 
   return (
-    <div className={classes.widget} aria-hidden={false}>
+    <div className={inCard ? classes.widgetInCard : classes.widget} aria-hidden={false}>
       {activeKeys.map((k) => {
         const key = k as ParamKey;
         const { Icon, labelKey } = paramMap[key];
         return (
           <Tooltip key={key} title={(translations as any)[labelKey]?.[language] || key} arrow>
-            <div className={classes.iconWrap}>
-              <Icon className={classes.icon} />
+            <div className={inCard ? classes.iconWrapInCard : classes.iconWrap}>
+              <Icon className={inCard ? classes.iconInCard : classes.icon} />
             </div>
           </Tooltip>
         );

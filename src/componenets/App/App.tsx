@@ -24,6 +24,8 @@ import MainLayout from '../Layout/MainLayout';
 import Recommendations from '../../pages/Recomendations/Recomendations';
 import CollectionPage from '../../pages/CollectionPage/CollectionPage';
 import EmailVerification from '../EmailVerification/EmailVerification';
+import Plans from '../../pages/Plans/Plans';
+import SharedTrip from '../SharedTrip/SharedTrip';
 
 let classes = require('./App.module.scss');
 let normilizer = require('../../../public/Styles/normalizer.module.scss');
@@ -129,6 +131,8 @@ const App = () => {
             <Route path="/admin" element={<AdminPanel />} />
             <Route path="/about" element={<AboutProject />} />
             <Route path="/recommendations" element={<Recommendations />} />
+            <Route path="/plans" element={<Plans />} />
+            <Route path="/shared-trip" element={<SharedTrip />} />
             <Route path="/collections/:id" element={<CollectionPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

@@ -23,3 +23,30 @@
   width: 20px;
   height: 20px;
 }
+
+// Стили для виджета в карточке (без фона и рамки)
+.widgetInCard {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 4px 0;
+}
+
+.iconWrapInCard {
+  width: auto;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  // Убираем фон и рамку для карточки
+  background: none;
+  border: none;
+  flex: 0 0 auto;
+}
+
+.iconInCard {
+  color: var(--accent-color, #2d7c9a);
+  width: 16px;
+  height: 16px;
+}

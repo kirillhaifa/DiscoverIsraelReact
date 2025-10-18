@@ -42,6 +42,11 @@ const Navigation = () => {
       <li className={classes.link}>
         <Link to="/recommendations" onClick={() => setMenuOpen(false)}>{translations.recommendations[languageShort]}</Link>
       </li>
+      {user && (
+        <li className={classes.link}>
+          <Link to="/plans" onClick={() => setMenuOpen(false)}>{translations.plansTitle[languageShort]}</Link>
+        </li>
+      )}
       {user && userData?.role === 'admin' && (
         <li className={classes.link}>
           <Link to="/admin" className={classes.adminLink} onClick={() => setMenuOpen(false)}>

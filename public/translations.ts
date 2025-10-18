@@ -651,4 +651,179 @@ export const translations = {
     en: 'No places found',
     he: 'לא נמצאו מקומות',
   },
+  addToPlans: {
+    ru: 'Добавить в планы',
+    en: 'Add to Plans',
+    he: 'הוסף לתוכניות',
+  },
+  removeFromPlans: {
+    ru: 'Удалить из планов',
+    en: 'Remove from Plans',
+    he: 'הסר מתוכניות',
+  },
+  plansTitle: {
+    ru: 'Мои планы',
+    en: 'My Plans',
+    he: 'התוכניות שלי',
+  },
+  loginRequiredForPlans: {
+    ru: 'Войдите в систему, чтобы управлять своими планами',
+    en: 'Please log in to manage your plans',
+    he: 'אנא התחבר כדי לנהל את התוכניות שלך',
+  },
+  plansCount: {
+    ru: 'Мест в планах:',
+    en: 'Places in plans:',
+    he: 'מקומות בתוכניות:',
+  },
+  noPlansYet: {
+    ru: 'У вас пока нет планов',
+    en: 'You have no plans yet',
+    he: 'אין לך תוכניות עדיין',
+  },
+  noPlansMessage: {
+    ru: 'Добавляйте интересные места в планы, нажимая на иконку сердечка на карточках мест',
+    en: 'Add interesting places to your plans by clicking the heart icon on place cards',
+    he: 'הוסף מקומות מעניינים לתוכניות שלך על ידי לחיצה על סמל הלב בכרטיסי המקומות',
+  },
+  ratePlace: {
+    ru: 'Оценить место',
+    en: 'Rate this place',
+    he: 'דרג מקום זה',
+  },
+  showAllPlaces: {
+    ru: 'Показать все места',
+    en: 'Show all places',
+    he: 'הראה כל המקומות',
+  },
+  showAsSlider: {
+    ru: 'Показать как слайдер',
+    en: 'Show as slider',
+    he: 'הראה כמחוון',
+  },
+  tripPlannerTitle: {
+    ru: 'Планировщик поездки',
+    en: 'Trip Planner',
+    he: 'מתכנן הטיול',
+  },
+  loginRequiredForTripPlanner: {
+    ru: 'Войдите в систему, чтобы планировать поездки',
+    en: 'Please log in to plan trips',
+    he: 'אנא התחבר כדי לתכנן טיולים',
+  },
+  close: {
+    ru: 'Закрыть',
+    en: 'Close',
+    he: 'סגור',
+  },
+  selectDateTime: {
+    ru: 'Выберите дату и время',
+    en: 'Select Date and Time',
+    he: 'בחר תאריך ושעה',
+  },
+  selectDate: {
+    ru: 'Выберите дату',
+    en: 'Select Date',
+    he: 'בחר תאריך',
+  },
+  selectTime: {
+    ru: 'Выберите время (опционально)',
+    en: 'Select Time (optional)',
+    he: 'בחר שעה (אופציונלי)',
+  },
+  selectPlacesForTrip: {
+    ru: 'Выберите места для посещения',
+    en: 'Select Places to Visit',
+    he: 'בחר מקומות לביקור',
+  },
+  availablePlaces: {
+    ru: 'Доступные места',
+    en: 'Available Places',
+    he: 'מקומות זמינים',
+  },
+  noPlannedPlaces: {
+    ru: 'У вас нет сохраненных мест. Добавьте места в планы сначала.',
+    en: 'You have no saved places. Add places to your plans first.',
+    he: 'אין לך מקומות שמורים. הוסף מקומות לתוכניות שלך קודם.',
+  },
+  selectedRoute: {
+    ru: 'Выбранный маршрут',
+    en: 'Selected Route',
+    he: 'המסלול הנבחר',
+  },
+  tripRoute: {
+    ru: 'Маршрут поездки',
+    en: 'Trip Route',
+    he: 'מסלול הטיול',
+  },
+  mapComingSoon: {
+    ru: 'Карта маршрута будет добавлена в ближайшее время',
+    en: 'Route map coming soon',
+    he: 'מפת המסלול תגיע בקרוב',
+  },
+  routeInfo: {
+    ru: 'Маршрут включает',
+    en: 'Route includes',
+    he: 'המסלול כולל',
+  },
+  places: {
+    ru: 'мест',
+    en: 'places',
+    he: 'מקומות',
+  },
+  shareTrip: {
+    ru: 'Поделиться маршрутом',
+    en: 'Share Trip',
+    he: 'שתף טיול',
+  },
+  shareComingSoon: {
+    ru: 'Функция "Поделиться" будет добавлена в ближайшее время',
+    en: 'Share functionality coming soon',
+    he: 'פונקציית השיתוף תגיע בקרוב',
+  },
+  searchResults: {
+    ru: 'Результаты поиска',
+    en: 'Search Results',
+    he: 'תוצאות חיפוש',
+  },
+  noSearchResults: {
+    ru: 'Ничего не найдено',
+    en: 'Nothing found',
+    he: 'לא נמצא דבר',
+  },
+  checkOutMyTrip: {
+    ru: 'Посмотри мой маршрут',
+    en: 'Check out my trip',
+    he: 'בדוק את המסלול שלי',
+  },
+  linkCopied: {
+    ru: 'Ссылка скопирована в буфер обмена',
+    en: 'Link copied to clipboard',
+    he: 'הקישור הועתק ללוח',
+  },
+  sharedTrip: {
+    ru: 'Общий маршрут',
+    en: 'Shared Trip',
+    he: 'מסלול משותף',
+  },
+  viewSharedTrip: {
+    ru: 'Просмотр общего маршрута',
+    en: 'View Shared Trip',
+    he: 'צפייה במסלול משותף',
+  },
+  copyLink: {
+    ru: 'Скопировать ссылку',
+    en: 'Copy Link',
+    he: 'העתק קישור',
+  },
+  myWishlist: {
+    ru: 'Мой список желаний',
+    en: 'My Wishlist',
+    he: 'רשימת המשאלות שלי',
+  },
+  planATrip: {
+    ru: 'Планировать поездку',
+    en: 'Plan a Trip',
+    he: 'תכנן טיול',
+  },
 };
