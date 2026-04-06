@@ -1,18 +1,17 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface FiltersState {
-  region: string | null; // Например, "Northern Israel"
-  distance: number ; // Максимальное расстояние в километрах
-  season: boolean; // Сейчас подходящий сезон
-  openNow: boolean; // Открыто сейчас
-  unvisited: boolean; // Не посещенные места
-  minVisitTime: number; // Минимальное время для посещения в минутах
-  hasPhotos: boolean; // Только с фото
-  rating: string | null; // Рейтинг: "high", "low" или null
-  parameters: {
-    [key: string]: boolean; // Параметры из объекта `parameters`
-  };
-  searchText: string; // Новый фильтр по тексту
+  region: string | null;
+  distance: number;
+  season: boolean;
+  openNow: boolean;
+  unvisited: boolean;
+  minVisitTime: number;
+  hasPhotos: boolean;
+  rating: string | null;
+  activeTags: string[];  // активные теги-фильтры: ['hiking', 'free', 'bombShelter', ...]
+  activeReligions: string[]; // активные религии-фильтры
+  searchText: string;
 }
 
 const initialState: FiltersState = {
@@ -24,25 +23,8 @@ const initialState: FiltersState = {
   minVisitTime: 0,
   hasPhotos: false,
   rating: null,
-  parameters: {
-    grill: false,
-    hiking: false,
-    view: false,
-    transport: false,
-    beach: false,
-    historical: false,
-    free: false,
-    pets: false,
-    parking: false,
-    toilets: false,
-    drinkingWater: false,
-    cafe: false,
-    wifi: false,
-    accessible: false,
-    unesco: false,
-    nationalPark: false,
-    kidsFriendly: false,
-  },
+  activeTags: [],
+  activeReligions: [],
   searchText: '',
 };
 
@@ -75,10 +57,22 @@ const filtersSlice = createSlice({
     setRating(state, action: PayloadAction<string | null>) {
       state.rating = action.payload;
     },
-    setParameter(state, action: PayloadAction<{ key: string; value: boolean }>) {
-      const { key, value } = action.payload;
-      if (key in state.parameters) {
-        state.parameters[key] = value;
+    toggleTag(state, action: PayloadAction<string>) {
+      const tag = action.payload;
+      const idx = state.activeTags.indexOf(tag);
+      if (idx === -1) {
+        state.activeTags.push(tag);
+      } else {
+        state.activeTags.splice(idx, 1);
+      }
+    },
+    toggleReligion(state, action: PayloadAction<string>) {
+      const religion = action.payload;
+      const idx = state.activeReligions.indexOf(religion);
+      if (idx === -1) {
+        state.activeReligions.push(religion);
+      } else {
+        state.activeReligions.splice(idx, 1);
       }
     },
     setSearchText(state, action: PayloadAction<string>) {
@@ -99,7 +93,8 @@ export const {
   setMinVisitTime,
   setHasPhotos,
   setRating,
-  setParameter,
+  toggleTag,
+  toggleReligion,
   setSearchText,
   resetFilters,
 } = filtersSlice.actions;

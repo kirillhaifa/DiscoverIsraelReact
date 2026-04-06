@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect, useLayoutEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store';
-import { setParameter } from '../../store/Filters/filtersSlice';
+import { toggleTag } from '../../store/Filters/filtersSlice';
+import { selectActiveTags } from '../../store/Filters/filtersSelectors';
 import { translations } from '../../../public/translations'; // Импорт переводов
 import { MdOutlineOutdoorGrill } from 'react-icons/md';
 import { LiaHikingSolid } from 'react-icons/lia';
@@ -27,17 +28,15 @@ let basic = require('../../../public/Styles/basic.module.scss');
 
 const ParametersFilter = () => {
   const dispatch = useDispatch();
-  const parameters = useSelector(
-    (state: RootState) => state.filters.parameters,
-  );
-  const language = useSelector((state: RootState) => state.language.language); // Текущий язык
+  const activeTags = useSelector(selectActiveTags);
+  const language = useSelector((state: RootState) => state.language.language);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const [uniformWidth, setUniformWidth] = useState<number | null>(null);
   const itemRefs = useRef<HTMLDivElement[]>([]);
 
-  const handleChange = (key: string, value: boolean) => {
-    dispatch(setParameter({ key, value }));
+  const handleChange = (key: string) => {
+    dispatch(toggleTag(key));
   };
 
   // Закрытие dropdown при клике вне меню
@@ -93,7 +92,6 @@ const ParametersFilter = () => {
     <form className={classes.form}>
       {filterDefs.map((f, i) => {
         const IconCmp = f.Icon;
-        const checked = (parameters as any)[f.key];
         return (
           <div
             key={f.key}
@@ -104,8 +102,8 @@ const ParametersFilter = () => {
             <input
               type="checkbox"
               id={f.key}
-              checked={checked}
-              onChange={(e) => handleChange(f.key, e.target.checked)}
+              checked={activeTags.includes(f.key)}
+              onChange={() => handleChange(f.key)}
               className={`${basic.visuallyHidden} ${classes.input}`}
             />
             <label htmlFor={f.key} className={classes.label}>

@@ -66,9 +66,9 @@ export const selectPlacesCount = createSelector(
   (places) => places.length
 );
 
-// Селектор для подсчёта мест с определённым параметром
-export const selectPlacesCountByParameter = (parameter: keyof Place['parameters']) =>
+// Селектор для подсчёта мест с определённым тегом
+export const selectPlacesCountByTag = (tag: string) =>
   createSelector(
     [selectPlaces],
-    (places) => places.filter((place) => place.parameters[parameter]).length
+    (places) => places.filter((place) => place.tags.includes(tag)).length
   );

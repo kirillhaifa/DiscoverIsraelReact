@@ -13,6 +13,26 @@ import {
 } from 'firebase/firestore';
 import { Place, uploadPlace, Collection, CreateCollectionData } from '../types';
 
+/**
+ * Нормализатор: конвертирует старый формат Firestore (parameters: {hiking:true})
+ * в новый (tags: ['hiking']). Работает в обе стороны — если уже есть tags, не трогает.
+ * Убрать когда все документы будут смигрированы на бэкенде.
+ */
+function normalizePlace(data: any, id: string): Place {
+  let tags: string[] = data.tags ?? [];
+  if (tags.length === 0 && data.parameters && typeof data.parameters === 'object') {
+    tags = Object.entries(data.parameters)
+      .filter(([, v]) => v === true)
+      .map(([k]) => k);
+  }
+  return {
+    ...data,
+    id,
+    tags,
+    religions: data.religions ?? [],
+  } as Place;
+}
+
 // Функция для получения объектов с добавлением их идентификаторов
 export const fetchPlaces = async (): Promise<Place[]> => {
   const placesCol = collection(db, 'places');
@@ -20,7 +40,7 @@ export const fetchPlaces = async (): Promise<Place[]> => {
 
   const placeList = placeSnapshot.docs.map((doc) => {
     const data = doc.data() as Omit<Place, 'id'>;
-    return { ...data, id: doc.id };
+    return normalizePlace(data, doc.id);
   });
   return placeList;
 };
@@ -98,9 +118,8 @@ export const fetchPlaceById = async (id: string): Promise<Place | null> => {
     const placeSnapshot = await getDoc(placeRef);
 
     if (placeSnapshot.exists()) {
-      // Если документ существует, возвращаем его данные
-      const data = placeSnapshot.data() as Omit<Place, 'id'>;
-      return { ...data, id: placeSnapshot.id }; // Добавляем Id документа
+      const data = placeSnapshot.data();
+      return normalizePlace(data, placeSnapshot.id);
     } else {
       return null;
     }

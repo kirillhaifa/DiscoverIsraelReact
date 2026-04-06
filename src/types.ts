@@ -1,5 +1,26 @@
 // src/types.ts
 
+export type Religion =
+  | 'jewish'
+  | 'christian'
+  | 'muslim'
+  | 'druze'
+  | 'bahai'
+  | 'samaritan'
+  | 'circassian'
+  | 'armenian'
+  | 'bedouin'
+  | 'secular';
+
+// Все возможные теги места — единственный способ хранить фичи
+// Добавить новый фильтр = добавить новую строку сюда + тег на нужные места
+export type PlaceTag =
+  | 'grill' | 'hiking' | 'view' | 'transport' | 'beach' | 'historical'
+  | 'free' | 'pets' | 'accessible' | 'unesco' | 'nationalPark'
+  | 'kidsFriendly' | 'toilets' | 'parking' | 'drinkingWater' | 'cafe'
+  | 'wifi' | 'mushrooms' | 'bombShelter'
+  | (string & {}); // допускаем произвольные теги для будущего расширения
+
 export interface Place {
   id: string; 
   number: number;
@@ -19,7 +40,8 @@ export interface Place {
     ru: string;
   };
   photos: Photo[];
-  parameters: Parameters;
+  tags: PlaceTag[];         // все фичи места: ['hiking', 'free', 'bombShelter', ...]
+  religions: Religion[];    // применимые религии (может быть несколько)
   schedule: Schedule;
   ticketPrice: TicketPrice;
   contact: Contact | null;
@@ -49,7 +71,8 @@ export interface uploadPlace {
     ru: string;
   };
   photos: Photo[];
-  parameters: Parameters;
+  tags: PlaceTag[];         // все фичи места
+  religions: Religion[];    // применимые религии
   schedule: Schedule;
   ticketPrice: TicketPrice;
   contact: Contact | null;
@@ -63,27 +86,6 @@ export interface uploadPlace {
 export interface Photo {
   photoName: string;
   photoWay: string;
-}
-
-export interface Parameters {
-  grill: boolean;
-  hiking: boolean;
-  view: boolean;
-  transport: boolean;
-  beach: boolean;
-  historical: boolean;
-  free: boolean;
-  pets: boolean;
-  accessible: boolean;
-  unesco: boolean;
-  nationalPark: boolean;
-  kidsFriendly: boolean;
-  toilets: boolean;
-  parking: boolean;
-  drinkingWater: boolean;
-  cafe: boolean;
-  wifi: boolean;
-  mushrooms: boolean;
 }
 
 export interface Schedule {

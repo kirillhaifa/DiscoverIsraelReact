@@ -4,7 +4,7 @@ import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { selectPlaces } from "../../store/Places/placesSelectors";
 import { 
   selectUnvisited, 
-  selectParameters, 
+  selectActiveTags,
   selectDistance,
   selectSearchText 
 } from "../../store/Filters/filtersSelectors";
@@ -20,9 +20,9 @@ let classes = require('./PlacesList.module.scss')
 const PlacesList = () => {
   // Извлекаем данные через мемоизированные селекторы
   const places = useSelector(selectPlaces); // Массив мест
-  const unvisited = useSelector(selectUnvisited); // Фильтр "непосещенные"
-  const parameters = useSelector(selectParameters); // Параметры фильтра
-  const maxDistance = useSelector(selectDistance); // Максимальное расстояние
+  const unvisited = useSelector(selectUnvisited);
+  const activeTags = useSelector(selectActiveTags); // активные теги-фильтры
+  const maxDistance = useSelector(selectDistance);
   const searchText = useSelector(selectSearchText); // Текст поиска
   const userRatings = useSelector(selectUserRatings); // Рейтинги пользователя
   const userCoordinates = useSelector((state: RootState) => state.location.coordinates); // Координаты пользователя
@@ -43,16 +43,11 @@ const PlacesList = () => {
       return false;
     }
 
-    // Фильтрация по параметрам
-    const parametersMatch = Object.entries(parameters).every(
-      ([key, value]) => {
-        if (value) {
-          return place.parameters[key as keyof Place["parameters"]] === true;
-        }
-        return true;
-      }
-    );
-    if (!parametersMatch) return false;
+    // Фильтрация по тегам
+    if (activeTags.length > 0) {
+      const tagsMatch = activeTags.every((tag) => place.tags.includes(tag));
+      if (!tagsMatch) return false;
+    }
 
     // Фильтрация по расстоянию
     if (userCoordinates && maxDistance < 500) {
@@ -80,7 +75,7 @@ const PlacesList = () => {
 
     return true; // Если место прошло все фильтры
     });
-  }, [places, unvisited, userRatings, parameters, userCoordinates, maxDistance, searchText]);
+  }, [places, unvisited, userRatings, activeTags, userCoordinates, maxDistance, searchText]);
 
   // Отслеживаем изменения для анимаций
   useEffect(() => {

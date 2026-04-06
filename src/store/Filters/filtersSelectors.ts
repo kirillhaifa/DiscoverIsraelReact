@@ -58,12 +58,22 @@ export const selectRating = createSelector(
   (filters) => filters.rating
 );
 
-// Селектор для всех параметров
-export const selectParameters = createSelector(
+// Селектор для активных тегов
+export const selectActiveTags = createSelector(
   [selectFiltersSlice],
-  (filters) => filters.parameters
+  (filters) => filters.activeTags
 );
 
-// Селектор для конкретного параметра (динамический)
-export const selectParameter = (key: string) =>
-  createSelector([selectParameters], (parameters) => parameters[key]);
+// Селектор: активен ли конкретный тег
+export const selectIsTagActive = (tag: string) =>
+  createSelector([selectActiveTags], (tags) => tags.includes(tag));
+
+// Селектор для активных религий
+export const selectActiveReligions = createSelector(
+  [selectFiltersSlice],
+  (filters) => filters.activeReligions
+);
+
+// Селектор: активна ли конкретная религия
+export const selectIsReligionActive = (religion: string) =>
+  createSelector([selectActiveReligions], (religions) => religions.includes(religion));
