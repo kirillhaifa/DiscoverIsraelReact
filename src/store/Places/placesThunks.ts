@@ -1,19 +1,18 @@
 // src/features/placesThunks.ts
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Place, uploadPlace } from '../../types';
-import { fetchPlaces } from '../../firebase/firebaseService';
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../../../firebaseConfig';
 import { shuffleArray } from '../../utils/functions';
+import apiClient from '../../utils/apiClient';
 
 
 export const fetchPlacesThunk = createAsyncThunk<Place[]>(
   'places/fetchPlaces',
   async (_, { rejectWithValue }) => {
     try {
-      const places = await fetchPlaces();
-      const shuffledPlaces = shuffleArray(places as Place[]); // Перемешиваем массив
-      return shuffledPlaces; // Возвращаем перемешанный массив
+      const { data } = await apiClient.get<{ data: Place[] }>('/api/places');
+      return shuffleArray(data.data);
     } catch (error) {
       return rejectWithValue('Error fetching places');
     }

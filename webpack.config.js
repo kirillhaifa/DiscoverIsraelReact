@@ -104,7 +104,7 @@ module.exports = {
     ],
     hot: true,
     watchFiles: ['src/**/*.scss', 'src/**/*.css'],
-    port: 3000,
+    port: 8081,
     historyApiFallback: {
       index: '/index.html'
     },
