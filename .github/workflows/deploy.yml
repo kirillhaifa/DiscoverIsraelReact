@@ -25,6 +25,7 @@ jobs:
       REACT_APP_FIREBASE_MESSAGING_SENDER_ID: "138076374660"
       REACT_APP_FIREBASE_APP_ID: "1:138076374660:web:3196ae23890356f164e4d1"
       REACT_APP_FIREBASE_MEASUREMENT_ID: "G-XRGZTLSF1T"
+      REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
