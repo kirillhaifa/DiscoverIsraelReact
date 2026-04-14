@@ -39,9 +39,20 @@
 .arrow {
   display: flex;
   align-items: center;
+  gap: 6px;
   margin-left: 0.5em;
-    cursor: pointer;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: var(--text-color);
+  padding: 0;
+}
 
+.globeIcon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
 }
 
 .chevronIcon {

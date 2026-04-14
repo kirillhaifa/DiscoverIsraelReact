@@ -334,6 +334,36 @@ export const translations = {
     en: 'Filters',
     he: 'מסננים',
   },
+  religionsFilter: {
+    ru: 'Религии',
+    en: 'Religions',
+    he: 'דתות',
+  },
+  jewish: {
+    ru: 'Иудаизм',
+    en: 'Jewish',
+    he: 'יהודי',
+  },
+  christian: {
+    ru: 'Христианство',
+    en: 'Christian',
+    he: 'נוצרי',
+  },
+  muslim: {
+    ru: 'Ислам',
+    en: 'Muslim',
+    he: 'מוסלמי',
+  },
+  druze: {
+    ru: 'Друзы',
+    en: 'Druze',
+    he: 'דרוזי',
+  },
+  bahai: {
+    ru: 'Бахаи',
+    en: "Baha'i",
+    he: 'בהאי',
+  },
   maxDistance: {
     ru: 'Максимальное расстояние',
     en: 'Maximum distance',

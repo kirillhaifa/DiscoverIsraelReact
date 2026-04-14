@@ -1,86 +1,19 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
-import { selectPlaces } from "../../store/Places/placesSelectors";
-import { 
-  selectUnvisited, 
-  selectActiveTags,
-  selectDistance,
-  selectSearchText 
-} from "../../store/Filters/filtersSelectors";
+import { selectFilteredPlaces, selectPlaces } from "../../store/Places/placesSelectors";
 import { Place } from "../../types";
 import PlaceCard from "../PlaceCard/PlaceCard";
 import Loader from "../Loader/Loader";
-import { getDistanceFromLatLonInKm } from "../../utils/functions";
-import { selectUserRatings } from "../../store/User/userSelector";
 import { RootState } from "../../store";
 import { translations } from "../../../public/translations";
 let classes = require('./PlacesList.module.scss')
 
 const PlacesList = () => {
-  // Извлекаем данные через мемоизированные селекторы
-  const places = useSelector(selectPlaces); // Массив мест
-  const unvisited = useSelector(selectUnvisited);
-  const activeTags = useSelector(selectActiveTags); // активные теги-фильтры
-  const maxDistance = useSelector(selectDistance);
-  const searchText = useSelector(selectSearchText); // Текст поиска
-  const userRatings = useSelector(selectUserRatings); // Рейтинги пользователя
-  const userCoordinates = useSelector((state: RootState) => state.location.coordinates); // Координаты пользователя
-  const language = useSelector((state: RootState) => state.language.language); // Текущий язык
-
-  // Состояние для анимаций и загрузки
-  const [previousPlaces, setPreviousPlaces] = useState<Place[]>([]);
+  const places = useSelector(selectPlaces);
+  const filteredPlaces = useSelector(selectFilteredPlaces);
+  const language = useSelector((state: RootState) => state.language.language);
   const [isLoading, setIsLoading] = useState(true);
-
-  // Мемоизированная фильтрация мест
-  const filteredPlaces = useMemo(() => {
-    return places.filter((place: Place) => {
-    // Фильтрация по "непосещенные"
-    if (
-      unvisited &&
-      userRatings.some((rating) => rating.placeId === place.id)
-    ) {
-      return false;
-    }
-
-    // Фильтрация по тегам
-    if (activeTags.length > 0) {
-      const tagsMatch = activeTags.every((tag) => place.tags.includes(tag));
-      if (!tagsMatch) return false;
-    }
-
-    // Фильтрация по расстоянию
-    if (userCoordinates && maxDistance < 500) {
-      const distance = getDistanceFromLatLonInKm(
-        userCoordinates[0],
-        userCoordinates[1],
-        place.coordinates[0],
-        place.coordinates[1]
-      );
-      if (distance > maxDistance) return false;
-    }
-
-    // Фильтрация по тексту поиска
-    if (searchText && searchText.trim()) {
-      const searchLower = searchText.toLowerCase().trim();
-      const nameMatch = Object.values(place.placeName).some(name => name.toLowerCase().includes(searchLower));
-      const shortDescMatch = Object.values(place.shortDescription).some(desc => desc.toLowerCase().includes(searchLower));
-      const extendedDescMatch = Object.values(place.extendedDescription).some(desc => desc.toLowerCase().includes(searchLower));
-      const regionMatch = place.region.toLowerCase().includes(searchLower);
-      
-      if (!nameMatch && !shortDescMatch && !extendedDescMatch && !regionMatch) {
-        return false;
-      }
-    }
-
-    return true; // Если место прошло все фильтры
-    });
-  }, [places, unvisited, userRatings, activeTags, userCoordinates, maxDistance, searchText]);
-
-  // Отслеживаем изменения для анимаций
-  useEffect(() => {
-    setPreviousPlaces(filteredPlaces);
-  }, [filteredPlaces]);
 
   // Отслеживаем состояние загрузки
   useEffect(() => {

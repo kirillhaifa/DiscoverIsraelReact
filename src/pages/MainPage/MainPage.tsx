@@ -4,6 +4,7 @@ import ParametersFilter from '../../componenets/ParametersFilter/ParametersFilte
 import SearchBar from '../../componenets/SearchBar/SearchBar';
 import DistanceFilter from '../../componenets/DistanceFilter/distanceFilter';
 import UnvisitedFilter from '../../componenets/UnvisitedFliter/UnvisitedFilter';
+import ReligionFilter from '../../componenets/ReligionFilter/ReligionFilter';
 import PlacesList from '../../componenets/PlacesList/PlacesList';
 let classes = require('./MainPage.module.scss');
 
@@ -14,6 +15,7 @@ const MainPageLayout: React.FC = () => {
       <SearchBar />
       <div className={classes.filtersRow}>
         <DistanceFilter />
+        <ReligionFilter />
         <UnvisitedFilter />
       </div>
       <div className={classes.content}>
