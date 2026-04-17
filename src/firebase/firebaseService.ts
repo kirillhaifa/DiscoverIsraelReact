@@ -12,6 +12,7 @@ import {
   arrayRemove,
 } from 'firebase/firestore';
 import { Place, uploadPlace, Collection, CreateCollectionData } from '../types';
+import apiClient from '../utils/apiClient';
 
 /**
  * Нормализатор: конвертирует старый формат Firestore (parameters: {hiking:true})
@@ -131,33 +132,9 @@ export const fetchPlaceById = async (id: string): Promise<Place | null> => {
 
 
 // Функция для обновления или добавления оценки
-export const submitRating = async (userId, placeId, rating) => {
+export const submitRating = async (_userId: string, placeId: string, rating: number) => {
   try {
-    const userRef = doc(db, 'Users', userId);
-    const userDoc = await getDoc(userRef);
-
-    if (!userDoc.exists()) {
-      throw new Error('User does not exist.');
-    }
-
-    const userData = userDoc.data();
-    const existingRatingIndex = userData.ratings.findIndex(
-      (item) => item.placeId === placeId
-    );
-
-    // Если оценка для этого места уже существует, обновляем её
-    if (existingRatingIndex >= 0) {
-      userData.ratings[existingRatingIndex].rating = rating;
-    } else {
-      // Если нет, добавляем новую
-      userData.ratings.push({ placeId, rating });
-    }
-
-    // Обновляем документ с новыми оценками
-    await updateDoc(userRef, {
-      ratings: userData.ratings,
-    });
-
+    await apiClient.post('/api/ratings', { placeId, rating });
   } catch (error) {
     console.error('Error submitting rating:', error);
     throw error;
@@ -165,24 +142,9 @@ export const submitRating = async (userId, placeId, rating) => {
 };
 
 // Функция для удаления оценки пользователя
-export const deleteRating = async (userId, placeId) => {
+export const deleteRating = async (_userId: string, placeId: string) => {
   try {
-    const userRef = doc(db, 'Users', userId);
-    const userDoc = await getDoc(userRef);
-
-    if (!userDoc.exists()) {
-      throw new Error('User does not exist.');
-    }
-
-    // Удаляем оценку для указанного места
-    const updatedRatings = userDoc
-      .data()
-      .ratings.filter((rating) => rating.placeId !== placeId);
-
-    await updateDoc(userRef, {
-      ratings: updatedRatings,
-    });
-
+    await apiClient.delete(`/api/ratings/${placeId}`);
   } catch (error) {
     console.error('Error deleting rating:', error);
     throw error;

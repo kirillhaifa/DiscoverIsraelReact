@@ -7,7 +7,12 @@ let classes = require('./PlaceRating.module.scss');
 let themes = require('../../../public/Styles/themes.module.scss');
 let basic = require('../../../public/Styles/basic.module.scss');
 
-const PlaceRating = ({ placeId, submitRating, deleteRating }) => {
+const PlaceRating = ({ placeId, submitRating, deleteRating, onRatingChange }: {
+  placeId: string;
+  submitRating: (userId: string, placeId: string, rating: number) => Promise<void>;
+  deleteRating: (userId: string, placeId: string) => Promise<void>;
+  onRatingChange?: () => void;
+}) => {
   const [selectedRating, setSelectedRating] = useState(null);
   const [userRating, setUserRating] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
@@ -47,6 +52,7 @@ const PlaceRating = ({ placeId, submitRating, deleteRating }) => {
         setUserRating(rating);
         setSelectedRating(rating);
       }
+      onRatingChange?.();
     } catch (error) {
       console.error('Error submitting rating:', error);
       alert('Failed to submit rating.');

@@ -50,6 +50,8 @@ export interface Place {
   googleMapsLink: string;
   minVisitTime: number;
   favoriteMonths: FavoriteMonths;
+  averageRating?: number;   // приходит с бэкенда, не считается на фронте
+  ratingsCount?: number;    // кол-во оценок
 }
 
 export interface uploadPlace {

@@ -27,8 +27,9 @@ interface PlaceCardProps {
 }
 
 const PlaceCard: React.FC<PlaceCardProps> = ({ place }) => {
-  const [imageError, setImageError] = useState(false); // Состояние для обработки ошибки изображения
-  const [isInPlans, setIsInPlans] = useState(false); // Состояние для отслеживания планов
+  const [imageError, setImageError] = useState(false);
+  const [isInPlans, setIsInPlans] = useState(false);
+  const [ratingVersion, setRatingVersion] = useState(0); // инкрементируется после каждой оценки → триггерит рефетч PlaceOverallRating
   const [user] = useAuthState(auth);
   const { userData } = useSelector((state: RootState) => state.user);
   const language = useSelector((state: RootState) => state.language.language);
@@ -135,7 +136,12 @@ const PlaceCard: React.FC<PlaceCardProps> = ({ place }) => {
         </div>
         <div className={classes.ratingsContainer}>
           <div className={classes.ratingsSection}>
-            <PlaceOverallRating placeId={place.id} />
+            <PlaceOverallRating
+              placeId={place.id}
+              initialRating={place.averageRating ?? null}
+              initialCount={place.ratingsCount ?? 0}
+              refreshKey={ratingVersion}
+            />
             <div className={classes.heartContainer}>
             {user && (
               <Tooltip 
@@ -167,6 +173,7 @@ const PlaceCard: React.FC<PlaceCardProps> = ({ place }) => {
                   placeId={place.id}
                   submitRating={submitRating}
                   deleteRating={deleteRating}
+                  onRatingChange={() => setRatingVersion((v) => v + 1)}
                 />
               </div>
             </Tooltip>
