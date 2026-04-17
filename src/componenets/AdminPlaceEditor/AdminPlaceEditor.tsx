@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { editPlaceField, fetchPlaceById } from '../../firebase/firebaseService';
+import apiClient from '../../utils/apiClient';
 
 // Редактор фотографий — список записей с полями photoName и photoWay
 const PhotoEditor = ({ photos, onChange }: { photos: { photoName: string; photoWay: string }[]; onChange: (updated: { photoName: string; photoWay: string }[]) => void }) => {
@@ -147,7 +147,8 @@ const AdminPlaceEditor = () => {
   const fetchPlaceData = async () => {
     setIsLoading(true);
     try {
-      const data = await fetchPlaceById(placeId); // Используем Firebase API для получения данных места
+      const response = await apiClient.get(`/api/places/${placeId}`);
+      const data = response.data.data;
       if (data) {
         setPlaceData(data); // Устанавливаем данные места
       } else {
@@ -215,8 +216,8 @@ const AdminPlaceEditor = () => {
   const updatePlaceData = async () => {
     setIsSaving(true);
     try {
-      // Обновляем каждое измененное поле в Firestore
-      await editPlaceField(placeId, placeData); // Используем Firebase API для обновления данных
+      // Обновляем поля места через API
+      await apiClient.patch(`/api/places/${placeId}`, placeData);
       alert('Place data successfully updated!');
     } catch (error) {
       console.error('Error updating place data:', error);

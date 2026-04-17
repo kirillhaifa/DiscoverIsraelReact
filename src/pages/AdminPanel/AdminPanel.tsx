@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store';
-import { uploadPlaceToFirestore } from '../../firebase/firebaseService';
 import { translations } from '../../../public/translations';
 import MainLayout from '../../componenets/Layout/MainLayout';
 import AdminPlaceEditor from '../../componenets/AdminPlaceEditor/AdminPlaceEditor';
@@ -52,7 +51,7 @@ const AdminPanel = () => {
     }
 
     try {
-      await uploadPlaceToFirestore(parsedData);
+      await apiClient.post('/api/places', parsedData);
       alert(translations.placeAddedSuccess[languageShort]);
       setPlaceData(''); // Очищаем поле ввода после успешного добавления
     } catch (error) {

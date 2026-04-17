@@ -54,37 +54,6 @@ export interface Place {
   ratingsCount?: number;    // кол-во оценок
 }
 
-export interface uploadPlace {
-  id?: string;  // Сделаем id опциональным
-  number: number;
-  placeName: {
-    en: string;
-    he: string;
-    ru: string;
-  };
-  shortDescription: {
-    en: string;
-    he: string;
-    ru: string;
-  };
-  extendedDescription: {
-    en: string;
-    he: string;
-    ru: string;
-  };
-  photos: Photo[];
-  tags: PlaceTag[];         // все фичи места
-  religions: Religion[];    // применимые религии
-  schedule: Schedule;
-  ticketPrice: TicketPrice;
-  contact: Contact | null;
-  region: string;
-  coordinates: [number, number];
-  googleMapsLink: string;
-  minVisitTime: number;
-  favoriteMonths: FavoriteMonths;
-}
-
 export interface Photo {
   photoName: string;
   photoWay: string;
