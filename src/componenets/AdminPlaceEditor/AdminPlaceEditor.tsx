@@ -1,20 +1,88 @@
 import React, { useState } from 'react';
 import { editPlaceField, fetchPlaceById } from '../../firebase/firebaseService';
 
+// Редактор фотографий — список записей с полями photoName и photoWay
+const PhotoEditor = ({ photos, onChange }: { photos: { photoName: string; photoWay: string }[]; onChange: (updated: { photoName: string; photoWay: string }[]) => void }) => {
+  const handlePhotoFieldChange = (index: number, field: 'photoName' | 'photoWay', value: string) => {
+    const updated = photos.map((p, i) => (i === index ? { ...p, [field]: value } : p));
+    onChange(updated);
+  };
+
+  const addPhoto = () => {
+    onChange([...photos, { photoName: '', photoWay: '' }]);
+  };
+
+  const removePhoto = (index: number) => {
+    onChange(photos.filter((_, i) => i !== index));
+  };
+
+  return (
+    <div style={{ marginLeft: '20px', marginTop: '4px' }}>
+      {photos.map((photo, i) => (
+        <div key={i} style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '6px', flexWrap: 'wrap' }}>
+          <span style={{ minWidth: '24px', color: '#888' }}>#{i + 1}</span>
+          <input
+            type="text"
+            placeholder="photoName"
+            value={photo.photoName ?? ''}
+            onChange={(e) => handlePhotoFieldChange(i, 'photoName', e.target.value)}
+            style={{ width: '180px' }}
+          />
+          <input
+            type="text"
+            placeholder="photoWay (URL)"
+            value={photo.photoWay ?? ''}
+            onChange={(e) => handlePhotoFieldChange(i, 'photoWay', e.target.value)}
+            style={{ flex: 1, minWidth: '200px' }}
+          />
+          <button type="button" onClick={() => removePhoto(i)} style={{ color: 'red', cursor: 'pointer' }}>✕</button>
+        </div>
+      ))}
+      <button type="button" onClick={addPhoto} style={{ marginTop: '4px' }}>+ Добавить фото</button>
+    </div>
+  );
+};
+
 // Функция для отображения вложенного объекта или массива
-const renderNestedField = (fieldData, handleInputChange, parentKey) => {
+const renderNestedField = (fieldData, handleInputChange, handleDirectChange, parentKey) => {
+  if (Array.isArray(fieldData)) {
+    if (parentKey === 'photos') {
+      return (
+        <PhotoEditor
+          photos={fieldData}
+          onChange={(updated) => handleDirectChange(parentKey, updated)}
+        />
+      );
+    }
+    // Другие массивы (religions, tags и т.д.) — JSON textarea
+    return (
+      <textarea
+        value={JSON.stringify(fieldData, null, 2)}
+        onChange={(e) => {
+          try {
+            const parsed = JSON.parse(e.target.value);
+            handleDirectChange(parentKey, parsed);
+          } catch {
+            // ignore parse errors while typing
+          }
+        }}
+        rows={4}
+        style={{ width: '100%', fontFamily: 'monospace' }}
+      />
+    );
+  }
+
   if (typeof fieldData === 'object' && fieldData !== null) {
     return Object.keys(fieldData).map((key) => (
       <div key={key} style={{ marginLeft: '20px' }}>
         <label>
           {`${parentKey}.${key}`}:
           {typeof fieldData[key] === 'object' && fieldData[key] !== null ? (
-            // Рекурсивно отображаем вложенные поля
-            renderNestedField(fieldData[key], handleInputChange, `${parentKey}.${key}`)
+            renderNestedField(fieldData[key], handleInputChange, handleDirectChange, `${parentKey}.${key}`)
           ) : (
             isTextAreaField(`${parentKey}.${key}`) ? (
               <textarea
-                value={fieldData[key] || ''}
+                value={fieldData[key] ?? ''}
                 onChange={(e) => handleInputChange(e, `${parentKey}.${key}`)}
                 rows={4}
                 style={{ width: '100%' }}
@@ -22,7 +90,7 @@ const renderNestedField = (fieldData, handleInputChange, parentKey) => {
             ) : (
               <input
                 type="text"
-                value={fieldData[key] || ''}
+                value={fieldData[key] ?? ''}
                 onChange={(e) => handleInputChange(e, `${parentKey}.${key}`)}
               />
             )
@@ -30,24 +98,25 @@ const renderNestedField = (fieldData, handleInputChange, parentKey) => {
         </label>
       </div>
     ));
-  } else {
-    return (
-      isTextAreaField(parentKey) ? (
-        <textarea
-          value={fieldData || ''}
-          onChange={(e) => handleInputChange(e, parentKey)}
-          rows={4}
-          style={{ width: '100%' }}
-        />
-      ) : (
-        <input
-          type="text"
-          value={fieldData || ''}
-          onChange={(e) => handleInputChange(e, parentKey)}
-        />
-      )
-    );
   }
+
+  // null / undefined / primitive — показываем как обычное поле
+  return (
+    isTextAreaField(parentKey) ? (
+      <textarea
+        value={fieldData ?? ''}
+        onChange={(e) => handleInputChange(e, parentKey)}
+        rows={4}
+        style={{ width: '100%' }}
+      />
+    ) : (
+      <input
+        type="text"
+        value={fieldData ?? ''}
+        onChange={(e) => handleInputChange(e, parentKey)}
+      />
+    )
+  );
 };
 
 // Функция для определения, должно ли поле быть textarea
@@ -114,10 +183,31 @@ const AdminPlaceEditor = () => {
     let current = updatedData;
 
     for (let i = 0; i < keys.length - 1; i++) {
+      // Если промежуточный объект null/undefined — создаём пустой
+      if (current[keys[i]] === null || current[keys[i]] === undefined) {
+        current[keys[i]] = {};
+      }
       current = current[keys[i]];
     }
 
     current[keys[keys.length - 1]] = e.target.value;
+    setPlaceData(updatedData);
+  };
+
+  // Обработчик для прямой установки значения (без event), используется для массивов
+  const handleDirectChange = (key: string, value: unknown) => {
+    const keys = key.split('.');
+    const updatedData = { ...placeData };
+    let current = updatedData as any;
+
+    for (let i = 0; i < keys.length - 1; i++) {
+      if (current[keys[i]] === null || current[keys[i]] === undefined) {
+        current[keys[i]] = {};
+      }
+      current = current[keys[i]];
+    }
+
+    current[keys[keys.length - 1]] = value;
     setPlaceData(updatedData);
   };
 
@@ -170,14 +260,14 @@ const AdminPlaceEditor = () => {
             <div key={key}>
               <label>
                 {key}:
-                {typeof placeData[key] === 'object' ? (
-                  // Если поле объект или массив, отображаем его рекурсивно
-                  renderNestedField(placeData[key], handleInputChange, key)
+                {Array.isArray(placeData[key]) ? (
+                  renderNestedField(placeData[key], handleInputChange, handleDirectChange, key)
+                ) : typeof placeData[key] === 'object' && placeData[key] !== null ? (
+                  renderNestedField(placeData[key], handleInputChange, handleDirectChange, key)
                 ) : (
-                  // Проверяем, является ли поле описанием или названием
                   isTextAreaField(key) ? (
                     <textarea
-                      value={placeData[key] || ''}
+                      value={placeData[key] ?? ''}
                       onChange={(e) => handleInputChange(e, key)}
                       rows={4}
                       style={{ width: '100%' }}
@@ -185,7 +275,7 @@ const AdminPlaceEditor = () => {
                   ) : (
                     <input
                       type="text"
-                      value={placeData[key] || ''}
+                      value={placeData[key] ?? ''}
                       onChange={(e) => handleInputChange(e, key)}
                     />
                   )

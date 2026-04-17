@@ -1,19 +1,15 @@
 // src/store/User/updateUserThunk.ts
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { doc, updateDoc } from 'firebase/firestore';
-import { db } from '../../../firebaseConfig';
+import apiClient from '../../utils/apiClient';
 import { UserState } from './userSlice';
 
 export const updateUserThunk = createAsyncThunk(
   'user/updateUserData',
   async (updatedData: Partial<UserState>, { rejectWithValue }) => {
     try {
-      const userDocRef = doc(db, 'Users', updatedData.userID as string);
-      
-      // Обновление данных в Firestore
-      await updateDoc(userDocRef, updatedData);
-      return updatedData; // Возвращаем обновленные данные
-
+      // Обновление данных через backend API
+      const { data } = await apiClient.patch('/api/users/me', updatedData);
+      return data.data as Partial<UserState>;
     } catch (error) {
       return rejectWithValue('Failed to update user data');
     }

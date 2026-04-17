@@ -1,11 +1,11 @@
-import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { auth, db } from '../../firebaseConfig.js';
+import { auth } from '../../firebaseConfig.js';
 import { createUserWithEmailAndPassword, GoogleAuthProvider, sendEmailVerification, signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
+import apiClient from '../utils/apiClient';
 
 
 export const registerUser = async (email: string, password: string) => {
   try {
-    // Создаем пользователя через Firebase Authentication
+    // Создаём пользователя через Firebase Authentication
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
 
@@ -13,20 +13,12 @@ export const registerUser = async (email: string, password: string) => {
       // Отправляем письмо с подтверждением email
       await sendEmailVerification(user);
 
-      // Добавляем пользователя в Firestore в коллекцию 'Users'
-      await setDoc(doc(db, 'Users', user.uid), {
-        userID: user.uid,
-        name: null, 
-        surname: null,
-        premiumStatus: false,
+      // Создаём профиль пользователя через backend API
+      await apiClient.post('/api/users/register', {
         email: user.email,
-        profilePicture: null, 
-        joinDate: new Date(),
-        ratings: [],
-        wishlist: [], 
-        role: 'user',
-        language: 'en',
-        colorTheme: 'light',
+        name: null,
+        surname: null,
+        profilePicture: null,
       });
     }
   } catch (error) {
@@ -40,10 +32,10 @@ export const loginUser = async (email: string, password: string) => {
     const result = await signInWithEmailAndPassword(auth, email, password);
     const user = result.user;
 
-    // Получение данных пользователя из Firestore
+    // Получение данных пользователя через backend API
     const userData = await getUserData(user.uid);
     
-    return userData; // Возвращаем полный объект пользователя
+    return userData;
   } catch (error) {
     console.error('Error signing in with email:', error);
     throw error;
@@ -67,33 +59,18 @@ export const handleGoogleSignIn = async () => {
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
 
+    // Upsert профиля через backend API (создаст если не существует)
+    await apiClient.post('/api/users/register', {
+      email: user.email,
+      name: user.displayName?.split(' ')[0] || null,
+      surname: user.displayName?.split(' ')[1] || null,
+      profilePicture: user.photoURL || null,
+    });
 
-    // Проверяем, существует ли пользователь в Firestore
-    const userDocRef = doc(db, 'Users', user.uid);
-    const userDoc = await getDoc(userDocRef);
-
-    if (!userDoc.exists()) {
-      // Если пользователь не существует, создаем новую запись
-      await setDoc(userDocRef, {
-        userID: user.uid,
-        name: user.displayName?.split(' ')[0] || null,
-        surname: user.displayName?.split(' ')[1] || null,
-        premiumStatus: false,
-        email: user.email,
-        profilePicture: user.photoURL || null,
-        joinDate: new Date(),
-        ratings: [],
-        wishlist: [],
-        role: 'user',
-        language: 'en',
-        colorTheme: 'light',
-      });
-    } 
-
-    // Получение данных пользователя из Firestore
+    // Получение данных пользователя через backend API
     const userData = await getUserData(user.uid);
     
-    return userData; // Возвращаем полный объект пользователя
+    return userData;
   } catch (error) {
     console.error('Error signing in with Google:', error);
     throw error;
@@ -102,21 +79,15 @@ export const handleGoogleSignIn = async () => {
 
 export const getUserData = async (userUID: string) => {
   try {
-    const userDocRef = doc(db, 'Users', userUID);
-    const userDoc = await getDoc(userDocRef);
-
-    if (userDoc.exists()) {
-      return {
-        ...userDoc.data(),
-        uid: userUID,
-        email: auth.currentUser?.email,
-        emailVerified: auth.currentUser?.emailVerified,
-        displayName: auth.currentUser?.displayName,
-        photoURL: auth.currentUser?.photoURL,
-      };
-    } else {
-      return null;
-    }
+    const { data } = await apiClient.get('/api/users/me');
+    return {
+      ...data.data,
+      uid: userUID,
+      email: auth.currentUser?.email,
+      emailVerified: auth.currentUser?.emailVerified,
+      displayName: auth.currentUser?.displayName,
+      photoURL: auth.currentUser?.photoURL,
+    };
   } catch (error) {
     console.error('Error fetching user data:', error);
     throw error;
