@@ -4,16 +4,12 @@ import { Collection } from '../../types';
 
 interface CollectionsState {
   collections: Collection[];
-  userCollections: Collection[];
-  publicCollections: Collection[];
   loading: boolean;
   error: string | null;
 }
 
 const initialState: CollectionsState = {
   collections: [],
-  userCollections: [],
-  publicCollections: [],
   loading: false,
   error: null,
 };

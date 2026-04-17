@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store';
-import { createCollection } from '../../firebase/firebaseService';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState, AppDispatch } from '../../store';
+import { createCollectionThunk } from '../../store/Collections/collectionsThunks';
 import { translations } from '../../../public/translations';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../../firebaseConfig';
@@ -22,6 +22,7 @@ interface CollectionCreatorProps {
 
 const CollectionCreator: React.FC<CollectionCreatorProps> = ({ onSuccess }) => {
   const [user] = useAuthState(auth);
+  const dispatch = useDispatch<AppDispatch>();
 
   const [collectionData, setCollectionData] = useState(''); // Строка для ввода JSON
   const [loading, setLoading] = useState(false);
@@ -68,12 +69,12 @@ const CollectionCreator: React.FC<CollectionCreatorProps> = ({ onSuccess }) => {
     setLoading(true);
 
     try {
-      const collectionId = await createCollection(parsedData, user.uid);
+      const result = await dispatch(createCollectionThunk({ collectionData: parsedData, userId: user.uid })).unwrap();
       setSuccessMessage('Коллекция успешно создана!');
       setCollectionData(''); // Очищаем поле ввода
 
-      if (onSuccess) {
-        onSuccess(collectionId);
+      if (onSuccess && result) {
+        onSuccess(result.id);
       }
     } catch (error) {
       console.error('Error creating collection:', error);
