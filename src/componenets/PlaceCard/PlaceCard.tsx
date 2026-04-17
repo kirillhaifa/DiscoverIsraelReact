@@ -10,9 +10,9 @@ import ParametersWidget from '../ParametersWidget/ParametersWidget';
 import {
   deleteRating,
   submitRating,
-  addPlaceToPlans,
-  removePlaceFromPlans,
-  checkPlaceInPlans,
+  addToWishlist,
+  removeFromWishlist,
+  checkPlaceInWishlist,
 } from '../../firebase/firebaseService';
 import { useNavigate } from 'react-router-dom';
 import { TbJewishStar } from 'react-icons/tb';
@@ -28,7 +28,7 @@ interface PlaceCardProps {
 
 const PlaceCard: React.FC<PlaceCardProps> = ({ place }) => {
   const [imageError, setImageError] = useState(false);
-  const [isInPlans, setIsInPlans] = useState(false);
+  const [isInWishlist, setIsInWishlist] = useState(false);
   const [ratingVersion, setRatingVersion] = useState(0); // инкрементируется после каждой оценки → триггерит рефетч PlaceOverallRating
   const [user] = useAuthState(auth);
   const { userData } = useSelector((state: RootState) => state.user);
@@ -41,14 +41,14 @@ const PlaceCard: React.FC<PlaceCardProps> = ({ place }) => {
 
   // Проверка, находится ли место в планах пользователя
   useEffect(() => {
-    const checkPlansStatus = async () => {
+    const checkWishlistStatus = async () => {
       if (user) {
-        const inPlans = await checkPlaceInPlans(user.uid, place.id);
-        setIsInPlans(inPlans);
+        const inWishlist = await checkPlaceInWishlist(user.uid, place.id);
+        setIsInWishlist(inWishlist);
       }
     };
 
-    checkPlansStatus();
+    checkWishlistStatus();
   }, [user, place.id]);
 
   const handlePlaceClick = () => {
@@ -66,15 +66,15 @@ const PlaceCard: React.FC<PlaceCardProps> = ({ place }) => {
     }
 
     try {
-      if (isInPlans) {
-        await removePlaceFromPlans(user.uid, place.id);
-        setIsInPlans(false);
+      if (isInWishlist) {
+        await removeFromWishlist(user.uid, place.id);
+        setIsInWishlist(false);
       } else {
-        await addPlaceToPlans(user.uid, place.id);
-        setIsInPlans(true);
+        await addToWishlist(user.uid, place.id);
+        setIsInWishlist(true);
       }
     } catch (error) {
-      console.error('Error updating plans:', error);
+      console.error('Error updating wishlist:', error);
     }
   };
 
@@ -146,7 +146,7 @@ const PlaceCard: React.FC<PlaceCardProps> = ({ place }) => {
             {user && (
               <Tooltip 
                 title={
-                  isInPlans
+                  isInWishlist
                     ? translations.removeFromPlans[language]
                     : translations.addToPlans[language]
                 }
@@ -156,7 +156,7 @@ const PlaceCard: React.FC<PlaceCardProps> = ({ place }) => {
                   className={classes.heartButton}
                   onClick={handleHeartClick}
                 >
-                  {isInPlans ? (
+                  {isInWishlist ? (
                     <FaHeart className={classes.heartFilled} />
                   ) : (
                     <FaRegHeart className={classes.heartEmpty} />

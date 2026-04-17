@@ -221,79 +221,52 @@ export const fetchUserCollections = async (userId: string): Promise<Collection[]
   }
 };
 
-// Функция для добавления места в планы пользователя
-export const addPlaceToPlans = async (userId: string, placeId: string) => {
+// Функции вишлиста (сердечко) — через API
+export const addToWishlist = async (_userId: string, placeId: string) => {
   try {
-    const userRef = doc(db, 'Users', userId);
-    await updateDoc(userRef, {
-      plans: arrayUnion(placeId),
-    });
+    await apiClient.post(`/api/users/me/wishlist/${placeId}`);
   } catch (error) {
-    console.error('Error adding place to plans:', error);
+    console.error('Error adding to wishlist:', error);
     throw error;
   }
 };
 
-// Функция для удаления места из планов пользователя
-export const removePlaceFromPlans = async (userId: string, placeId: string) => {
+// Обратная совместимость: старые названия остаются рабочими пока не обновлены все компоненты
+export const addPlaceToPlans = addToWishlist;
+
+export const removeFromWishlist = async (_userId: string, placeId: string) => {
   try {
-    const userRef = doc(db, 'Users', userId);
-    await updateDoc(userRef, {
-      plans: arrayRemove(placeId),
-    });
+    await apiClient.delete(`/api/users/me/wishlist/${placeId}`);
   } catch (error) {
-    console.error('Error removing place from plans:', error);
+    console.error('Error removing from wishlist:', error);
     throw error;
   }
 };
 
-// Функция для проверки, находится ли место в планах пользователя
-export const checkPlaceInPlans = async (userId: string, placeId: string): Promise<boolean> => {
+export const removePlaceFromPlans = removeFromWishlist;
+
+export const checkPlaceInWishlist = async (_userId: string, placeId: string): Promise<boolean> => {
   try {
-    const userRef = doc(db, 'Users', userId);
-    const userDoc = await getDoc(userRef);
-
-    if (!userDoc.exists()) {
-      return false;
-    }
-
-    const userData = userDoc.data();
-    const plans = userData.plans || [];
-    return plans.includes(placeId);
+    const { data } = await apiClient.get('/api/users/me/wishlist');
+    const places: { id: string }[] = data.data;
+    return places.some((p) => p.id === placeId);
   } catch (error) {
-    console.error('Error checking place in plans:', error);
+    console.error('Error checking wishlist:', error);
     return false;
   }
 };
 
-// Функция для получения мест из планов пользователя
-export const fetchPlannedPlaces = async (userId: string): Promise<Place[]> => {
+export const checkPlaceInPlans = checkPlaceInWishlist;
+
+export const fetchWishlistPlaces = async (_userId: string): Promise<Place[]> => {
   try {
-    // Получаем планы пользователя
-    const userRef = doc(db, 'Users', userId);
-    const userDoc = await getDoc(userRef);
-    
-    if (!userDoc.exists()) {
-      return [];
-    }
-
-    const userData = userDoc.data();
-    const userPlans = userData.plans || [];
-
-    if (userPlans.length === 0) {
-      return [];
-    }
-
-    // Получаем все места
-    const allPlaces = await fetchPlaces();
-    
-    // Фильтруем места, которые есть в планах пользователя
-    const filteredPlaces = allPlaces.filter(place => userPlans.includes(place.id));
-    
-    return filteredPlaces;
+    const { data } = await apiClient.get('/api/users/me/wishlist');
+    return data.data as Place[];
   } catch (error) {
-    console.error('Error fetching planned places:', error);
+    console.error('Error fetching wishlist:', error);
     return [];
   }
 };
+
+export const fetchPlannedPlaces = fetchWishlistPlaces;
 
