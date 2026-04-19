@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Place } from '../../types';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState, AppDispatch } from '../../store';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../../firebaseConfig';
 import PlaceRating from '../PlaceRating/PlaceRating';
@@ -12,8 +12,8 @@ import {
   submitRating,
   addToWishlist,
   removeFromWishlist,
-  checkPlaceInWishlist,
 } from '../../firebase/firebaseService';
+import { fetchUserData } from '../../store/User/fetchUserThunk';
 import { useNavigate } from 'react-router-dom';
 import { TbJewishStar } from 'react-icons/tb';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
@@ -28,9 +28,9 @@ interface PlaceCardProps {
 
 const PlaceCard: React.FC<PlaceCardProps> = ({ place }) => {
   const [imageError, setImageError] = useState(false);
-  const [isInWishlist, setIsInWishlist] = useState(false);
   const [ratingVersion, setRatingVersion] = useState(0); // инкрементируется после каждой оценки → триггерит рефетч PlaceOverallRating
   const [user] = useAuthState(auth);
+  const dispatch = useDispatch<AppDispatch>();
   const { userData } = useSelector((state: RootState) => state.user);
   const language = useSelector((state: RootState) => state.language.language);
   const isRtl = language === 'he'; // Определяем направление текста
@@ -39,17 +39,8 @@ const PlaceCard: React.FC<PlaceCardProps> = ({ place }) => {
     (state: RootState) => state.filters.searchText,
   );
 
-  // Проверка, находится ли место в планах пользователя
-  useEffect(() => {
-    const checkWishlistStatus = async () => {
-      if (user) {
-        const inWishlist = await checkPlaceInWishlist(user.uid, place.id);
-        setIsInWishlist(inWishlist);
-      }
-    };
-
-    checkWishlistStatus();
-  }, [user, place.id]);
+  // Читаем вишлист из стора — 0 HTTP запросов
+  const isInWishlist = (userData?.wishlist ?? []).includes(place.id);
 
   const handlePlaceClick = () => {
     navigate(
@@ -68,11 +59,11 @@ const PlaceCard: React.FC<PlaceCardProps> = ({ place }) => {
     try {
       if (isInWishlist) {
         await removeFromWishlist(user.uid, place.id);
-        setIsInWishlist(false);
       } else {
         await addToWishlist(user.uid, place.id);
-        setIsInWishlist(true);
       }
+      // Обновляем стор — карточка перерисуется автоматически через селектор
+      dispatch(fetchUserData(user.uid));
     } catch (error) {
       console.error('Error updating wishlist:', error);
     }
