@@ -4,6 +4,8 @@ import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import { useFirebaseAuth } from '../../hooks/useFirebaseAuth';
 import { fetchUserData } from '../../store/User/fetchUserThunk';
 import { clearUserData } from '../../store/User/userSlice';
+import { fetchRatingsThunk } from '../../store/Ratings/fetchRatingsThunk';
+import { clearRatings } from '../../store/Ratings/ratingsSlice';
 import { setTheme } from '../../store/ColorScheme/themeSlice';
 import { RootState, AppDispatch } from '../../store';
 import Logout from '../Logout/logout';
@@ -78,11 +80,13 @@ const App = () => {
         // Небольшая задержка для обеспечения очистки старых данных
         setTimeout(() => {
           dispatch(fetchUserData(user.uid));
+          dispatch(fetchRatingsThunk());
         }, 100);
       }
     } else {
       // Очищаем данные пользователя при выходе
       dispatch(clearUserData());
+      dispatch(clearRatings());
     }
     dispatch(fetchPlacesThunk());
   }, [user, dispatch]);

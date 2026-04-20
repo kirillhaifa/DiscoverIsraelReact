@@ -20,7 +20,6 @@ export const fetchUserData = createAsyncThunk<UserState, string>(
         email: userData.email || firebaseUser?.email || null,
         profilePicture: userData.profilePicture || firebaseUser?.photoURL || null,
         joinDate: userData.joinDate ?? null,
-        ratings: userData.ratings || null,
         wishlist: userData.wishlist || null,
         role: userData.role || null,
         language: userData.language || null,

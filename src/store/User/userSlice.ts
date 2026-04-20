@@ -2,11 +2,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { fetchUserData } from './fetchUserThunk';
 import { updateUserThunk } from './updateUserThunk';
 
-export interface Rating {
-  placeId: string;
-  rating: number;
-}
-
 export interface UserState {
   userID: string | null;
   name: string | null;
@@ -15,7 +10,6 @@ export interface UserState {
   email: string | null;
   profilePicture: string | null;
   joinDate: string | null;
-  ratings: Rating[] | null;
   wishlist: string[] | null;
   role: string | null;
   language: string | null;

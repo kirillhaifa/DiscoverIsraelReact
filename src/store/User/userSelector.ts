@@ -65,11 +65,8 @@ export const selectUserJoinDate = createSelector(
   (userData) => userData?.joinDate || null
 );
 
-// Селектор для `ratings`
-export const selectUserRatings = createSelector(
-  [selectUserData],
-  (userData) => userData?.ratings || []
-);
+// Селектор для `ratings` — данные хранятся в отдельном слайсе state.ratings
+export const selectUserRatings = (state: RootState) => state.ratings.ratings;
 
 // Селектор для `wishlist`
 export const selectUserWishlist = createSelector(

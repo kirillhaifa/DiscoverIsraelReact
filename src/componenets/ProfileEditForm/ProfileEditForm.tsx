@@ -20,6 +20,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 const ProfileEditForm = () => {
   const dispatch: AppDispatch = useDispatch();
   const { userData, loading, error } = useSelector((state: RootState) => state.user);
+  const ratings = useSelector((state: RootState) => state.ratings.ratings);
   const language = useSelector((state: RootState) => state.language.language);
   const t = (key: keyof typeof translations) => translations[key][language] || translations[key].en;
   const theme = useTheme();
@@ -48,11 +49,11 @@ const ProfileEditForm = () => {
         profilePicture: userData.profilePicture || '',
         language: userData.language || '',
         colorTheme: userData.colorTheme || '',
-        placesMarks: userData.ratings || [],
+        placesMarks: ratings,
         wishlist: userData.wishlist || [],
       });
     }
-  }, [userData]);
+  }, [userData, ratings]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store';
 import { requireAuth } from '../../store/authPrompt/authPromptSlice';
+import { addOrUpdateRating, removeRating } from '../../store/Ratings/ratingsSlice';
 import { FaStar } from 'react-icons/fa';
 let classes = require('./PlaceRating.module.scss');
 let themes = require('../../../public/Styles/themes.module.scss');
@@ -20,20 +21,20 @@ const PlaceRating = ({ placeId, submitRating, deleteRating, onRatingChange }: {
   const [hoverTimer, setHoverTimer] = useState(null);
   const [hideTimer, setHideTimer] = useState(null);
   const { userData } = useSelector((state: RootState) => state.user);
+  const userRatings = useSelector((state: RootState) => state.ratings.ratings);
   const dispatch = useDispatch();
   const barRef = useRef(null);
 
   useEffect(() => {
-    if (userData && userData.ratings) {
-      const existingMark = userData.ratings.find(
-        (mark) => mark.placeId === placeId,
-      );
-      if (existingMark) {
-        setUserRating(existingMark.rating);
-        setSelectedRating(existingMark.rating);
-      }
+    const existingMark = userRatings.find((mark) => mark.placeId === placeId);
+    if (existingMark) {
+      setUserRating(existingMark.rating);
+      setSelectedRating(existingMark.rating);
+    } else {
+      setUserRating(null);
+      setSelectedRating(null);
     }
-  }, [userData, placeId]);
+  }, [userRatings, placeId]);
 
   const handleRatingClick = async (rating, event) => {
     event.stopPropagation();
@@ -45,10 +46,12 @@ const PlaceRating = ({ placeId, submitRating, deleteRating, onRatingChange }: {
     try {
       if (rating === userRating) {
         await deleteRating(userData.userID, placeId);
+        dispatch(removeRating(placeId));
         setUserRating(null);
         setSelectedRating(null);
       } else {
         await submitRating(userData.userID, placeId, rating);
+        dispatch(addOrUpdateRating({ placeId, rating }));
         setUserRating(rating);
         setSelectedRating(rating);
       }

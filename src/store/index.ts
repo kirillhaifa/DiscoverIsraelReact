@@ -7,6 +7,7 @@ import filtersReducer from './Filters/filtersSlice';
 import locationReducer from '../store/Location/locationSlice'
 import authPromptReducer from '../store/authPrompt/authPromptSlice'
 import collectionsReducer from './Collections/collectionsSlice';
+import ratingsReducer from './Ratings/ratingsSlice';
 
 const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ const store = configureStore({
     location: locationReducer,
     authPrompt: authPromptReducer,
     collections: collectionsReducer,
+    ratings: ratingsReducer,
   },
 });
 

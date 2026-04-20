@@ -18,7 +18,8 @@ const Profile = () => {
     (state: RootState) => state.user,
   );
   const language = useSelector((state: RootState) => state.language.language);
-  const ratingCount = userData?.ratings ? userData.ratings.length : 0;
+  const ratings = useSelector((state: RootState) => state.ratings.ratings);
+  const ratingCount = ratings.length;
   const [avatarError, setAvatarError] = useState(false);
 
   // Уровни достижений
